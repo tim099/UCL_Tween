@@ -1,0 +1,17 @@
+{
+    "name": "UCL_TweenEditor",
+    "references": [
+        "GUID:fb313712d3efc8045821678f6c8743af",
+        "GUID:4c555891f72787444a02cc0388aa32db",
+        "GUID:a7bf2b788598f0c458c671fab4e10fb8"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

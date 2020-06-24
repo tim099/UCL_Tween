@@ -1,0 +1,15 @@
+{
+    "name": "UCL_Tween",
+    "references": [
+        "GUID:fb313712d3efc8045821678f6c8743af"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
