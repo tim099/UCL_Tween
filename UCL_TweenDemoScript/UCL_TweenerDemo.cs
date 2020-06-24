@@ -14,10 +14,11 @@ namespace UCL.TweenLib.Demo {
         public Transform m_Target;
         public Core.MathLib.UCL_Curve m_Curve;
         UCL_TweenerCurve m_Cur = null;
+#if UNITY_EDITOR
         private void Start() {
             StartTweener();
         }
-#if UNITY_EDITOR
+
         [Core.ATTR.UCL_DrawTexture2D(128 , 128, TextureFormat.ARGB32, typeof(UCL_EaseTexture))]
         public void DrawEaseCurve(Core.TextureLib.UCL_Texture2D texture) {
             UCL_EaseTexture.DrawEase(m_Ease, texture);
