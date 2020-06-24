@@ -40,7 +40,7 @@ namespace UCL.TweenLib {
             }
             for(int i = 0; i < m_EndTweens.Count; i++) {
                 m_Tweens.Remove(m_EndTweens[i]);
-                Debug.LogWarning("remove:" + i + ",TweenCount:" + TweenCount);
+                //Debug.LogWarning("remove:" + i + ",TweenCount:" + TweenCount);
             }
             m_EndTweens.Clear();
         }

@@ -9,13 +9,12 @@ namespace UCL.TweenLib {
         protected System.Action<float> m_UpdateAct = null;
         protected override void InitTween() {
             m_Ease = null;
-
         }
         virtual public void OnUpdate(System.Action<float> _UpdateAct) {
             m_UpdateAct = _UpdateAct;
         }
         virtual protected void TweenerUpdate(float pos) { }
-        protected override void TimeUpdateAction() {
+        protected override void TimeUpdateAction(float time_delta) {
             float at = m_Timer;
             if(m_Duration > 0) at /= m_Duration;
             if(m_Ease != null) {

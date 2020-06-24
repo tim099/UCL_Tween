@@ -13,11 +13,9 @@ namespace UCL.TweenLib {
 
         public static UCL_TweenerCurve Create() {
             var obj = new UCL_TweenerCurve();
-            UCL_TweenManager.Instance.Add(obj);
             return obj;
         }
-
-        virtual public UCL_TweenerCurve Start(float duration, Core.MathLib.UCL_Curve curve, Transform target) {
+        virtual public UCL_TweenerCurve Init(float duration, Core.MathLib.UCL_Curve curve, Transform target) {
             m_Duration = duration;
             m_Curve = curve;
             m_Target = target;

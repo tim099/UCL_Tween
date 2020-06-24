@@ -40,14 +40,14 @@ namespace UCL.TweenLib.Demo {
                 obj.name = "target " + ++count;
                 m_Cur = UCL_TweenerCurve.Create();
                 var cur = m_Cur;
-                m_Cur.Start(m_Duration, m_Curve, obj.transform)
+                m_Cur.Init(m_Duration, m_Curve, obj.transform)
                     .SetEase(m_Ease)
                     .OnComplete(delegate() {
                         if(m_Cur == cur) {
                             m_Cur = null;
                         }
                         Destroy(obj);
-                    });
+                    }).Start();
             } else {
                 Debug.LogWarning("StartTweener() !UnityEditor.EditorApplication.isPlaying");
             }

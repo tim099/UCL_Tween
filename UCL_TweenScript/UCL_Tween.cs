@@ -37,7 +37,14 @@ namespace UCL.TweenLib {
             InitTween();
         }
         virtual protected void InitTween() { }
-
+        /// <summary>
+        /// Start the Tween
+        /// </summary>
+        /// <returns></returns>
+        virtual public UCL_Tween Start() {
+            UCL_TweenManager.Instance.Add(this);
+            return this;
+        }
         /// <summary>
         /// return value is the remain time of update
         /// </summary>
@@ -48,11 +55,11 @@ namespace UCL.TweenLib {
 
             m_Timer += time_delta;
 
-            TimeUpdateAction();
+            TimeUpdateAction(time_delta);
 
             return CheckComplete();
         }
-        virtual protected void TimeUpdateAction() {
+        virtual protected void TimeUpdateAction(float time_delta) {
 
         }
         virtual protected float CheckComplete() {
