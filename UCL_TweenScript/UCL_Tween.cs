@@ -10,6 +10,16 @@ namespace UCL.TweenLib {
                 return m_Completed;
             }
         }
+        public bool IsTweener {
+            get {
+                return (this is UCL_Tweener);
+            }
+        }
+        public bool IsSequence {
+            get {
+                return (this is UCL_Sequence);
+            }
+        }
         /// <summary>
         /// true if Tween is Complete or Killed
         /// </summary>
@@ -18,9 +28,19 @@ namespace UCL.TweenLib {
                 return m_End;
             }
         }
-
-
+        public bool Started {
+            get {
+                return m_Started;
+            }
+        }
+        public float Timer {
+            get { return m_Timer; }
+        }
+        public float Duration {
+            get { return m_Duration; }
+        }
         protected bool m_Completed = false;
+        protected bool m_Started = false;
         protected bool m_End = false;
         protected bool m_Paused = false;
         protected System.Action m_CompleteAct = null;
@@ -36,17 +56,36 @@ namespace UCL.TweenLib {
             m_Paused = false;
             InitTween();
         }
+        virtual public float GetTime() {
+            return m_Timer;
+        }
+        virtual public float GetRemainDuration() {
+            return m_Duration - m_Timer;
+        }
+        virtual public void SetDuration(float duration) {
+            m_Duration = duration;
+        }
         virtual protected void InitTween() { }
         /// <summary>
-        /// Start the Tween
+        /// Start the Tween on manager
         /// </summary>
         /// <returns></returns>
-        virtual public UCL_Tween Start() {
-            UCL_TweenManager.Instance.Add(this);
+        virtual public UCL_Tween Start(UCL_TweenManager manager = null) {
+            if(manager == null) {
+                manager = UCL_TweenManager.Instance;
+            }
+            manager.Add(this);
             return this;
         }
         /// <summary>
-        /// return value is the remain time of update
+        /// Called once when tween start
+        /// </summary>
+        virtual internal protected void TweenStart() {
+            if(m_Started) return;
+            m_Started = true;
+        }
+        /// <summary>
+        /// return value is the remain time of update(0 if not complete
         /// </summary>
         /// <param name="time_delta"></param>
         /// <returns></returns>
@@ -54,20 +93,21 @@ namespace UCL.TweenLib {
             if(m_End || m_Paused) return 0;
 
             m_Timer += time_delta;
+            //if(m_Timer >= m_Duration) m_Timer = m_Duration;
+            float remains = TimeUpdateAction(time_delta);
+            //CheckComplete();
 
-            TimeUpdateAction(time_delta);
-
-            return CheckComplete();
+            return remains;
         }
-        virtual protected void TimeUpdateAction(float time_delta) {
-
+        virtual protected float TimeUpdateAction(float time_delta) {
+            return m_Timer > m_Duration ? m_Timer - m_Duration : 0 ;
         }
-        virtual protected float CheckComplete() {
+        virtual internal protected bool CheckComplete() {
             if(m_Duration > 0 && m_Timer >= m_Duration) {
                 Complete();
-                return m_Timer - m_Duration;
+                return true;
             }
-            return 0;
+            return false;
         }
         virtual public void Pause() {
             m_Paused = true;

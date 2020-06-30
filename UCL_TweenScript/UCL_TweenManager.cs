@@ -13,6 +13,18 @@ namespace UCL.TweenLib {
                 return m_TimeManager.TweenCount;
             }
         }
+        public int TweenerCount {
+            get {
+                if(m_TimeManager == null) return 0;
+                return m_TimeManager.TweenerCount;
+            }
+        }
+        public int SequenceCount {
+            get {
+                if(m_TimeManager == null) return 0;
+                return m_TimeManager.SequenceCount;
+            }
+        }
         UCL_TweenTimeManager m_TimeManager;
         bool m_Inited = false;
 

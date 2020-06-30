@@ -9,7 +9,28 @@ namespace UCL.TweenLib {
                 return m_Tweens.Count;
             }
         }
-
+        public int TweenerCount {
+            get {
+                int c = 0;
+                for(int i = 0; i < m_Tweens.Count; i++) {
+                    if(m_Tweens[i].IsTweener) {
+                        c++;
+                    }
+                }
+                return c;
+            }
+        }
+        public int SequenceCount {
+            get {
+                int c = 0;
+                for(int i = 0; i < m_Tweens.Count; i++) {
+                    if(m_Tweens[i].IsSequence) {
+                        c++;
+                    }
+                }
+                return c;
+            }
+        }
         List<UCL_Tween> m_Tweens = new List<UCL_Tween>();
         List<UCL_Tween> m_EndTweens = new List<UCL_Tween>();
         UCL_TweenTimeManager() {
@@ -22,6 +43,7 @@ namespace UCL.TweenLib {
         }
 
         internal void Add(UCL_Tween tween) {
+            tween.TweenStart();
             m_Tweens.Add(tween);
         }
         public void KillAllTweens(bool complete = false) {
@@ -34,7 +56,7 @@ namespace UCL.TweenLib {
             for(int i = 0; i < m_Tweens.Count; i++) {
                 var tween = m_Tweens[i];
                 tween.TimeUpdate(delta_time);
-                if(tween.End) {
+                if(tween.CheckComplete()) {
                     m_EndTweens.Add(tween);
                 }
             }

@@ -5,6 +5,10 @@ using UnityEngine;
 
 namespace UCL.TweenLib {
     public class UCL_Sequence : UCL_Tween {
+        UCL_Sequence() {
+
+        }
+
         protected List<UCL_Tween> m_Tweens;
         protected int m_CurAt = 0;
         protected internal override void Init() {
@@ -17,41 +21,77 @@ namespace UCL.TweenLib {
             seq.Init();
             return seq;
         }
-        virtual public void AppendInterval(float interval) {
-            
+        virtual public UCL_Tween AppendInterval(float interval) {
+            UCL_Tween tween = UCL_TweenTimer.Create();
+
+            tween.SetDuration(interval);
+            Append(tween);
+            return tween;
         }
-        public void Append(UCL_Tween tween) {
+        public UCL_Sequence Append(UCL_Tween tween) {
             m_Tweens.Add(tween);
+            m_Duration += tween.Duration;
+            return this;
         }
-        protected override void TimeUpdateAction(float time_delta) {
+        protected internal override void TweenStart() {
+            base.TweenStart();
+        }
+        override internal protected float TimeUpdate(float time_delta) {
+            if(m_End || m_Paused) return 0;
+            
+            var time_remains = TimeUpdateAction(time_delta);
+            //CheckComplete();
+
+            return time_remains;
+        }
+        override protected float TimeUpdateAction(float time_delta) {
             //base.TimeUpdateAction();
+            
             var cur = GetCurTween();
+
+
             int i = 0;
+            var tmp_timer = m_Timer + time_delta;
+            //Debug.LogWarning("m_Timer:" + m_Timer);
+            if(cur != null && !cur.Started) {
+                cur.Start();
+            }
+
             while(cur != null && time_delta > 0 && i++ < 10000) {
-                time_delta = cur.TimeUpdate(time_delta);
-                if(cur.End) {
+                var del = cur.TimeUpdate(time_delta);
+                m_Timer += (time_delta - del);
+                //Debug.LogWarning(i+",m_Timer t:" + m_Timer);
+                time_delta = del;
+                
+                if(cur.CheckComplete()) {
                     m_CurAt++;
                     cur = GetCurTween();
+                    if(cur != null) cur.TweenStart();
                 }
             }
+            m_Timer = tmp_timer - time_delta;
+            return time_delta;
         }
         protected UCL_Tween GetCurTween() {
             if(m_CurAt < 0 || m_CurAt >= m_Tweens.Count) return null;
 
             return m_Tweens[m_CurAt];
         }
-        override protected float CheckComplete() {
-            if(GetCurTween() == null) {
-                if(m_Duration > 0 && m_Timer >= m_Duration) {
-                    Complete();
-                    return m_Timer - m_Duration;
-                }
+        public override void Kill(bool compelete = false) {
+            if(compelete) {// && GetCurTween() != null
+                TimeUpdateAction(m_Duration + 1000f);//End all Tween
             }
 
-            return 0;
+            base.Kill(compelete);
         }
-        UCL_Sequence() {
+        override internal protected bool CheckComplete() {
+            if(GetCurTween() == null) {
+                Complete();
+                return true;
+            }
 
+            return false;
         }
+
     }
 }

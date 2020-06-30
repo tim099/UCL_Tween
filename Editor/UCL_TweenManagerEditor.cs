@@ -11,10 +11,13 @@ namespace UCL.TweenLib {
         }
         public override void OnInspectorGUI() {
             var manager = target as UCL_TweenManager;
-            
+            int tweenerc = manager.TweenerCount;
+            int seq_c = manager.SequenceCount;
             GUILayout.BeginVertical();
             //Debug.LogWarning("TweenCount:" + manager.TweenCount);
-            GUILayout.Box("TweenCount:" + manager.TweenCount);
+            GUILayout.Box("TweenCount:" + manager.TweenCount+"("+ tweenerc + "+" + seq_c + ")");
+            GUILayout.Box("TweenerCount:" + tweenerc);
+            GUILayout.Box("SequenceCount:" + seq_c);
             GUILayout.EndVertical();
 
             base.OnInspectorGUI();
