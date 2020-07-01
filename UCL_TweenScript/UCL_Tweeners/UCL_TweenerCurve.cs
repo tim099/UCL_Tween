@@ -17,8 +17,7 @@ namespace UCL.TweenLib {
         }
 
         public static UCL_TweenerCurve Create() {
-            var obj = new UCL_TweenerCurve();
-            return obj;
+            return new UCL_TweenerCurve();
         }
         virtual public UCL_TweenerCurve Init(Transform target, Core.MathLib.UCL_Curve curve, float duration) {
             m_Duration = duration;
@@ -30,7 +29,6 @@ namespace UCL.TweenLib {
         protected override void TweenerUpdate(float pos) {
             m_Target.transform.position = m_Curve.GetPoint(pos);
             //Debug.LogWarning("TweenerUpdate:" + pos+ ",m_Target.transform.position:"+ m_Target.transform.position);
-
         }
     }
 }

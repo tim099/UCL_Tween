@@ -402,7 +402,7 @@ GameObject:
   m_Layer: 0
   m_Name: SequenceDemoFinalPos
   m_TagString: Untagged
-  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -626,7 +626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1006621653
 Transform:
   m_ObjectHideFlags: 0
@@ -990,6 +990,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Ease: 45
   m_Target: {fileID: 2102868294}
+  m_Target2: {fileID: 415336378}
   m_RotTarget: {fileID: 739741535}
   m_Curve: {fileID: 2095632936}
 --- !u!4 &1805666350
@@ -1330,7 +1331,7 @@ GameObject:
   m_Layer: 0
   m_Name: SequenceDemoTarget
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

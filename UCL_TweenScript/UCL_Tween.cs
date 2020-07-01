@@ -44,6 +44,7 @@ namespace UCL.TweenLib {
         protected bool m_End = false;
         protected bool m_Paused = false;
         protected System.Action m_CompleteAct = null;
+        protected System.Action m_StartAct = null;
         protected float m_Timer = 0;
         protected float m_Duration = 0;
         
@@ -62,8 +63,14 @@ namespace UCL.TweenLib {
         virtual public float GetRemainDuration() {
             return m_Duration - m_Timer;
         }
-        virtual public void SetDuration(float duration) {
+        virtual public UCL_Tween SetDuration(float duration) {
             m_Duration = duration;
+            return this;
+        }
+        virtual public UCL_Tween TimeAlter(float delta_time) {
+            //m_Timer += delta_time;
+            TimeUpdate(delta_time);
+            return this;
         }
         virtual protected void InitTween() { }
         /// <summary>
@@ -83,6 +90,7 @@ namespace UCL.TweenLib {
         virtual internal protected void TweenStart() {
             if(m_Started) return;
             m_Started = true;
+            if(m_StartAct != null) m_StartAct.Invoke();
         }
         /// <summary>
         /// return value is the remain time of update(0 if not complete
@@ -103,6 +111,7 @@ namespace UCL.TweenLib {
             return m_Timer > m_Duration ? m_Timer - m_Duration : 0 ;
         }
         virtual internal protected bool CheckComplete() {
+            if(m_End) return true;
             if(m_Duration > 0 && m_Timer >= m_Duration) {
                 Complete();
                 return true;
@@ -131,6 +140,10 @@ namespace UCL.TweenLib {
         }
         virtual protected void CompleteAction() {
 
+        }
+        virtual public UCL_Tween OnStart(System.Action _Act) {
+            m_StartAct = _Act;
+            return this;
         }
         virtual public UCL_Tween OnComplete(System.Action _CompleteAct) {
             m_CompleteAct = _CompleteAct;

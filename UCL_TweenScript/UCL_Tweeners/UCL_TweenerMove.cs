@@ -21,19 +21,25 @@ namespace UCL.TweenLib {
             m_Target = target;
             m_TargetVal = target_position;
             m_Duration = duration;
-            m_StartVal = m_Target.position;
             //Debug.LogWarning("Init !!m_Target.transform.position:" + m_Target.transform.position +
                 //",m_TargetPos:" + m_TargetPos + ",m_StartPos:" + m_StartPos);
             return this;
         }
-        protected internal override void TweenStart() {
-            base.TweenStart();
-            m_StartVal = m_Target.position;
+        protected override void TweenerStart() {
+            if(m_Local) {
+                m_StartVal = m_Target.localPosition;
+            } else {
+                m_StartVal = m_Target.position;
+            }
         }
         protected override void TweenerUpdate(float pos) {
-            m_Target.transform.position = Vector3.Lerp(m_StartVal, m_TargetVal, pos);
+            if(m_Local) {
+                m_Target.transform.localPosition = Vector3.Lerp(m_StartVal, m_TargetVal, pos);
+            } else {
+                m_Target.transform.position = Vector3.Lerp(m_StartVal, m_TargetVal, pos);
+            }
             //Debug.LogWarning("TweenerUpdate:" + pos + ",m_Target.transform.position:"+ m_Target.transform.position + 
-                //",m_TargetPos:"+ m_TargetPos+ ",m_StartPos:"+ m_StartPos);
+            //",m_TargetPos:"+ m_TargetPos+ ",m_StartPos:"+ m_StartPos);
 
         }
     }

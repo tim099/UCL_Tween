@@ -31,9 +31,17 @@ namespace UCL.TweenLib {
                 return c;
             }
         }
+        float TimeScale {
+            get { return m_TimeScale; }
+        }
+
+        float m_TimeScale = 1f;
         List<UCL_Tween> m_Tweens = new List<UCL_Tween>();
         List<UCL_Tween> m_EndTweens = new List<UCL_Tween>();
         UCL_TweenTimeManager() {
+        }
+        public void SetTimeScale(float val) {
+            m_TimeScale = val;
         }
         public static UCL_TweenTimeManager Create() {
             return new UCL_TweenTimeManager();
@@ -52,12 +60,19 @@ namespace UCL.TweenLib {
             }
         }
         internal void TimeUpdate(float delta_time) {
-            
+            if(m_TimeScale != 1) {
+                delta_time *= m_TimeScale;
+            }
+
             for(int i = 0; i < m_Tweens.Count; i++) {
                 var tween = m_Tweens[i];
-                tween.TimeUpdate(delta_time);
-                if(tween.CheckComplete()) {
+                if(tween.End) {
                     m_EndTweens.Add(tween);
+                } else {
+                    tween.TimeUpdate(delta_time);
+                    if(tween.CheckComplete()) {
+                        m_EndTweens.Add(tween);
+                    }
                 }
             }
             for(int i = 0; i < m_EndTweens.Count; i++) {
@@ -65,10 +80,6 @@ namespace UCL.TweenLib {
                 //Debug.LogWarning("remove:" + i + ",TweenCount:" + TweenCount);
             }
             m_EndTweens.Clear();
-        }
-
-        private void Update() {
-
         }
     }
 }
