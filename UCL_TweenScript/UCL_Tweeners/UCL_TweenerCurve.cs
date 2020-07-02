@@ -11,10 +11,7 @@ namespace UCL.TweenLib {
 
     public class UCL_TweenerCurve : UCL_TweenerTransform {
         protected Core.MathLib.UCL_Curve m_Curve;
-
-        UCL_TweenerCurve() {
-
-        }
+        UCL_TweenerCurve() { }
 
         public static UCL_TweenerCurve Create() {
             return new UCL_TweenerCurve();

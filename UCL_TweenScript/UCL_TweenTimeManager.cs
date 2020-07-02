@@ -31,17 +31,14 @@ namespace UCL.TweenLib {
                 return c;
             }
         }
-        float TimeScale {
-            get { return m_TimeScale; }
-        }
+        public float TimeScale { get; private set; } = 1f;
 
-        float m_TimeScale = 1f;
         List<UCL_Tween> m_Tweens = new List<UCL_Tween>();
         List<UCL_Tween> m_EndTweens = new List<UCL_Tween>();
         UCL_TweenTimeManager() {
         }
         public void SetTimeScale(float val) {
-            m_TimeScale = val;
+            TimeScale = val;
         }
         public static UCL_TweenTimeManager Create() {
             return new UCL_TweenTimeManager();
@@ -60,8 +57,8 @@ namespace UCL.TweenLib {
             }
         }
         internal void TimeUpdate(float delta_time) {
-            if(m_TimeScale != 1) {
-                delta_time *= m_TimeScale;
+            if(TimeScale != 1) {
+                delta_time *= TimeScale;
             }
 
             for(int i = 0; i < m_Tweens.Count; i++) {

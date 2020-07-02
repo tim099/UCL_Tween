@@ -13,18 +13,7 @@ namespace UCL.TweenLib {
         static public UCL_TweenerRotate UCL_Rotate(this Transform target, float x, float y, float z, float duration) {
             return UCL_TweenerRotate.Create().Init(target, Quaternion.Euler(x, y, z), duration);
         }
-        /*
-        /// <summary>
-        /// Not done yet!!
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="target_rotation"></param>
-        /// <param name="duration"></param>
-        /// <returns></returns>
-        static public UCL_TweenerRotate UCL_LookAt(this Transform target, Vector3 target_rotation, float duration) {
-            return UCL_TweenerRotate.Create().Init(target, target_rotation.x, target_rotation.y, target_rotation.z, duration);
-        }
-        */
+
     }
     public class UCL_TweenerRotate : UCL_TweenerTransform {
         protected Quaternion m_TargetVal;

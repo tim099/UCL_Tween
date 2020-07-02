@@ -14,6 +14,8 @@ namespace UCL.TweenLib.Demo {
         //public float m_Duration = 5.0f;
         public Transform m_Target;
         public Transform m_Target2;
+        public Transform m_Target3;
+        public Transform[] m_LookTargets;
         public Transform m_RotTarget;
         public float m_Y = 0;
         public bool m_AutoLoop = true;
@@ -65,6 +67,7 @@ namespace UCL.TweenLib.Demo {
                 //Debug.LogWarning("Test " + ++times + ",Timer:" + m_Seq.Timer + ",interval:" + interval);
             });
             bool rev = true;
+            int look_at = 0;
             {
                 int n = at >= Eases.Length ? at = 0 : at++;
                 m_Seq.Append(
@@ -76,6 +79,7 @@ namespace UCL.TweenLib.Demo {
                     //Debug.LogWarning("y:" + y);
                         m_Y = y;
                     }))
+                    .AddComponent(m_Target3.TC_LookAt(m_LookTargets[look_at++].position , Vector3.up))
                     .SetEase(Eases[n])
                     //.SetReverse(rev ^= true)
                     .OnStart(delegate () {
@@ -111,11 +115,12 @@ namespace UCL.TweenLib.Demo {
                 m_Seq.Append(Lib.Tweener(3)
                     .AddComponent(m_Target.TC_Move(m_Curve).SetReverse(rev ^= true))
                     .AddComponent(m_Target.TC_Rotate(90, 130, -70))//.SetReverse(!rev)
-                    .AddComponent(m_Target2.TC_LocalMove(Vector3.zero))//.SetReverse(!rev)
+                    .AddComponent(m_Target2.TC_LocalMove(0, -20, 0))//.SetReverse(!rev)
+                    .AddComponent(m_Target3.TC_LookAt(m_Target, Vector3.up))
                     .AddComponent(LibTC.Action(delegate (float y) {
-                    //Debug.LogWarning("y:" + y);
-                    m_Y = y;
+                        m_Y = y;
                     }))
+                    .AddComponent(m_Target3.TC_LookAt(m_LookTargets[look_at++] , Vector3.up))
                     .SetEase(Eases[n])
                     .OnStart(delegate () {
                         Debug.LogWarning("Start at:" + at + "n:" + n);
@@ -137,9 +142,11 @@ namespace UCL.TweenLib.Demo {
                         m_Target.TC_Rotate(-60, -80, 40).SetReverse(!rev)
                     )
                     .AddComponent(LibTC.Action(delegate (float y) {
-                    //Debug.LogWarning("y:" + y);
-                    m_Y = y;
+                        m_Y = y;
                     }))
+                    .AddComponent(m_Target2.TC_LocalMove(Vector3.zero))
+                    .AddComponent(m_Target3.TC_LookAt(m_LookTargets[look_at++] , Vector3.up).SetReverse(!rev))
+                    .AddComponent(m_Target3.TC_LookAt(m_Target, Vector3.up))
                     .SetEase(Eases[n])
                     .SetReverse(rev ^= true)
                     .OnStart(delegate () {
@@ -157,10 +164,12 @@ namespace UCL.TweenLib.Demo {
                     .AddComponent(
                         m_Target.TC_Rotate(m_RotTarget.rotation)
                     )
+                    //.AddComponent(m_Target2.TC_LocalMove(Vector3.zero))
                     .AddComponent(LibTC.Action(delegate (float y) {
                     //Debug.LogWarning("y:" + y);
                     m_Y = y;
                     }))
+                    .AddComponent(m_Target3.TC_LookAt(m_Target, Vector3.up).SetReverse(!rev))
                     .SetEase(Eases[n])
                     .SetReverse(rev ^= true)
                     .OnStart(delegate () {
@@ -192,6 +201,7 @@ namespace UCL.TweenLib.Demo {
                     //Debug.LogWarning("y:" + y);
                     m_Y = y;
                 }))
+                .AddComponent(m_Target3.TC_LookAt(m_Target, Vector3.up).SetReverse(!rev))
                 .SetEase(EaseType.InCirc).OnComplete(() => {
                     Debug.LogWarning("Move End!!" + ++times + ",Timer:" + m_Seq.Timer);
                 }));
