@@ -37,6 +37,8 @@ namespace UCL.TweenLib {
         */
     }
     public class UCL_TC_Rotate : UCL_TC_Transform {
+        override protected TC_Type GetTC_Type() { return TC_Type.Rotate; }
+
         protected Quaternion m_TargetVal;
         protected Quaternion m_StartVal;
         public static UCL_TC_Rotate Create() {

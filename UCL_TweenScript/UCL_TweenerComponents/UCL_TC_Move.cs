@@ -23,6 +23,8 @@ namespace UCL.TweenLib {
         }
     }
     public class UCL_TC_Move : UCL_TC_Transform {
+        override protected TC_Type GetTC_Type() { return TC_Type.Move; }
+
         protected Vector3 m_TargetVal;
         protected Vector3 m_StartVal;
         public static UCL_TC_Move Create() {

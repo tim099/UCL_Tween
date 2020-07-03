@@ -17,6 +17,8 @@ namespace UCL.TweenLib {
         }
     }
     public class UCL_TC_LookAt : UCL_TC_Transform {
+        override protected TC_Type GetTC_Type() { return TC_Type.LookAt; }
+
         public static UCL_TC_LookAt Create() {
             return new UCL_TC_LookAt();
         }

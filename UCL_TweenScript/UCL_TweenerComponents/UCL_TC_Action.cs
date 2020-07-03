@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UCL.TweenLib {
     public class UCL_TC_Action : UCL_TC_Transform {
-        UCL_TC_Action() { }
+        override protected TC_Type GetTC_Type() { return TC_Type.Action; }
         public static UCL_TC_Action Create() {
             return new UCL_TC_Action();
         }

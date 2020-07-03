@@ -77,9 +77,9 @@ namespace UCL.TweenLib {
         /// Start the Tween on manager
         /// </summary>
         /// <returns></returns>
-        virtual public UCL_Tween Start(UCL_TweenManager manager = null) {
+        virtual public UCL_Tween Start(UCL_TweenTimeManager manager = null) {
             if(manager == null) {
-                manager = UCL_TweenManager.Instance;
+                manager = UCL_TweenManager.Instance.TimeManager;
             }
             manager.Add(this);
             return this;

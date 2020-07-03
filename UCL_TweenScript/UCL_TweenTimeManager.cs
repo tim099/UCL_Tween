@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace UCL.TweenLib {
-    public class UCL_TweenTimeManager {
+    public class UCL_TweenTimeManager : MonoBehaviour{
+        #region Get
         public int TweenCount {
             get {
                 return m_Tweens.Count;
@@ -31,17 +32,15 @@ namespace UCL.TweenLib {
                 return c;
             }
         }
-        public float TimeScale { get; private set; } = 1f;
+        #endregion
+        public float TimeScale = 1f;
 
         List<UCL_Tween> m_Tweens = new List<UCL_Tween>();
         List<UCL_Tween> m_EndTweens = new List<UCL_Tween>();
-        UCL_TweenTimeManager() {
-        }
-        public void SetTimeScale(float val) {
-            TimeScale = val;
-        }
-        public static UCL_TweenTimeManager Create() {
-            return new UCL_TweenTimeManager();
+        //UCL_TweenTimeManager() {}
+        public static UCL_TweenTimeManager Create(GameObject obj) {
+            return obj.AddComponent<UCL_TweenTimeManager>();
+            //return new UCL_TweenTimeManager();
         }
         public void Init() {
 

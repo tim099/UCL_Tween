@@ -11,7 +11,7 @@ namespace UCL.TweenLib.Demo {
     public class UCL_SequenceDemo : MonoBehaviour {
         public EaseType m_Ease;
         public EaseType m_CurEase;
-        //public float m_Duration = 5.0f;
+
         public Transform m_Target;
         public Transform m_Target2;
         public Transform m_Target3;
@@ -21,7 +21,7 @@ namespace UCL.TweenLib.Demo {
         public bool m_AutoLoop = true;
         public Core.MathLib.UCL_Curve m_Curve;
         UCL_TweenerCurve m_Cur = null;
-
+#if UNITY_EDITOR
         [Core.ATTR.UCL_DrawTexture2D(128, 128, TextureFormat.ARGB32, typeof(UCL_EaseTexture))]
         public void DrawEaseCurve(Core.TextureLib.UCL_Texture2D texture) {
             if(UnityEditor.EditorApplication.isPlaying && m_Seq != null) {
@@ -30,7 +30,6 @@ namespace UCL.TweenLib.Demo {
                 UCL_EaseTexture.DrawEase(m_Ease, texture);
             }
 
-            
             if(m_Cur != null) {
                 Vector2 pos = m_Cur.GetPos();
                 var tex = texture as UCL_EaseTexture;
@@ -42,6 +41,7 @@ namespace UCL.TweenLib.Demo {
                 texture.DrawDot(pos.x, pos.y, Color.red, 2);
             }
         }
+#endif
         [Core.ATTR.UCL_FunctionButton]
         public void StartDemo() {
             Kill(false);

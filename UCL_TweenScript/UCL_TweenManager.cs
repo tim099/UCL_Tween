@@ -25,6 +25,9 @@ namespace UCL.TweenLib {
                 return m_TimeManager.SequenceCount;
             }
         }
+        public UCL_TweenTimeManager TimeManager {
+            get { return m_TimeManager; }
+        }
         UCL_TweenTimeManager m_TimeManager;
         bool m_Inited = false;
 
@@ -35,7 +38,7 @@ namespace UCL.TweenLib {
             if(m_Inited) return;
 
             m_Inited = true;
-            m_TimeManager = UCL_TweenTimeManager.Create();
+            m_TimeManager = UCL_TweenTimeManager.Create(gameObject);
         }
         
         internal void Add(UCL_Tween tween) {
