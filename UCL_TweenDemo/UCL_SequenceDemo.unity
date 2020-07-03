@@ -1076,8 +1076,6 @@ MonoBehaviour:
     m_Data: ff00
   - m_Type: 2
     m_Data: 
-  - m_Type: 0
-    m_Data: 
 --- !u!1 &1805666348
 GameObject:
   m_ObjectHideFlags: 0
