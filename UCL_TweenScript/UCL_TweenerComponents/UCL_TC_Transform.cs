@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace UCL.TweenLib {
     public class UCL_TC_Transform : UCL_TweenerComponent {
-        override protected TC_Type GetTC_Type() { return TC_Type.Transform; }
 
         protected Transform m_Target;
         protected bool m_Local = false;

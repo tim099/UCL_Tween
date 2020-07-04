@@ -10,8 +10,8 @@ namespace UCL.TweenLib {
     }
     public class UCL_TC_Curve : UCL_TC_Transform {
         override protected TC_Type GetTC_Type() { return TC_Type.Curve; }
-
-        protected class LookAtFront {
+        [System.Serializable]
+        public class LookAtFront {
             public Vector3 m_Up;
 
             public Vector3 m_Rot;

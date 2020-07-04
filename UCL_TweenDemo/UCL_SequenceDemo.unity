@@ -1027,6 +1027,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1750260932}
   - component: {fileID: 1750260933}
+  - component: {fileID: 1750260934}
   m_Layer: 0
   m_Name: Demo_TB_Move_2
   m_TagString: Untagged
@@ -1073,9 +1074,88 @@ MonoBehaviour:
   m_Duration: 5
   m_TweenerComponents:
   - m_Type: 2
-    m_Data: ff00
+    m_Transform:
+    - {fileID: 0}
+    m_Vector4: []
+    m_Vector3:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    m_Vector2: []
+    m_Vector3Int: []
+    m_Vector2Int: []
+    m_Boolean: 0000
+    m_Int32: 00000000
+    m_float: []
+    m_Data: 01
   - m_Type: 2
-    m_Data: 
+    m_Transform:
+    - {fileID: 0}
+    m_Vector4: []
+    m_Vector3:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    m_Vector2: []
+    m_Vector3Int: []
+    m_Vector2Int: []
+    m_Boolean: 0000
+    m_Int32: 00000000
+    m_float: []
+    m_Data: 01
+--- !u!114 &1750260934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750260931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11c3e360b51c3fb4484102b46789803b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StartOnEnable: 0
+  m_EndOnDisable: 0
+  m_StartEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_EndEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CompleteWhenKill: 0
+  m_Ease: 0
+  m_Duration: 5
+  m_TweenerComponents:
+  - m_Type: 2
+    m_Transform:
+    - {fileID: 871763453}
+    m_Vector4: []
+    m_Vector3:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    m_Vector2: []
+    m_Vector3Int: []
+    m_Vector2Int: []
+    m_Boolean: 0000
+    m_Int32: 00000000
+    m_float: []
+    m_Data: 01
+  - m_Type: 4
+    m_Transform:
+    - {fileID: 578086134}
+    - {fileID: 871763453}
+    m_Vector4: []
+    m_Vector3:
+    - {x: 1, y: 2, z: 3}
+    - {x: 0, y: 0, z: 0}
+    m_Vector2: []
+    m_Vector3Int: []
+    m_Vector2Int: []
+    m_Boolean: 0000
+    m_Int32: 03000000
+    m_float: []
+    m_Data: 01
+  m_Target: {fileID: 0}
+  m_MoveTarget: {fileID: 0}
 --- !u!1 &1805666348
 GameObject:
   m_ObjectHideFlags: 0

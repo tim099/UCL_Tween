@@ -24,6 +24,7 @@ namespace UCL.TweenLib {
         public EaseType m_Ease = EaseType.Linear;
         public float m_Duration = 5f;
 
+        //[HideInInspector]
         public List<UCL_TC_Data> m_TweenerComponents;
         protected UCL_Tweener m_Tweener;
 
