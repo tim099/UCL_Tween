@@ -43,16 +43,14 @@ namespace UCL.TweenLib {
         /// override this to implement StartTweener action
         /// </summary>
         virtual public void StartTweener() { CreateTweener().Start(); }
-
-        public override void StartTween() {
-            base.StartTween();
-
-            StartTweener();
-            //CreateTweener();
-        }
-        public override void EndTween() {
-            base.EndTween();
+        virtual protected void EndTweener() {
             Kill();
+        }
+        protected override void StartTweenAction() {
+            StartTweener();
+        }
+        protected override void EndTweenAction() {
+            EndTweener();
         }
         virtual protected void OnDestroy() {
             Kill();
@@ -66,6 +64,7 @@ namespace UCL.TweenLib {
                 m_Tweener.AddComponent(comp);
                 Debug.LogWarning("AddCom:" + comp.GetType().Name);
             }
+            m_Tweener.OnComplete(EndTween);
             return m_Tweener;
         }
         virtual public void Kill() {
