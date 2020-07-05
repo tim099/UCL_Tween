@@ -23,7 +23,7 @@ namespace UCL.TweenLib {
         }
     }
     public class UCL_TC_Move : UCL_TC_Transform {
-        override protected TC_Type GetTC_Type() { return TC_Type.Move; }
+        override public TC_Type GetTC_Type() { return TC_Type.Move; }
 
         protected Vector3 m_TargetVal;
         protected Vector3 m_StartVal;
@@ -46,11 +46,19 @@ namespace UCL.TweenLib {
             }
         }
         protected override void ComponentUpdate(float pos) {
+            if(m_TargetTransform) {
+                if(m_Local) {
+                    m_TargetVal = m_TargetTransform.localPosition;
+                } else {
+                    m_TargetVal = m_TargetTransform.position;
+                }
+            }
             if(m_Local) {
                 m_Target.transform.localPosition = Vector3.Lerp(m_StartVal, m_TargetVal, pos);
             } else {
                 m_Target.transform.position = Vector3.Lerp(m_StartVal, m_TargetVal, pos);
             }
+            //Debug.LogWarning("ComponentUpdate:" + pos+ ",m_StartVal:"+ m_StartVal+ ",m_TargetVal:"+ m_TargetVal);
         }
     }
 }

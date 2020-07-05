@@ -6,6 +6,12 @@ using UnityEngine;
 namespace UCL.TweenLib {
     [System.Serializable]
     public class UCL_TC_Data {
+        public UCL_TweenerComponent CreateTweenerComponent() {
+            var tc = UCL_TweenerComponent.Create(m_Type);
+            tc.LoadData(this);
+            return tc;
+        }
+
         public TC_Type m_Type;
         public List<Transform> m_Transform;
         public List<Quaternion> m_Quaternion;
@@ -26,7 +32,9 @@ namespace UCL.TweenLib {
 
         public List<System.Single> m_Single;
         public List<System.Double> m_Double;
-        public byte[] m_Data;
+
+        [HideInInspector] public bool m_Foldout = false;
+        //public byte[] m_Data;
 
     }
 }

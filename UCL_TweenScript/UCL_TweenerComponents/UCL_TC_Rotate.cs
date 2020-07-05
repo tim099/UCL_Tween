@@ -37,12 +37,15 @@ namespace UCL.TweenLib {
         */
     }
     public class UCL_TC_Rotate : UCL_TC_Transform {
-        override protected TC_Type GetTC_Type() { return TC_Type.Rotate; }
+        override public TC_Type GetTC_Type() { return TC_Type.Rotate; }
 
         protected Quaternion m_TargetVal;
         protected Quaternion m_StartVal;
         public static UCL_TC_Rotate Create() {
             return new UCL_TC_Rotate();
+        }
+        public override UCL_TweenerComponent Init() {
+            return this;
         }
         virtual public UCL_TC_Rotate Init(Transform target, Quaternion target_rotation) {
             m_Target = target;
@@ -66,11 +69,20 @@ namespace UCL.TweenLib {
             }
         }
         protected override void ComponentUpdate(float pos) {
+            if(m_TargetTransform) {
+                if(m_Local) {
+                    m_TargetVal = m_TargetTransform.localRotation;
+                } else {
+                    m_TargetVal = m_TargetTransform.rotation;
+                }
+            }
             if(m_Local) {
                 m_Target.transform.localRotation = Quaternion.Lerp(m_StartVal, m_TargetVal, pos);
             } else {
                 m_Target.transform.rotation = Quaternion.Lerp(m_StartVal, m_TargetVal, pos);
             }
+            //Debug.LogWarning("ComponentUpdate:" + pos + ",m_StartVal:" + m_StartVal + ",m_TargetVal:" + m_TargetVal+
+                //",m_Target.transform.rotation:"+ m_Target.transform.rotation);
         }
     }
 }

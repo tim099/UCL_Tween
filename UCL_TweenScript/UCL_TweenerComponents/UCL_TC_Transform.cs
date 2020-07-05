@@ -6,6 +6,7 @@ namespace UCL.TweenLib {
     public class UCL_TC_Transform : UCL_TweenerComponent {
 
         protected Transform m_Target;
+        protected Transform m_TargetTransform;
         protected bool m_Local = false;
 
         public UCL_TC_Transform SetLocal(bool local) {

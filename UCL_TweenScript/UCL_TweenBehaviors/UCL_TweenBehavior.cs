@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace UCL.TweenLib {
     public class UCL_TweenBehavior : MonoBehaviour {
+        //[SerializeField] protected float m_Timer;//For Inspector
         public bool m_StartOnEnable = false;
         public bool m_EndOnDisable = false;
         public UnityEngine.Events.UnityEvent m_StartEvent;
