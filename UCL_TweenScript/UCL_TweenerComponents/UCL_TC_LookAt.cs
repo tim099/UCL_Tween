@@ -25,7 +25,6 @@ namespace UCL.TweenLib {
         protected Quaternion m_TargetVal;
         protected Quaternion m_StartVal;
 
-        protected Transform m_LookTargetTransform;
         protected Vector3 m_LookTarget;
         protected Vector3 m_Up;
         virtual public UCL_TC_LookAt Init(Transform target, Vector3 look_target, Vector3 up) {
@@ -36,14 +35,14 @@ namespace UCL.TweenLib {
         }
         virtual public UCL_TC_LookAt Init(Transform target, Transform look_target, Vector3 up) {
             m_Target = target;
-            m_LookTargetTransform = look_target;
-            m_LookTarget = m_LookTargetTransform.position;
+            m_TargetTransform = look_target;
+            m_LookTarget = m_TargetTransform.position;
             m_Up = up;
             return this;
         }
         protected internal override void Start() {
-            if(m_LookTargetTransform != null) {
-                m_LookTarget = m_LookTargetTransform.position;
+            if(m_TargetTransform != null) {
+                m_LookTarget = m_TargetTransform.position;
             }
             if(m_Local) {
                 m_StartVal = m_Target.localRotation;
@@ -56,8 +55,8 @@ namespace UCL.TweenLib {
             }
         }
         protected override void ComponentUpdate(float pos) {
-            if(m_LookTargetTransform != null) {
-                m_LookTarget = m_LookTargetTransform.position;
+            if(m_TargetTransform != null) {
+                m_LookTarget = m_TargetTransform.position;
                 if(m_Local) {
                     m_TargetVal = Quaternion.LookRotation(m_LookTarget - m_Target.localPosition, m_Up);
                 } else {
