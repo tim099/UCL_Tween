@@ -18,6 +18,7 @@ namespace UCL.TweenLib {
             int add_at = -1;
             int delete_at = -1;
             bool modified = false;
+            EditorGUI.BeginChangeCheck();
             for(int i = 0; i < coms.Count; i++) {
                 var data = coms[i];
                 var sdata = scoms.GetArrayElementAtIndex(i);          
@@ -56,14 +57,15 @@ namespace UCL.TweenLib {
                 //EditorGUI.BeginChangeCheck();
                 Undo.RecordObject(target, "m_TweenerComponents.RemoveAt_" + delete_at);
                 tb.m_TweenerComponents.RemoveAt(delete_at);
-                //if(EditorGUI.EndChangeCheck()) Undo.RecordObject(target, "m_TweenerComponents.RemoveAt_"+delete_at);
-                
-
+                //if(EditorGUI.EndChangeCheck()) Undo.RecordObject(target, "m_TweenerComponents.RemoveAt_"+delete_at); 
             }
             if(modified) {
-                //EditorGUI.BeginChangeCheck();
-                Undo.RecordObject(target, "serializedObject.ApplyModifiedProperties()");
-                serializedObject.ApplyModifiedProperties();
+                if(EditorGUI.EndChangeCheck()) {
+                    Undo.RecordObject(target, "serializedObject.ApplyModifiedProperties()");
+                    serializedObject.ApplyModifiedProperties();
+                }
+                //Undo.RecordObject(target, "serializedObject.ApplyModifiedProperties()");
+                
                 //if(EditorGUI.EndChangeCheck()) Undo.RecordObject(target, "serializedObject.ApplyModifiedProperties()");
             }
             GUILayout.EndVertical();

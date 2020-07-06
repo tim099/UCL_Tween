@@ -42,7 +42,7 @@ namespace UCL.TweenLib {
             m_StartVal = m_Target.rotation;
         }
         protected override void TweenerUpdate(float pos) {
-            m_Target.transform.rotation = Quaternion.Lerp(m_StartVal, m_TargetVal, pos);
+            m_Target.transform.rotation = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
 
 
         }

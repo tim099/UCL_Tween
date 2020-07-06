@@ -58,7 +58,7 @@ namespace UCL.TweenLib {
 
         virtual protected UCL_Tweener CreateTweener() {
             Kill();
-            m_Tweener = Lib.Tweener(m_Duration).SetEase(m_Ease);
+            m_Tweener = LibTween.Tweener(m_Duration).SetEase(m_Ease);
             for(int i = 0; i < m_TweenerComponents.Count; i++) {
                 var comp = m_TweenerComponents[i].CreateTweenerComponent();
                 m_Tweener.AddComponent(comp);

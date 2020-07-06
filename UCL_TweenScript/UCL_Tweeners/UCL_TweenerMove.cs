@@ -34,9 +34,9 @@ namespace UCL.TweenLib {
         }
         protected override void TweenerUpdate(float pos) {
             if(m_Local) {
-                m_Target.transform.localPosition = Vector3.Lerp(m_StartVal, m_TargetVal, pos);
+                m_Target.transform.localPosition = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
             } else {
-                m_Target.transform.position = Vector3.Lerp(m_StartVal, m_TargetVal, pos);
+                m_Target.transform.position = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
             }
             //Debug.LogWarning("TweenerUpdate:" + pos + ",m_Target.transform.position:"+ m_Target.transform.position + 
             //",m_TargetPos:"+ m_TargetPos+ ",m_StartPos:"+ m_StartPos);

@@ -71,7 +71,7 @@ namespace UCL.TweenLib.Demo {
             {
                 int n = at >= Eases.Length ? at = 0 : at++;
                 m_Seq.Append(
-                    Lib.Tweener(4)
+                    LibTween.Tweener(4)
                     .AddComponent(m_Target.TC_Move(m_Curve).SetReverse(rev ^= true))
                     .AddComponent(m_Target.TC_Rotate(0, 0, 0))//.SetReverse(!rev)
                     .AddComponent(m_Target2.TC_LocalMove(0, 20, 0))//.SetReverse(!rev)
@@ -112,7 +112,7 @@ namespace UCL.TweenLib.Demo {
             });
             {
                 int n = at >= Eases.Length ? at = 0 : at++;
-                m_Seq.Append(Lib.Tweener(3)
+                m_Seq.Append(LibTween.Tweener(3)
                     .AddComponent(m_Target.TC_Move(m_Curve).SetReverse(rev ^= true))
                     .AddComponent(m_Target.TC_Rotate(90, 130, -70))//.SetReverse(!rev)
                     .AddComponent(m_Target2.TC_LocalMove(0, -20, 0))//.SetReverse(!rev)

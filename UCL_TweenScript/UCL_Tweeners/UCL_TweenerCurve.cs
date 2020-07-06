@@ -24,7 +24,7 @@ namespace UCL.TweenLib {
         }
 
         protected override void TweenerUpdate(float pos) {
-            m_Target.transform.position = m_Curve.GetPoint(pos);
+            m_Target.transform.position = m_Curve.GetPos(pos);
             //Debug.LogWarning("TweenerUpdate:" + pos+ ",m_Target.transform.position:"+ m_Target.transform.position);
         }
     }

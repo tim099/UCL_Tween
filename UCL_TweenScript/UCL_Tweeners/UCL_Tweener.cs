@@ -50,10 +50,22 @@ namespace UCL.TweenLib {
             if(x > 1.0f) x = 1.0f;
             float y = GetY(x);
 
-            foreach(var com in m_Components) com.Update(y);
-
+            foreach(var com in m_Components) {
+                try {
+                    com.Update(y);
+                } catch(System.Exception e) {
+                    Debug.LogWarning("UCL_Tweener.TimeUpdateAction com.Update(y) Exception:" + e);
+                }
+            }
             TweenerUpdate(y);
-            m_UpdateAct?.Invoke(y);
+            if(m_UpdateAct != null) {
+                try {
+                    m_UpdateAct.Invoke(y);
+                } catch(System.Exception e) {
+                    Debug.LogWarning("UCL_Tweener.TimeUpdateAction m_UpdateAct.Invoke(y) Exception:" + e);
+                }
+            }
+
             return remains;
         }
         protected override void CompleteAction() {

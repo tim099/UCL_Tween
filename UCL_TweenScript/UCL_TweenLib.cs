@@ -8,7 +8,7 @@ namespace UCL.TweenLib {
             return UCL_TC_Action.Create().Init(act);
         }
     }
-    public static class Lib {
+    public static class LibTween {
         static public UCL_Sequence Sequence() {
             return UCL_Sequence.Create();
         }

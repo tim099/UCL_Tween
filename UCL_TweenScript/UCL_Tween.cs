@@ -67,10 +67,10 @@ namespace UCL.TweenLib {
             m_Duration = duration;
             return this;
         }
-        virtual public UCL_Tween TimeAlter(float delta_time) {
+        virtual public float TimeAlter(float delta_time) {
             //m_Timer += delta_time;
-            TimeUpdate(delta_time);
-            return this;
+            //TimeUpdate(delta_time);
+            return TimeUpdate(delta_time);//this;
         }
         virtual protected void InitTween() { }
         /// <summary>
@@ -79,9 +79,11 @@ namespace UCL.TweenLib {
         /// <returns></returns>
         virtual public UCL_Tween Start(UCL_TweenTimeManager manager = null) {
             if(manager == null) {
-                manager = UCL_TweenManager.Instance.TimeManager;
+                if(UCL_TweenManager.Instance != null) {
+                    manager = UCL_TweenManager.Instance.TimeManager;
+                }
             }
-            manager.Add(this);
+            if(manager != null) manager.Add(this);
             return this;
         }
         /// <summary>
@@ -90,7 +92,14 @@ namespace UCL.TweenLib {
         virtual internal protected void TweenStart() {
             if(m_Started) return;
             m_Started = true;
-            if(m_StartAct != null) m_StartAct.Invoke();
+            if(m_StartAct != null) {
+                try {
+                    m_StartAct.Invoke();
+                } catch(System.Exception e) {
+                    Debug.LogError("UCL_Tween m_StartAct.Invoke() Exception:" + e);
+                }
+                
+            }
         }
         /// <summary>
         /// return value is the remain time of update(0 if not complete
@@ -136,7 +145,13 @@ namespace UCL.TweenLib {
             m_Completed = true;
             m_End = true;
 
-            m_CompleteAct?.Invoke();
+            if(m_CompleteAct != null) {
+                try {
+                    m_CompleteAct.Invoke();
+                } catch(System.Exception e) {
+                    Debug.LogError("UCL_Tween m_CompleteAct.Invoke() Exception:" + e);
+                }
+            }
         }
         virtual protected void CompleteAction() {
 

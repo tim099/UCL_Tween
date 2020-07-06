@@ -54,9 +54,9 @@ namespace UCL.TweenLib {
                 }
             }
             if(m_Local) {
-                m_Target.transform.localPosition = Vector3.Lerp(m_StartVal, m_TargetVal, pos);
+                m_Target.transform.localPosition = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
             } else {
-                m_Target.transform.position = Vector3.Lerp(m_StartVal, m_TargetVal, pos);
+                m_Target.transform.position = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
             }
             //Debug.LogWarning("ComponentUpdate:" + pos+ ",m_StartVal:"+ m_StartVal+ ",m_TargetVal:"+ m_TargetVal);
         }

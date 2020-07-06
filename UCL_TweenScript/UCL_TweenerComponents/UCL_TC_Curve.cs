@@ -47,19 +47,17 @@ namespace UCL.TweenLib {
             return this;
         }
         protected override void ComponentUpdate(float pos) {
-            var cur_pos = m_Curve.GetPoint(pos);
+            var cur_pos = m_Curve.GetPos(pos);
             m_Target.transform.position = cur_pos;
             if(m_LookAtFront != null) {
-                const float ndel = 0.0001f;
-                if(pos <= 1 - ndel) {
-                    var next_pos = m_Curve.GetPoint(pos + ndel);
-                    var rot = Quaternion.LookRotation(next_pos - cur_pos, m_LookAtFront.m_Up);
-                    
-                    if(m_LookAtFront.m_DoRot) {
-                        rot *= Quaternion.Euler(m_LookAtFront.m_Rot);
-                    }
-                    m_Target.transform.rotation = rot;
+                const float ndel = 0.0002f;
+                var next_pos = m_Curve.GetPos(pos + ndel);
+                var rot = Quaternion.LookRotation(next_pos - cur_pos, m_LookAtFront.m_Up);
+
+                if(m_LookAtFront.m_DoRot) {
+                    rot *= Quaternion.Euler(m_LookAtFront.m_Rot);
                 }
+                m_Target.transform.rotation = rot;
             }
         }
 

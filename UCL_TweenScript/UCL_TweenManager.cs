@@ -57,7 +57,7 @@ namespace UCL.TweenLib {
         private void Update() {
             if(!m_Inited) Init();
 
-            m_TimeManager.TimeUpdate(Time.deltaTime);
+            //m_TimeManager.TimeUpdate(Time.deltaTime);
         }
     }
 }
