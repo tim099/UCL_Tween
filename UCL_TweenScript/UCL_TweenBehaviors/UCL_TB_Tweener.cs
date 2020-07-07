@@ -52,9 +52,6 @@ namespace UCL.TweenLib {
         protected override void EndTweenAction() {
             EndTweener();
         }
-        virtual protected void OnDestroy() {
-            Kill();
-        }
 
         virtual protected UCL_Tweener CreateTweener() {
             Kill();
@@ -62,7 +59,7 @@ namespace UCL.TweenLib {
             for(int i = 0; i < m_TweenerComponents.Count; i++) {
                 var comp = m_TweenerComponents[i].CreateTweenerComponent();
                 m_Tweener.AddComponent(comp);
-                Debug.LogWarning("AddCom:" + comp.GetType().Name);
+                //Debug.LogWarning("AddCom:" + comp.GetType().Name);
             }
             m_Tweener.OnComplete(EndTween);
             return m_Tweener;

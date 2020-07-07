@@ -6,14 +6,28 @@ namespace UCL.TweenLib {
 #if UNITY_EDITOR
     [Core.ATTR.EnableUCLEditor]
 #endif
+    
     public class UCL_TweenBehavior : MonoBehaviour {
+        public enum StartOption {
+            None = 0,//No Auto Invoke StartTween()
+            OnStart,//Invoke StartTween() On Start()
+            OnEnable,//Invoke StartTween() On OnEnable()
+            OnAwake,//Invoke StartTween() On Awake()
+        }
+
+
         //[SerializeField] protected float m_Timer;//For Inspector
 
+        /*
         /// <summary>
         /// Invoke StartTween(); when Start()
         /// </summary>
         public bool m_AutoStart = true;
         public bool m_StartOnEnable = false;
+        */
+
+        public StartOption m_StartOption = StartOption.OnStart;
+
 
         public bool m_EndOnDestroy = true;
         public bool m_EndOnDisable = false;
@@ -26,7 +40,7 @@ namespace UCL.TweenLib {
         protected bool m_End = false;
 
         virtual protected void Start() {
-            if(m_AutoStart && !m_StartOnEnable) StartTween();
+            if(m_StartOption == StartOption.OnStart) StartTween();
         }
         virtual protected void OnDestroy() {
             m_End = true;
@@ -90,7 +104,7 @@ namespace UCL.TweenLib {
             if(m_EndOnDisable) EndTween();
         }
         virtual protected void OnEnable() {
-            if(m_StartOnEnable) StartTween();
+            if(m_StartOption == StartOption.OnEnable) StartTween();
         }
     }
 }
