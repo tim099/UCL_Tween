@@ -19,12 +19,6 @@ namespace UCL.TweenLib {
             Ease.UCL_EaseTexture.DrawEase(m_Ease, m_EaseTexture);
             GUILayout.Box(m_EaseTexture.texture);
         }
-        /*
-        [Core.ATTR.UCL_DrawTexture2D(128, 128, TextureFormat.ARGB32, typeof(Ease.UCL_EaseTexture))]
-        public void DrawEaseCurve(Core.TextureLib.UCL_Texture2D texture) {
-            Ease.UCL_EaseTexture.DrawEase(m_Ease, texture);
-        }
-        */
 #endif
         #endregion
         
@@ -70,5 +64,17 @@ namespace UCL.TweenLib {
                 m_Tweener = null;
             }
         }
+        /*
+#if UNITY_EDITOR
+        [SerializeField] protected float m_Y = 0;
+#endif
+        virtual protected void Update() {
+#if UNITY_EDITOR
+            if(m_Tweener != null) {
+                m_Y = m_Tweener.GetY();
+            }
+#endif
+        }
+        */
     }
 }
