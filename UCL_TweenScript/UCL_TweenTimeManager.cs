@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace UCL.TweenLib {
+#if UNITY_EDITOR
+    [Core.ATTR.EnableUCLEditor]
+#endif
     public class UCL_TweenTimeManager : MonoBehaviour{
         #region Get
         public int TweenCount {
@@ -58,11 +61,35 @@ namespace UCL.TweenLib {
             tween.TweenStart();
             m_Tweens.Add(tween);
         }
+#if UNITY_EDITOR
+        [UCL.Core.ATTR.UCL_RuntimeOnly]
+        [Core.ATTR.UCL_FunctionButton("KillAllTweens(complete = false)", false)]
+        [Core.ATTR.UCL_FunctionButton("KillAllTweens(complete = true)", true)]
+#endif
         public void KillAllTweens(bool complete = false) {
             for(int i = 0; i < m_Tweens.Count; i++) {
                 m_Tweens[i].Kill(complete);
             }
         }
+#if UNITY_EDITOR
+        [UCL.Core.ATTR.UCL_RuntimeOnly]
+        [Core.ATTR.UCL_FunctionButton]
+#endif
+        public void PauseAllTweens() {
+            for(int i = 0; i < m_Tweens.Count; i++) {
+                m_Tweens[i].Pause();
+            }
+        }
+#if UNITY_EDITOR
+        [UCL.Core.ATTR.UCL_RuntimeOnly]
+        [Core.ATTR.UCL_FunctionButton]
+#endif
+        public void ResumeAllTweens() {
+            for(int i = 0; i < m_Tweens.Count; i++) {
+                m_Tweens[i].Resume();
+            }
+        }
+
         public void TimeUpdate(float delta_time) {
             if(TimeScale != 1) {
                 delta_time *= TimeScale;

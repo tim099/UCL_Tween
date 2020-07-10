@@ -215,6 +215,12 @@ namespace UCL.TweenLib.Demo {
             m_Seq.Start();
         }
 
+        [Core.ATTR.UCL_FunctionButton("Pause", true)]
+        [Core.ATTR.UCL_FunctionButton("Resume", false)]
+        public void Pause(bool val) {
+            if(m_Seq == null) return;
+            m_Seq.SetPause(val);
+        }
 
         [Core.ATTR.UCL_FunctionButton("Kill(complete = true)",true)]
         [Core.ATTR.UCL_FunctionButton("Kill(complete = false)", false)]
@@ -223,6 +229,7 @@ namespace UCL.TweenLib.Demo {
             m_Seq.Kill(complete);
             m_Seq = null;
         }
+        [Core.ATTR.UCL_FunctionButton("Time Alter -0.5 sec", -0.5f)]
         [Core.ATTR.UCL_FunctionButton("Time Alter 0.5 sec", 0.5f)]
         [Core.ATTR.UCL_FunctionButton("Time Alter 1 sec", 1f)]
         [Core.ATTR.UCL_FunctionButton("Time Alter 2 sec", 2f)]
@@ -230,7 +237,6 @@ namespace UCL.TweenLib.Demo {
             if(m_Seq == null) return;
             m_Seq.TimeAlter(val);
         }
-
 
         UCL_Sequence m_Seq = null;
         private void Start() {

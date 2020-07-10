@@ -67,10 +67,21 @@ namespace UCL.TweenLib {
             m_Duration = duration;
             return this;
         }
-        virtual public float TimeAlter(float delta_time) {
-            //m_Timer += delta_time;
-            //TimeUpdate(delta_time);
-            return TimeUpdate(delta_time);//this;
+        /// <summary>
+        /// TimeAlter ignore pause
+        /// </summary>
+        /// <param name="time_delta"></param>
+        /// <returns></returns>
+        virtual public float TimeAlter(float time_delta) {
+            if(m_End) return 0;
+
+            m_Timer += time_delta;
+            if(m_Timer < 0) m_Timer = 0;
+
+            float remains = TimeUpdateAction(time_delta);
+
+            return remains;
+            //return TimeUpdate(delta_time);//this;
         }
         virtual protected void InitTween() { }
         /// <summary>
@@ -126,6 +137,13 @@ namespace UCL.TweenLib {
                 return true;
             }
             return false;
+        }
+        virtual public void SetPause(bool _pause) {
+            if(_pause) {
+                Pause();
+            } else {
+                Resume();
+            }
         }
         virtual public void Pause() {
             m_Paused = true;

@@ -11,7 +11,8 @@ namespace UCL.TweenLib {
         Rotate,
         LookAt,
         Curve,
-        Action
+        Action,
+        Shake
     }
     /// <summary>
     ///UCL_TweenerComponent extened action on tweener

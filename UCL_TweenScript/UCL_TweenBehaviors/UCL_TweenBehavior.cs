@@ -50,7 +50,7 @@ namespace UCL.TweenLib {
         virtual protected void EndTweenAction() { }
 #if UNITY_EDITOR
         [Core.ATTR.UCL_RuntimeOnly]
-        [Core.ATTR.UCL_FunctionButton]
+        [Core.ATTR.UCL_FunctionButton("StartTween(Editor)")]
         public void Editor_StartTween() {
             if(!Application.isPlaying) {
                 Debug.LogError("UCL_TweenBehavior Editor_StartTween() Fail!! Please press in play mode!!");
@@ -59,14 +59,21 @@ namespace UCL.TweenLib {
             StartTween();
         }
         [Core.ATTR.UCL_RuntimeOnly]
-        [Core.ATTR.UCL_FunctionButton]
+        [Core.ATTR.UCL_FunctionButton("EndTween(Editor)")]
         public void Editor_EndTween() {
-            if(!Application.isPlaying) {
-                Debug.LogError("UCL_TweenBehavior Editor_EndTween() Fail!! Please press in play mode!!");
-                return;
-            }
             EndTween();
         }
+        [Core.ATTR.UCL_RuntimeOnly]
+        [Core.ATTR.UCL_FunctionButton("PauseTween(Editor)")]
+        public void Editor_PauseTween() {
+            PauseTween();
+        }
+        [Core.ATTR.UCL_RuntimeOnly]
+        [Core.ATTR.UCL_FunctionButton("ResumeTween(Editor)")]
+        public void Editor_ResumeTween() {
+            ResumeTween();
+        }
+
 #endif
         virtual public void StartTween() {
             if(m_Started) EndTween();
@@ -100,6 +107,8 @@ namespace UCL.TweenLib {
             m_Started = false;
             if(m_Looping && !m_End) StartTween();
         }
+        virtual public void PauseTween() { }
+        virtual public void ResumeTween() { }
         virtual protected void OnDisable() {
             if(m_EndOnDisable) EndTween();
         }

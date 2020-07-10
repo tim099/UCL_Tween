@@ -12,16 +12,25 @@ namespace UCL.TweenLib {
 
 #if UNITY_EDITOR
         Ease.UCL_EaseTexture m_EaseTexture;
-        public void Editor_DrawEaseCurve() {
+        [Core.ATTR.UCL_DrawTexture2D]
+        public Core.TextureLib.UCL_Texture2D Editor_DrawEaseCurve() {
             if(m_EaseTexture == null) {
                 m_EaseTexture = new Ease.UCL_EaseTexture(new Vector2Int(128,128), TextureFormat.ARGB32);
             }
             Ease.UCL_EaseTexture.DrawEase(m_Ease, m_EaseTexture);
-            GUILayout.Box(m_EaseTexture.texture);
+            return m_EaseTexture;
+            //GUILayout.Box(m_EaseTexture.texture);
+        }
+        [Core.ATTR.UCL_RuntimeOnly]
+        [Core.ATTR.UCL_FunctionButton("Time Alter -0.5 sec", -0.5f)]
+        [Core.ATTR.UCL_FunctionButton("Time Alter 0.5 sec", 0.5f)]
+        public void TimeAlter(float val) {
+            if(m_Tweener == null) return;
+            m_Tweener.TimeAlter(val);
         }
 #endif
         #endregion
-        
+
         /// <summary>
         /// m_Tweener.Kill(m_CompleteWhenKill);
         /// </summary>
@@ -46,7 +55,20 @@ namespace UCL.TweenLib {
         protected override void EndTweenAction() {
             EndTweener();
         }
-
+        public override void PauseTween() {
+            if(!m_Started) return;
+            base.PauseTween();
+            if(m_Tweener != null) {
+                m_Tweener.Pause();
+            }
+        }
+        public override void ResumeTween() {
+            if(!m_Started) return;
+            base.ResumeTween();
+            if(m_Tweener != null) {
+                m_Tweener.Resume();
+            }
+        }
         virtual protected UCL_Tweener CreateTweener() {
             Kill();
             m_Tweener = LibTween.Tweener(m_Duration).SetEase(m_Ease);

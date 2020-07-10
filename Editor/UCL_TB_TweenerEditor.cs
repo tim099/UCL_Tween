@@ -11,8 +11,6 @@ namespace UCL.TweenLib {
             UCL_TB_Tweener tb = target as UCL_TB_Tweener;
             GUILayout.BeginVertical();
 
-            tb.Editor_DrawEaseCurve();
-
             var scoms = serializedObject.FindProperty("m_TweenerComponents");
             var coms = tb.m_TweenerComponents;
             int add_at = -1;

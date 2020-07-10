@@ -781,7 +781,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_CompleteWhenKill: 0
-  m_Ease: 4
+  m_Ease: 13
   m_Duration: 8
   m_TweenerComponents:
   - m_Type: 4
@@ -2351,7 +2351,7 @@ MonoBehaviour:
     - 0
     m_Double:
     - 0
-    m_Foldout: 1
+    m_Foldout: 0
   - m_Type: 1
     m_Transform:
     - {fileID: 1408378712}
@@ -2373,7 +2373,7 @@ MonoBehaviour:
     m_Int64: 
     m_Single: []
     m_Double: []
-    m_Foldout: 1
+    m_Foldout: 0
 --- !u!1 &1340649971
 GameObject:
   m_ObjectHideFlags: 0
