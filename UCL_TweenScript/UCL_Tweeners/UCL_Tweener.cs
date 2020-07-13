@@ -29,6 +29,7 @@ namespace UCL.TweenLib {
         virtual protected void TweenerCompleteAction() { }
 
         virtual public UCL_Tweener AddComponent(UCL_TweenerComponent component) {
+            component.p_Tweener = this;
             m_Components.Add(component);
             return this;
         }
@@ -55,6 +56,8 @@ namespace UCL.TweenLib {
                     com.Update(y);
                 } catch(System.Exception e) {
                     Debug.LogWarning("UCL_Tweener.TimeUpdateAction com.Update(y) Exception:" + e);
+                    Kill();
+                    return remains;
                 }
             }
             TweenerUpdate(y);
@@ -63,6 +66,8 @@ namespace UCL.TweenLib {
                     m_UpdateAct.Invoke(y);
                 } catch(System.Exception e) {
                     Debug.LogWarning("UCL_Tweener.TimeUpdateAction m_UpdateAct.Invoke(y) Exception:" + e);
+                    Kill();
+                    return remains;
                 }
             }
 

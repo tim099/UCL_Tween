@@ -40,7 +40,6 @@ namespace UCL.TweenLib {
             if(m_End || m_Paused) return 0;
             
             var time_remains = TimeUpdateAction(time_delta);
-            //CheckComplete();
 
             return time_remains;
         }

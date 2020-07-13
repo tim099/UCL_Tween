@@ -116,6 +116,7 @@ namespace UCL.TweenLib {
                     try {
                         tween.TimeUpdate(delta_time);
                     } catch(System.Exception e) {
+                        tween.Kill();
                         Debug.LogWarning("UCL_TweenTimeManager tween.TimeUpdate Exception:" + e);
                     }
                     try {
@@ -125,7 +126,6 @@ namespace UCL.TweenLib {
                     } catch(System.Exception e) {
                         Debug.LogWarning("UCL_TweenTimeManager tween.CheckComplete() Exception:" + e);
                     }
-
                 }
             }
             for(int i = 0; i < m_EndTweens.Count; i++) {

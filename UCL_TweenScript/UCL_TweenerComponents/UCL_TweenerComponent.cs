@@ -152,6 +152,7 @@ namespace UCL.TweenLib {
         }
 
         protected bool m_Reverse = false;
+        internal protected UCL_Tweener p_Tweener = null;
 
         virtual public UCL_TweenerComponent Init() { return this; }
         virtual protected internal void Start() { }
