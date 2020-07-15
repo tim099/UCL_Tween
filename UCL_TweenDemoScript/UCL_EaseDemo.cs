@@ -36,7 +36,7 @@ namespace UCL.TweenLib.Demo {
             var ease = EaseCreator.Get(m_Type, m_Dir);
             if(ease == null) return;
 
-            string sc_path = ease.GetScriptPath(Core.FileLib.EditorLib.GetLibFolderPath("TweenLib"), ease.GetType().Name);
+            string sc_path = ease.GetScriptPath(Core.FileLib.EditorLib.GetLibFolderPath(TweenLib.Lib.LibName), ease.GetType().Name);
             Debug.Log("EaseScript:" + sc_path);
             var obj = UnityEditor.AssetDatabase.LoadMainAssetAtPath(sc_path);
             if(obj != null) {

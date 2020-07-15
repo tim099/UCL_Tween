@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -12,7 +13,8 @@ namespace UCL.TweenLib {
         LookAt,
         Curve,
         Action,
-        Shake
+        Shake,
+        Scale
     }
     /// <summary>
     ///UCL_TweenerComponent extened action on tweener
@@ -31,27 +33,51 @@ namespace UCL.TweenLib {
                     }
                     */
                 case TC_Type.Move: {
-                        tc = new UCL_TC_Move();
+                        tc = UCL_TC_Move.Create();
                         break;
                     }
                 case TC_Type.Rotate: {
-                        tc = new UCL_TC_Rotate();
+                        tc = UCL_TC_Rotate.Create();
                         break;
                     }
                 case TC_Type.LookAt: {
-                        tc = new UCL_TC_LookAt();
+                        tc = UCL_TC_LookAt.Create();
                         break;
                     }
                 case TC_Type.Curve: {
-                        tc = new UCL_TC_Curve();
+                        tc = UCL_TC_Curve.Create();
                         break;
                     }
                 case TC_Type.Action: {
-                        tc = new UCL_TC_Action();
+                        tc = UCL_TC_Action.Create();
+                        break;
+                    }
+                case TC_Type.Shake: {
+                        tc = UCL_TC_Shake.Create();
+                        break;
+                    }
+                case TC_Type.Scale: {
+                        tc = UCL_TC_Scale.Create();
+                        break;
+                    }
+                case TC_Type.TweenerComponent: {
+                        tc = new UCL_TweenerComponent();
+                        break;
+                    }
+                default: {
+                        string type_name = "UCL.TweenLib.UCL_TC_" + type.ToString();
+                        Type tc_type = Type.GetType(type_name);
+                        if(tc_type != null) {
+                            tc = Activator.CreateInstance(tc_type) as UCL_TweenerComponent;
+                        } else {
+                            Debug.LogError("type_name:" + type_name + ", not exist!!");
+                        }
                         break;
                     }
             }
-            if(tc == null) tc = new UCL_TweenerComponent();
+            if(tc == null) {
+                tc = new UCL_TweenerComponent();
+            }
             return tc;
         }
         #endregion
@@ -86,7 +112,18 @@ namespace UCL.TweenLib {
             System.Action<string, List<string>> draw_data = delegate (string type_name,List<string> type_names) {
                 var t_datas = sdata.FindPropertyRelative("m_"+ type_name);
                 if(t_datas == null) {
-                    GUILayout.Box(type_name + " not support by UCL_TC_Data yet!!");
+                    if(GUILayout.Button(new GUIContent(type_name + " not supported by UCL_TC_Data yet!!",
+                        "Click this button to open UCL_TC_Data script."))) {
+                        //Assets/UCL/UCL_Modules/UCL_Tween/UCL_TweenScript/UCL_TweenBehaviors/UCL_TweenComponentDatas/UCL_TC_Data.cs
+                        string sc_path = Core.FileLib.EditorLib.GetLibFolderPath(TweenLib.Lib.LibName)
+                         + "/UCL_TweenScript/UCL_TweenBehaviors/UCL_TweenComponentDatas/UCL_TC_Data.cs";
+                        //Debug.Log("EaseScript:" + sc_path);
+                        var obj = UnityEditor.AssetDatabase.LoadMainAssetAtPath(sc_path);
+                        if(obj != null) {
+                            UnityEditor.Selection.activeObject = obj;
+                        }
+                    }
+                    //GUILayout.Box(type_name + " not support by UCL_TC_Data yet!!");
                     return;
                 }
                 while(type_names.Count > t_datas.arraySize) {
@@ -112,6 +149,10 @@ namespace UCL.TweenLib {
 #endif
         #endregion
 
+        /// <summary>
+        /// Load Data using reflection
+        /// </summary>
+        /// <param name="data"></param>
         virtual protected internal void LoadData(UCL_TC_Data data) {
             var type = this.GetType();
             var data_type = data.GetType();
@@ -152,7 +193,7 @@ namespace UCL.TweenLib {
         }
 
         protected bool m_Reverse = false;
-        internal protected UCL_Tweener p_Tweener = null;
+        //internal protected UCL_Tweener p_Tweener = null;
 
         virtual public UCL_TweenerComponent Init() { return this; }
         virtual protected internal void Start() { }

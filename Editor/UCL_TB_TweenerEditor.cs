@@ -19,7 +19,7 @@ namespace UCL.TweenLib {
             EditorGUI.BeginChangeCheck();
             for(int i = 0; i < coms.Count; i++) {
                 var data = coms[i];
-                var sdata = scoms.GetArrayElementAtIndex(i);          
+                var sdata = scoms.GetArrayElementAtIndex(i);
                 var tc = UCL_TweenerComponent.Create(data.m_Type);
                 var type = tc.GetType();
                 if(GUILayout.Button("Insert TweenerComponent")) {

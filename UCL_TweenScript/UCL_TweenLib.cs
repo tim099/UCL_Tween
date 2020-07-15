@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace UCL.TweenLib {
+    public static class Lib {
+        public const string LibName = "TweenLib";
+    }
     public static class LibTC {
         static public UCL_TC_Action Action(System.Action<float> act) {
             return UCL_TC_Action.Create().Init(act);

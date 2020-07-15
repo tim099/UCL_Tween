@@ -29,7 +29,7 @@ namespace UCL.TweenLib {
         virtual protected void TweenerCompleteAction() { }
 
         virtual public UCL_Tweener AddComponent(UCL_TweenerComponent component) {
-            component.p_Tweener = this;
+            //component.p_Tweener = this;
             m_Components.Add(component);
             return this;
         }
