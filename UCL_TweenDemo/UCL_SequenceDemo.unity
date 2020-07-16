@@ -1035,7 +1035,7 @@ MonoBehaviour:
     m_Vector2: []
     m_Boolean: 0000
     m_Byte: 
-    m_Int32: 
+    m_Int32: 00000000
     m_Single: []
     m_Foldout: 1
 --- !u!1 &518429267

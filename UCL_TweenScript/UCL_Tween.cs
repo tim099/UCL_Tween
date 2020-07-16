@@ -73,7 +73,7 @@ namespace UCL.TweenLib {
         /// <param name="time_delta"></param>
         /// <returns></returns>
         virtual public float TimeAlter(float time_delta) {
-            if(m_End) return 0;
+            if(m_End) return time_delta;
 
             m_Timer += time_delta;
             if(m_Timer < 0) m_Timer = 0;
@@ -118,7 +118,8 @@ namespace UCL.TweenLib {
         /// <param name="time_delta"></param>
         /// <returns></returns>
         virtual internal protected float TimeUpdate(float time_delta) {
-            if(m_End || m_Paused) return 0;
+            if(m_End) return time_delta;
+            if(m_Paused) return 0;
 
             m_Timer += time_delta;
             //if(m_Timer >= m_Duration) m_Timer = m_Duration;

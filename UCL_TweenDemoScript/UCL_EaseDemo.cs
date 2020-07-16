@@ -79,7 +79,7 @@ namespace UCL.TweenLib.Demo {
             */
             //m_Ease.SetDir(m_Dir);
             m_Texture.SetEase(m_Ease);
-            Core.DebugLib.UCL_DebugOnGUI.Instance.CreateData().SetOnGUIAct(() => {
+            Core.DebugLib.UCL_DebugOnGUI.Instance.CreateData().AddOnGUIAct(() => {
                 GUILayout.BeginVertical();
                 //string target_name = this.GetType().UnderlyingSystemType.Name.Replace("UCL_", "");
                 GUILayout.Box("Min:" + m_Texture.m_Min.ToString("N2") + ",Max:" + m_Texture.m_Max.ToString("N2"), GUILayout.Width(m_TextureSize.x + 4));
