@@ -107,7 +107,7 @@ namespace UCL.TweenLib {
             }
 
         }
-        void TimeUpdateAction(float delta_time) {
+        float TimeUpdateAction(float delta_time) {
             for(int i = 0; i < m_Tweens.Count; i++) {
                 var tween = m_Tweens[i];
                 if(tween.End) {
@@ -133,6 +133,7 @@ namespace UCL.TweenLib {
                 //Debug.LogWarning("remove:" + i + ",TweenCount:" + TweenCount);
             }
             m_EndTweens.Clear();
+            return delta_time;
         }
 
         private void Update() {

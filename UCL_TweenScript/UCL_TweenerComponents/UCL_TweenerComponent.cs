@@ -22,7 +22,7 @@ namespace UCL.TweenLib {
     public class UCL_TweenerComponent {
         #region Create
         virtual public TC_Type GetTC_Type() { return TC_Type.TweenerComponent; }
-        
+        virtual public void OnDrawGizmos() { }
         public static UCL_TweenerComponent Create(TC_Type type) {
             UCL_TweenerComponent tc = null;
             switch(type) {

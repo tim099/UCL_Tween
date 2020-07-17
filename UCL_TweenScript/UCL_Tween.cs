@@ -112,6 +112,9 @@ namespace UCL.TweenLib {
                 
             }
         }
+
+        virtual public void OnDrawGizmos() { }
+
         /// <summary>
         /// return value is the remain time of update(0 if not complete
         /// </summary>

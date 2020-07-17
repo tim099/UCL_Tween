@@ -69,6 +69,13 @@ namespace UCL.TweenLib {
                 m_Tweener.Resume();
             }
         }
+        virtual protected void OnDrawGizmos() {
+#if UNITY_EDITOR
+            if(m_Tweener != null) {
+                m_Tweener.OnDrawGizmos();
+            }
+#endif
+        }
         virtual protected UCL_Tweener CreateTweener() {
             Kill();
             m_Tweener = LibTween.Tweener(m_Duration).SetEase(m_Ease);

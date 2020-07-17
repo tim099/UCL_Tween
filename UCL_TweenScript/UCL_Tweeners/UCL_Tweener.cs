@@ -12,6 +12,13 @@ namespace UCL.TweenLib {
         static public UCL_Tweener CreateTweener() {
             return new UCL_Tweener();
         }
+        public override void OnDrawGizmos() {
+            base.OnDrawGizmos();
+
+            foreach(var tc in m_Components) {
+                tc.OnDrawGizmos();
+            }
+        }
         protected override void InitTween() {
             m_Ease = null;
             foreach(var com in m_Components) com.Init();
