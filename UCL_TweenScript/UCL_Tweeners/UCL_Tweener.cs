@@ -26,10 +26,16 @@ namespace UCL.TweenLib {
         /// <summary>
         /// float value pass to UpdateAct is current y axis value(range 0 ~ 1)
         /// </summary>
-        /// <param name="_UpdateAct"></param>
-        virtual public void OnUpdate(System.Action<float> _UpdateAct) {
+        /// <param name="_UpdateAct">y value will pass to _UpdateAct as parameter</param>
+        virtual public UCL_Tweener OnUpdate(System.Action<float> _UpdateAct) {
             m_UpdateAct = _UpdateAct;
+            return this;
         }
+        virtual public UCL_Tweener AddUpdateAction(System.Action<float> _UpdateAct) {
+            AddComponent(LibTC.Action(_UpdateAct));
+            return this;
+        }
+
         virtual protected void TweenerUpdate(float pos) { }
 
         virtual protected void TweenerStart() { }
@@ -40,6 +46,7 @@ namespace UCL.TweenLib {
             m_Components.Add(component);
             return this;
         }
+
         protected internal override void TweenStart() {
             base.TweenStart();
             foreach(var com in m_Components) com.Start();
@@ -108,17 +115,24 @@ namespace UCL.TweenLib {
             return y;
         }
         virtual public UCL_Tweener SetEase(EaseClass ease,EaseDir dir) {
-            m_Ease = EaseCreator.Get(ease, dir);
-            return this;
+            return SetEase(EaseCreator.Get(ease, dir));
         }
         virtual public UCL_Tweener SetEase(EaseType type) {
-            m_Ease = EaseCreator.Get(type);
+            return SetEase(EaseCreator.Get(type));
+        }
+        virtual public UCL_Tweener SetEase(System.Func<float, float> _EaseFunction) {
+            SetEase(new Ease.UCL_EaseFunction(_EaseFunction));
+            return this;
+        }
+        virtual public UCL_Tweener SetEase(AnimationCurve _Curve) {
+            SetEase(new Ease.UCL_EaseAnimationCurve(_Curve));
             return this;
         }
         virtual public UCL_Tweener SetEase(Ease.UCL_Ease _ease) {
             m_Ease = _ease;
             return this;
         }
+
         public UCL_Tweener SetReverse(bool val) {
             m_Reverse = val;
             return this;

@@ -98,8 +98,11 @@ namespace UCL.TweenLib {
             FieldInfo[] fieldInfos1 = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetProperty | BindingFlags.Instance);
             Dictionary<System.Type, List<string>> m_Names = new Dictionary<System.Type, List<string>>();
             System.Action<FieldInfo> parse_fieldinfo = delegate (FieldInfo info) {
+                if(info.GetCustomAttribute<HideInInspector>() != null) return;
                 var value = info.GetValue(this);
                 System.Type info_type = info.FieldType;
+                if(info_type.IsGenericType) return;
+
                 if(!m_Names.ContainsKey(info_type)) {
                     m_Names.Add(info_type, new List<string>());
                 }

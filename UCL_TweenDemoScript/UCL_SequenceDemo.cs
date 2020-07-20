@@ -13,8 +13,11 @@ namespace UCL.TweenLib.Demo {
         public EaseType m_CurEase;
 
         public Transform m_Target;
-        public Transform m_Target2;
+        public Transform m_TargetChild;
         public Transform m_Target3;
+
+        //public Transform m_TargetChild;
+        public AnimationCurve m_AnimCurve;
         public Transform[] m_LookTargets;
         public Transform m_RotTarget;
         public float m_Y = 0;
@@ -74,20 +77,21 @@ namespace UCL.TweenLib.Demo {
                     LibTween.Tweener(4)
                     .AddComponent(m_Target.TC_Move(m_Curve).SetReverse(rev ^= true))
                     .AddComponent(m_Target.TC_Rotate(0, 0, 0))//.SetReverse(!rev)
-                    .AddComponent(m_Target2.TC_LocalMove(0, 20, 0))//.SetReverse(!rev)
+                    .AddComponent(m_TargetChild.TC_LocalMove(0, 20, 0))//.SetReverse(!rev)
                     .AddComponent(LibTC.Action(delegate (float y) {
                     //Debug.LogWarning("y:" + y);
                         m_Y = y;
                     }))
                     .AddComponent(m_Target3.TC_LookAt(m_LookTargets[look_at++].position , Vector3.up))
-                    .SetEase(Eases[n])
+                    .SetEase(m_AnimCurve)
+                    //.SetEase(Eases[n])
                     //.SetReverse(rev ^= true)
                     .OnStart(delegate () {
-                        Debug.LogWarning("Start at:" + at + "n:" + n);
+                        //Debug.LogWarning("Start at:" + at + "n:" + n);
                         m_CurEase = Eases[n];
                     })
                     .OnComplete(delegate () {
-                        Debug.LogWarning("Curve End!!" + ++times + ",Timer:" + m_Seq.Timer + ",Timer:" + m_Seq.Timer + ",interval:" + interval);
+                        //Debug.LogWarning("Curve End!!" + ++times + ",Timer:" + m_Seq.Timer + ",Timer:" + m_Seq.Timer + ",interval:" + interval);
                     })
                     );
             }
@@ -115,7 +119,7 @@ namespace UCL.TweenLib.Demo {
                 m_Seq.Append(LibTween.Tweener(3)
                     .AddComponent(m_Target.TC_Move(m_Curve).SetReverse(rev ^= true))
                     .AddComponent(m_Target.TC_Rotate(90, 130, -70))//.SetReverse(!rev)
-                    .AddComponent(m_Target2.TC_LocalMove(0, -20, 0))//.SetReverse(!rev)
+                    //.AddComponent(m_TargetChild.TC_LocalMove(0, -20, 0))//.SetReverse(!rev)
                     .AddComponent(m_Target3.TC_LookAt(m_Target, Vector3.up))
                     .AddComponent(LibTC.Action(delegate (float y) {
                         m_Y = y;
@@ -123,12 +127,12 @@ namespace UCL.TweenLib.Demo {
                     .AddComponent(m_Target3.TC_LookAt(m_LookTargets[look_at++] , Vector3.up))
                     .SetEase(Eases[n])
                     .OnStart(delegate () {
-                        Debug.LogWarning("Start at:" + at + "n:" + n);
+                        //Debug.LogWarning("Start at:" + at + "n:" + n);
                         m_CurEase = Eases[n];
                     })
                     //.SetReverse(rev ^= true)
                     .OnComplete(delegate () {
-                        Debug.LogWarning("Curve End!!" + ++times + ",Timer:" + m_Seq.Timer);
+                        //Debug.LogWarning("Curve End!!" + ++times + ",Timer:" + m_Seq.Timer);
                     }));
             }
 
@@ -141,20 +145,25 @@ namespace UCL.TweenLib.Demo {
                     .AddComponent(
                         m_Target.TC_Rotate(-60, -80, 40).SetReverse(!rev)
                     )
-                    .AddComponent(LibTC.Action(delegate (float y) {
+                    .AddComponent(m_TargetChild.TC_LocalShake(20, 60))
+                    .AddUpdateAction(delegate (float y) {
                         m_Y = y;
-                    }))
-                    .AddComponent(m_Target2.TC_LocalMove(Vector3.zero))
+                    })
+                    //.AddComponent(m_TargetChild.TC_LocalMove(Vector3.zero))
                     .AddComponent(m_Target3.TC_LookAt(m_LookTargets[look_at++] , Vector3.up).SetReverse(!rev))
                     .AddComponent(m_Target3.TC_LookAt(m_Target, Vector3.up))
-                    .SetEase(Eases[n])
+                    .SetEase(delegate(float y) {
+                        float x = 4 * y;
+                        x -= Mathf.FloorToInt(x);
+                        return x;
+                    })//Eases[n]
                     .SetReverse(rev ^= true)
                     .OnStart(delegate () {
-                        Debug.LogWarning("Start at:" + at + "n:"+n);
+                        //Debug.LogWarning("Start at:" + at + "n:"+n);
                         m_CurEase = Eases[n];
                     })
                     .OnComplete(delegate () {
-                        Debug.LogWarning("Curve End!!" + ++times + ",Timer:" + m_Seq.Timer);
+                        //Debug.LogWarning("Curve End!!" + ++times + ",Timer:" + m_Seq.Timer);
                     }));
             }
 
@@ -176,12 +185,12 @@ namespace UCL.TweenLib.Demo {
                         m_CurEase = Eases[n];
                     })
                     .OnComplete(delegate () {
-                        Debug.LogWarning("Curve End!!" + ++times + ",Timer:" + m_Seq.Timer);
+                        //Debug.LogWarning("Curve End!!" + ++times + ",Timer:" + m_Seq.Timer);
                     }));
             }
 
             m_Seq.AppendInterval(2.0f).OnComplete(delegate () {
-                Debug.LogWarning("Test " + ++times + ",Timer:" + m_Seq.Timer);
+                //Debug.LogWarning("Test " + ++times + ",Timer:" + m_Seq.Timer);
             });
             m_Seq.Append(m_Target.UCL_Rotate(45, 90, 150, 2.5f)
                 .SetEase(EaseType.OutBounce).
@@ -203,9 +212,11 @@ namespace UCL.TweenLib.Demo {
                 }))
                 .AddComponent(m_Target3.TC_LookAt(m_Target, Vector3.up).SetReverse(!rev))
                 .SetEase(EaseType.InCirc).OnComplete(() => {
-                    Debug.LogWarning("Move End!!" + ++times + ",Timer:" + m_Seq.Timer);
+                    //Debug.LogWarning("Move End!!" + ++times + ",Timer:" + m_Seq.Timer);
                 }));
+            m_Seq.Append(m_Target.UCL_Shake(2f, 20f, 30).SetEase(EaseType.OutQuart));
             m_Seq.Append(m_Target.UCL_Rotate(m_RotTarget.rotation, 2f).SetEase(EaseType.OutBounce));
+            
             //m_RotTarget
             m_Seq.OnComplete(delegate () {
                 Debug.LogWarning("End!! " + ",Timer:" + m_Seq.Timer);

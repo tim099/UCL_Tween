@@ -29,12 +29,16 @@ namespace UCL.TweenLib {
             obj.SetLocal(true);
             return obj.Init(target, Quaternion.Euler(x, y, z));
         }
-        /*
-        static public UCL_TC_Rotate TC_LookAt(this Transform target, Vector3 target_position, Vector3 up) {
-            //target_position
-            return UCL_TC_Rotate.Create().Init(target, target_position.x, target_position.y, target_position.z);
+
+        static public UCL_Tweener UCL_LocalRotate(this Transform target, float duration, Quaternion target_rotation) {
+            return LibTween.Tweener(duration).AddComponent(TC_LocalRotate(target, target_rotation));
         }
-        */
+        static public UCL_Tweener UCL_LocalRotate(this Transform target, float duration, Vector3 target_rotation) {
+            return LibTween.Tweener(duration).AddComponent(TC_LocalRotate(target, target_rotation));
+        }
+        static public UCL_Tweener UCL_LocalRotate(this Transform target, float duration, float x, float y, float z) {
+            return LibTween.Tweener(duration).AddComponent(TC_LocalRotate(target, x, y, z));
+        }
     }
     public class UCL_TC_Rotate : UCL_TC_Transform {
         override public TC_Type GetTC_Type() { return TC_Type.Rotate; }

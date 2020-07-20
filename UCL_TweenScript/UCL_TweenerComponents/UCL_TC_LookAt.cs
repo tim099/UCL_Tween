@@ -15,6 +15,16 @@ namespace UCL.TweenLib {
             obj.SetLocal(true);
             return obj.Init(target, look_target, up);
         }
+
+        static public UCL_Tweener UCL_Scale(this Transform target, float duration, Vector3 look_target, Vector3 up) {
+            return LibTween.Tweener(duration).AddComponent(TC_LookAt(target, look_target, up));
+        }
+        static public UCL_Tweener UCL_Scale(this Transform target, float duration, Transform look_target, Vector3 up) {
+            return LibTween.Tweener(duration).AddComponent(TC_LookAt(target, look_target, up));
+        }
+        static public UCL_Tweener UCL_LocalScale(this Transform target, float duration, Vector3 look_target, Vector3 up) {
+            return LibTween.Tweener(duration).AddComponent(TC_LocalLookAt(target, look_target, up));
+        }
     }
     public class UCL_TC_LookAt : UCL_TC_Transform {
         override public TC_Type GetTC_Type() { return TC_Type.LookAt; }

@@ -38,6 +38,8 @@ namespace UCL.TweenLib {
         public EaseType m_Ease = EaseType.Linear;
         public float m_Duration = 5f;
 
+        [Header("Debug Setting")]
+        public bool m_DrawGizmos = true;
         //[HideInInspector]
         public List<UCL_TC_Data> m_TweenerComponents;
         protected UCL_Tweener m_Tweener;
@@ -71,11 +73,19 @@ namespace UCL.TweenLib {
         }
         virtual protected void OnDrawGizmos() {
 #if UNITY_EDITOR
+            if(!m_DrawGizmos) return;
             if(m_Tweener != null) {
                 m_Tweener.OnDrawGizmos();
             }
 #endif
         }
+#if UNITY_EDITOR
+        [Core.ATTR.UCL_DrawString]
+        string GetY() {
+            if(m_Tweener == null) return "Y:0";// return null;
+            return "Y:" + m_Tweener.GetY().ToString("N2");
+        }
+#endif
         virtual protected UCL_Tweener CreateTweener() {
             Kill();
             m_Tweener = LibTween.Tweener(m_Duration).SetEase(m_Ease);
