@@ -30,10 +30,20 @@ namespace UCL.TweenLib {
         }
     }
     public class UCL_TC_Move : UCL_TC_Transform {
+        #region EDITOR
+#if UNITY_EDITOR
+        public override string OnInspectorGUITips() {
+            var tips = base.OnInspectorGUITips();
+            tips += "\"TargetVal\" is target position that \"Target\" will move to " +
+                "(if \"TargetTransform\" is not null ,\"Target\" will move to \"TargetTransform\" instead)";
+            return tips;
+        }
+#endif
+        #endregion
         override public TC_Type GetTC_Type() { return TC_Type.Move; }
 
         protected Vector3 m_TargetVal;
-        protected Vector3 m_StartVal;
+        [HideInInspector] protected Vector3 m_StartVal;
         public static UCL_TC_Move Create() {
             return new UCL_TC_Move();
         }

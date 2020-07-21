@@ -33,9 +33,9 @@ namespace UCL.TweenLib {
             return new UCL_TC_LookAt();
         }
         protected Quaternion m_TargetVal;
-        protected Quaternion m_StartVal;
+        [HideInInspector] protected Quaternion m_StartVal;
 
-        protected Vector3 m_LookTarget;
+        [HideInInspector] protected Vector3 m_LookTarget;
         protected Vector3 m_Up;
         virtual public UCL_TC_LookAt Init(Transform target, Vector3 look_target, Vector3 up) {
             m_Target = target;

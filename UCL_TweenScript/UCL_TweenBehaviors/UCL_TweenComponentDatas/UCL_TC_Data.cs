@@ -12,6 +12,11 @@ namespace UCL.TweenLib {
     /// </summary>
     [System.Serializable]
     public class UCL_TC_Data {
+        static public UCL_TC_Data Create() {
+            var data = new UCL_TC_Data();
+            data.m_Foldout = true;
+            return data;
+        } 
         public UCL_TweenerComponent CreateTweenerComponent() {
             var tc = UCL_TweenerComponent.Create(m_Type);
             tc.LoadData(this);

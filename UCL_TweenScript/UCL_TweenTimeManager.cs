@@ -90,7 +90,7 @@ namespace UCL.TweenLib {
             }
         }
 
-        public void TimeUpdate(float delta_time) {
+        public float TimeUpdate(float delta_time) {
             if(TimeScale != 1) {
                 delta_time *= TimeScale;
             }
@@ -105,7 +105,7 @@ namespace UCL.TweenLib {
                     TimeUpdateAction(seg_time);
                 }
             }
-
+            return delta_time;
         }
         float TimeUpdateAction(float delta_time) {
             for(int i = 0; i < m_Tweens.Count; i++) {

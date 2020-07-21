@@ -28,9 +28,23 @@ namespace UCL.TweenLib {
             Append(tween);
             return tween;
         }
+        /// <summary>
+        /// Append a tween to this sequence, tween in sequence will start in order
+        /// </summary>
+        /// <param name="tween">tween to append to this sequence</param>
+        /// <returns></returns>
         public UCL_Sequence Append(UCL_Tween tween) {
             m_Tweens.Add(tween);
             m_Duration += tween.Duration;
+            return this;
+        }
+        /// <summary>
+        /// Not done yet!!
+        /// </summary>
+        /// <param name="tween"></param>
+        /// <returns></returns>
+        public UCL_Sequence Join(UCL_Tween tween) {
+
             return this;
         }
         protected internal override void TweenStart() {

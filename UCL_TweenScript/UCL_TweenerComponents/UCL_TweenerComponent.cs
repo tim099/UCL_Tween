@@ -84,17 +84,15 @@ namespace UCL.TweenLib {
 
         #region Editor
 #if UNITY_EDITOR
-
         /// <summary>
         /// return true if data altered
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         virtual public bool OnInspectorGUI(UCL_TC_Data tc_data, UnityEditor.SerializedProperty sdata) {
+
             var type = this.GetType();
-            
-            UnityEditor.EditorGUILayout.PropertyField(sdata.FindPropertyRelative("m_Type"));//,new GUIContent("Test")
-            //var data = tc_data.m_Data;
+
             FieldInfo[] fieldInfos1 = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetProperty | BindingFlags.Instance);
             Dictionary<System.Type, List<string>> m_Names = new Dictionary<System.Type, List<string>>();
             System.Action<FieldInfo> parse_fieldinfo = delegate (FieldInfo info) {
@@ -147,7 +145,23 @@ namespace UCL.TweenLib {
             foreach(var type_name in m_Names) {
                 draw_data(type_name.Key.Name, type_name.Value);
             }
+
             return false;
+        }
+        virtual public string OnInspectorGUITips() {
+            return string.Empty;
+        }
+        virtual public void OnInspectorGUIBasic(UCL_TC_Data tc_data, UnityEditor.SerializedProperty sdata, 
+            Transform TB_transform) {
+            UnityEditor.EditorGUILayout.PropertyField(sdata.FindPropertyRelative("m_Type"));//,new GUIContent("Test")
+
+            string tips = OnInspectorGUITips();
+            if(!string.IsNullOrEmpty(tips)) {
+                var strs = tips.Split('\n');
+                foreach(string str in strs) {
+                    if(!string.IsNullOrEmpty(str)) GUILayout.Box(str);
+                }
+            }
         }
 #endif
         #endregion

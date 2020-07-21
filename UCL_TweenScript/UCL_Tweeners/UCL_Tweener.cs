@@ -31,6 +31,11 @@ namespace UCL.TweenLib {
             m_UpdateAct = _UpdateAct;
             return this;
         }
+        /// <summary>
+        /// float value pass to UpdateAct is current y axis value(range 0 ~ 1)
+        /// </summary>
+        /// <param name="_UpdateAct"></param>
+        /// <returns>y value will pass to _UpdateAct as parameter</returns>
         virtual public UCL_Tweener AddUpdateAction(System.Action<float> _UpdateAct) {
             AddComponent(LibTC.Action(_UpdateAct));
             return this;
