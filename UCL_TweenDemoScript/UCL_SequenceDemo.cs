@@ -60,15 +60,17 @@ namespace UCL.TweenLib.Demo {
             }
 
             int times = 0;
-            float interval = 0.001f;
+            float interval = 0.101f;
             m_Seq.AppendInterval(interval).OnComplete(delegate () {
                 //Debug.LogWarning("Test " + ++times + ",Timer:" + m_Seq.Timer + ",interval:" + interval);
             });
+            
+            interval = 0.2025f;
+            m_Seq.AppendInterval(interval).OnComplete(delegate () {
+                //Debug.LogWarning("Test " + ++times + ",Timer:" + m_Seq.Timer + ",interval:" + interval);
+            });
+            m_Seq.Join(m_TargetChild.UCL_LocalShake(1f, 30f, 30, true));
 
-            interval = 0.0025f;
-            m_Seq.AppendInterval(interval).OnComplete(delegate () {
-                //Debug.LogWarning("Test " + ++times + ",Timer:" + m_Seq.Timer + ",interval:" + interval);
-            });
             bool rev = true;
             int look_at = 0;
             {
@@ -188,7 +190,6 @@ namespace UCL.TweenLib.Demo {
                         //Debug.LogWarning("Curve End!!" + ++times + ",Timer:" + m_Seq.Timer);
                     }));
             }
-
             m_Seq.AppendInterval(2.0f).OnComplete(delegate () {
                 //Debug.LogWarning("Test " + ++times + ",Timer:" + m_Seq.Timer);
             });

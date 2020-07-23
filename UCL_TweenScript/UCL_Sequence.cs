@@ -10,11 +10,15 @@ namespace UCL.TweenLib {
         }
 
         protected List<UCL_Tween> m_Tweens;
+        protected Dictionary<int, List<UCL_Tween>> m_JoinTweens;
+        protected List<UCL_Tween> m_StartedJoinTweens;
         protected int m_CurAt = 0;
         protected internal override void Init() {
             base.Init();
             m_CurAt = 0;
             m_Tweens = new List<UCL_Tween>();
+            m_JoinTweens = new Dictionary<int, List<UCL_Tween>>();
+            m_StartedJoinTweens = new List<UCL_Tween>();
         }
         static public UCL_Sequence Create() {
             var seq = new UCL_Sequence();
@@ -39,12 +43,17 @@ namespace UCL.TweenLib {
             return this;
         }
         /// <summary>
-        /// Not done yet!!
+        /// Join a tween to this sequence, tween will start on current appended tween start
         /// </summary>
         /// <param name="tween"></param>
         /// <returns></returns>
         public UCL_Sequence Join(UCL_Tween tween) {
-
+            int at = m_Tweens.Count - 1;
+            if(at < 0) at = 0;
+            if(!m_JoinTweens.ContainsKey(at)) {
+                m_JoinTweens[at] = new List<UCL_Tween>();
+            }
+            m_JoinTweens[at].Add(tween);
             return this;
         }
         protected internal override void TweenStart() {
@@ -57,6 +66,25 @@ namespace UCL.TweenLib {
 
             return time_remains;
         }
+        virtual protected void JoinTweenStart(int at) {
+            if(m_JoinTweens.ContainsKey(at)) {
+                var list = m_JoinTweens[at];
+                for(int i = 0; i < list.Count; i++) {
+                    var tween = list[i];
+                    tween.Start();
+                    m_StartedJoinTweens.Add(tween);
+                }
+            }
+        }
+        virtual protected void JoinTweenUpdate(float time_delta) {
+            for(int i = m_StartedJoinTweens.Count - 1; i >= 0; i--) {
+                var tween = m_StartedJoinTweens[i];
+                tween.TimeUpdate(time_delta);
+                if(tween.CheckComplete()) {
+                    m_StartedJoinTweens.Remove(tween);
+                }
+            }
+        }
         override protected float TimeUpdateAction(float time_delta) {
             //base.TimeUpdateAction();
             
@@ -64,15 +92,19 @@ namespace UCL.TweenLib {
 
 
             int i = 0;
-            var tmp_timer = m_Timer + time_delta;
+            float tmp_timer = m_Timer + time_delta;
             //Debug.LogWarning("m_Timer:" + m_Timer);
-            if(cur != null && !cur.Started) {
+            if(cur != null && !cur.Started) {//First
                 cur.Start();
+                JoinTweenStart(m_CurAt);
             }
 
             while(cur != null && time_delta > 0 && i++ < 10000) {
-                var del = cur.TimeUpdate(time_delta);
-                m_Timer += (time_delta - del);
+                float del = cur.TimeUpdate(time_delta);
+                float time_spent = (time_delta - del);
+                JoinTweenUpdate(time_spent);
+
+                m_Timer += time_spent;
                 //Debug.LogWarning(i+",m_Timer t:" + m_Timer);
                 time_delta = del;
                 
@@ -80,7 +112,12 @@ namespace UCL.TweenLib {
                     m_CurAt++;
                     cur = GetCurTween();
                     if(cur != null) cur.TweenStart();
+
+                    JoinTweenStart(m_CurAt);
                 }
+            }
+            if(time_delta > 0) {
+                JoinTweenUpdate(time_delta);
             }
             m_Timer = tmp_timer - time_delta;
             return time_delta;
@@ -98,7 +135,7 @@ namespace UCL.TweenLib {
             base.Kill(compelete);
         }
         override internal protected bool CheckComplete() {
-            if(GetCurTween() == null) {
+            if(GetCurTween() == null && m_StartedJoinTweens.Count == 0) {
                 Complete();
                 return true;
             }

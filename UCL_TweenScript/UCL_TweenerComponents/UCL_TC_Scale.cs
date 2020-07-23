@@ -10,6 +10,10 @@ namespace UCL.TweenLib {
         static public UCL_TC_Scale TC_Scale(this Transform target, float x, float y, float z) {
             return UCL_TC_Scale.Create().Init(target, x, y, z);
         }
+        static public UCL_TC_Scale TC_Scale(this Transform target, float size) {
+            return UCL_TC_Scale.Create().Init(target, size, size, size);
+        }
+
         static public UCL_TC_Scale TC_ScaleX(this Transform target, float val) {
             return UCL_TC_Scale.Create().Init(target, val, target.localScale.y, target.localScale.z);
         }
@@ -25,6 +29,9 @@ namespace UCL.TweenLib {
         }
         static public UCL_Tweener UCL_Scale(this Transform target, float duration, float x, float y, float z) {
             return LibTween.Tweener(duration).AddComponent(TC_Scale(target, x, y, z));
+        }
+        static public UCL_Tweener UCL_Scale(this Transform target, float duration, float size) {
+            return LibTween.Tweener(duration).AddComponent(TC_Scale(target, size));
         }
         static public UCL_Tweener UCL_ScaleX(this Transform target, float duration, float val) {
             return LibTween.Tweener(duration).AddComponent(TC_ScaleX(target, val));
