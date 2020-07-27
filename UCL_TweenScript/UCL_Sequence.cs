@@ -39,7 +39,7 @@ namespace UCL.TweenLib {
         /// <returns></returns>
         public UCL_Sequence Append(UCL_Tween tween) {
             m_Tweens.Add(tween);
-            m_Duration += tween.Duration;
+            m_Duration.AlterTime(tween.Duration);
             return this;
         }
         /// <summary>
@@ -66,6 +66,13 @@ namespace UCL.TweenLib {
 
             return time_remains;
         }
+        override internal protected long TimeUpdate(long time_delta) {
+            if(m_End || m_Paused) return 0;
+
+            var time_remains = TimeUpdateAction(time_delta);
+
+            return time_remains;
+        }
         virtual protected void JoinTweenStart(int at) {
             if(m_JoinTweens.ContainsKey(at)) {
                 var list = m_JoinTweens[at];
@@ -86,13 +93,10 @@ namespace UCL.TweenLib {
             }
         }
         override protected float TimeUpdateAction(float time_delta) {
-            //base.TimeUpdateAction();
-            
             var cur = GetCurTween();
 
-
             int i = 0;
-            float tmp_timer = m_Timer + time_delta;
+            float tmp_timer = m_Timer.GetTime() + time_delta;
             //Debug.LogWarning("m_Timer:" + m_Timer);
             if(cur != null && !cur.Started) {//First
                 cur.Start();
@@ -104,8 +108,8 @@ namespace UCL.TweenLib {
                 float time_spent = (time_delta - del);
                 JoinTweenUpdate(time_spent);
 
-                m_Timer += time_spent;
-                //Debug.LogWarning(i+",m_Timer t:" + m_Timer);
+                m_Timer.AlterTime(time_spent);
+                //Debug.LogWarning(i+",m_Timer t:" + Timer + ",del:"+ del+ ",time_spent:"+ time_spent);
                 time_delta = del;
                 
                 if(cur.CheckComplete()) {
@@ -119,9 +123,10 @@ namespace UCL.TweenLib {
             if(time_delta > 0) {
                 JoinTweenUpdate(time_delta);
             }
-            m_Timer = tmp_timer - time_delta;
+            m_Timer.SetTime(tmp_timer - time_delta);
             return time_delta;
         }
+
         protected UCL_Tween GetCurTween() {
             if(m_CurAt < 0 || m_CurAt >= m_Tweens.Count) return null;
 
@@ -129,7 +134,7 @@ namespace UCL.TweenLib {
         }
         public override void Kill(bool compelete = false) {
             if(compelete) {// && GetCurTween() != null
-                TimeUpdateAction(m_Duration + 1000f);//End all Tween
+                TimeUpdateAction(Duration + 1000f);//End all Tween
             }
 
             base.Kill(compelete);

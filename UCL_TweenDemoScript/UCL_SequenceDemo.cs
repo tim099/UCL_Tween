@@ -47,6 +47,7 @@ namespace UCL.TweenLib.Demo {
 #endif
         [Core.ATTR.UCL_FunctionButton]
         public void StartDemo() {
+            Debug.LogWarning("StartDemo()");
             Kill(false);
 
             m_Seq = UCL_Sequence.Create();

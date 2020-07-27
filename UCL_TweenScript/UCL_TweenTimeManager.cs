@@ -7,6 +7,10 @@ namespace UCL.TweenLib {
     [Core.ATTR.EnableUCLEditor]
 #endif
     public class UCL_TweenTimeManager : MonoBehaviour{
+        public enum UpdateMode {
+            FloatSecond,
+            LongMs
+        }
         #region Get
         public int TweenCount {
             get {
@@ -41,11 +45,14 @@ namespace UCL.TweenLib {
         /// if m_AutoUpdate == true then UCL_TweenTimeManager will call TimeUpdate on Update
         /// </summary>
         public bool m_AutoUpdate = true;
+        public UpdateMode m_UpdateMode = UpdateMode.FloatSecond;
+
         /// <summary>
         /// if TimeUpdate delta_time is longer then MaxTimeInterval
         /// delta_time will be slice into segment smaller then MaxTimeInterval
         /// </summary>
         public float m_MaxTimeInterval = 0.05f;
+        public long m_MaxTimeIntervalMs = 50;//50 Ms
         List<UCL_Tween> m_Tweens = new List<UCL_Tween>();
         List<UCL_Tween> m_EndTweens = new List<UCL_Tween>();
         //UCL_TweenTimeManager() {}
@@ -98,12 +105,28 @@ namespace UCL.TweenLib {
                 TimeUpdateAction(delta_time);
             } else {
                 int seg = Mathf.CeilToInt(delta_time / m_MaxTimeInterval);
-                
                 float seg_time = delta_time / seg;
                 //Debug.LogWarning("Seg:" + seg + ",seg_time:" + seg_time);
                 for(int i = 0; i < seg; i++) {
                     TimeUpdateAction(seg_time);
                 }
+            }
+            return delta_time;
+        }
+        public long TimeUpdate(long delta_time) {
+            if(TimeScale != 1) {
+                delta_time = Mathf.RoundToInt(delta_time * TimeScale);
+            }
+            if(delta_time <= m_MaxTimeIntervalMs) {
+                TimeUpdateAction(delta_time);
+            } else {
+                int seg = Mathf.CeilToInt(delta_time / m_MaxTimeIntervalMs);
+                long seg_time = Mathf.RoundToInt(delta_time / seg);
+                //Debug.LogWarning("Seg:" + seg + ",seg_time:" + seg_time);
+                for(int i = 0; i < seg - 1; i++) {
+                    TimeUpdateAction(seg_time);
+                }
+                TimeUpdateAction(delta_time - seg_time * (seg - 1));
             }
             return delta_time;
         }
@@ -135,10 +158,47 @@ namespace UCL.TweenLib {
             m_EndTweens.Clear();
             return delta_time;
         }
-
+        long TimeUpdateAction(long delta_time) {
+            for(int i = 0; i < m_Tweens.Count; i++) {
+                var tween = m_Tweens[i];
+                if(tween.End) {
+                    m_EndTweens.Add(tween);
+                } else {
+                    try {
+                        tween.TimeUpdate(delta_time);
+                    } catch(System.Exception e) {
+                        tween.Kill();
+                        Debug.LogWarning("UCL_TweenTimeManager tween.TimeUpdate Exception:" + e);
+                    }
+                    try {
+                        if(tween.CheckComplete()) {
+                            m_EndTweens.Add(tween);
+                        }
+                    } catch(System.Exception e) {
+                        Debug.LogWarning("UCL_TweenTimeManager tween.CheckComplete() Exception:" + e);
+                    }
+                }
+            }
+            for(int i = 0; i < m_EndTweens.Count; i++) {
+                m_Tweens.Remove(m_EndTweens[i]);
+                //Debug.LogWarning("remove:" + i + ",TweenCount:" + TweenCount);
+            }
+            m_EndTweens.Clear();
+            return delta_time;
+        }
         private void Update() {
             if(m_AutoUpdate) {
-                TimeUpdate(Time.deltaTime);
+                switch(m_UpdateMode) {
+                    case UpdateMode.FloatSecond: {
+                            TimeUpdate(Time.deltaTime);
+                            break;
+                        }
+                    case UpdateMode.LongMs: {
+                            TimeUpdate(Mathf.RoundToInt(1000f*Time.deltaTime));
+                            break;
+                        }
+                }
+                
             }
         }
     }

@@ -40,6 +40,8 @@ namespace UCL.TweenLib {
 
         [Header("Debug Setting")]
         public bool m_DrawGizmos = true;
+        [Header("Tweener use the default TimeManager when m_TimeManager is null")]
+        public UCL_TweenTimeManager m_TimeManager;
         //[HideInInspector]
         public List<UCL_TC_Data> m_TweenerComponents;
         protected UCL_Tweener m_Tweener;
@@ -47,7 +49,7 @@ namespace UCL.TweenLib {
         /// <summary>
         /// override this to implement StartTweener action
         /// </summary>
-        virtual public void StartTweener() { CreateTweener().Start(); }
+        virtual public void StartTweener() { CreateTweener().Start(m_TimeManager); }
         virtual protected void EndTweener() {
             Kill();
         }

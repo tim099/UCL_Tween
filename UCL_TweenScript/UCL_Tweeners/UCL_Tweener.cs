@@ -58,16 +58,46 @@ namespace UCL.TweenLib {
 
             TweenerStart();
         }
+        protected override long TimeUpdateAction(long time_delta) {
+            long remains = 0;
+            if(TimerMs > DurationMs) {
+                remains = TimerMs - DurationMs;
+                m_Timer.SetTime(m_Duration);
+            }
+
+            float x = GetX();
+            float y = GetY(x);
+
+            foreach(var com in m_Components) {
+                try {
+                    com.Update(y);
+                } catch(System.Exception e) {
+                    Debug.LogWarning("UCL_Tweener.TimeUpdateAction com.Update(y) Exception:" + e);
+                    Kill();
+                    return remains;
+                }
+            }
+            TweenerUpdate(y);
+            if(m_UpdateAct != null) {
+                try {
+                    m_UpdateAct.Invoke(y);
+                } catch(System.Exception e) {
+                    Debug.LogWarning("UCL_Tweener.TimeUpdateAction m_UpdateAct.Invoke(y) Exception:" + e);
+                    Kill();
+                    return remains;
+                }
+            }
+
+            return remains;
+        }
         protected override float TimeUpdateAction(float time_delta) {
             float remains = 0;
-            if(m_Timer > m_Duration) {
-                remains = m_Timer - m_Duration;
-                m_Timer = m_Duration;
+            if(Timer > Duration) {
+                remains = Timer - Duration;
+                m_Timer.SetTime(m_Duration);
             }
-            
-            float x = m_Timer;
-            if(m_Duration > 0) x /= m_Duration;
-            if(x > 1.0f) x = 1.0f;
+
+            float x = GetX();
             float y = GetY(x);
 
             foreach(var com in m_Components) {
@@ -98,14 +128,20 @@ namespace UCL.TweenLib {
             TweenerCompleteAction();
         }
         virtual public Vector2 GetPos() {
-            float x = m_Timer;
-            if(m_Duration > 0) x /= m_Duration;
+            float x = Timer;
+            if(Duration > 0) x /= Duration;
 
             return new Vector2(x, GetY(x));
         }
+        virtual public float GetX() {
+            float x = Timer;
+            if(Duration > 0) x /= Duration;
+            if(x > 1.0f) x = 1.0f;
+            return x;
+        }
         virtual public float GetY() {
-            float x = m_Timer;
-            if(m_Duration > 0) x /= m_Duration;
+            float x = Timer;
+            if(Duration > 0) x /= Duration;
             return GetY(x);
         }
         virtual public float GetY(float x) {

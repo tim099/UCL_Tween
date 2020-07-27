@@ -17,7 +17,7 @@ namespace UCL.TweenLib {
             return new UCL_TweenerCurve();
         }
         virtual public UCL_TweenerCurve Init(Transform target, Core.MathLib.UCL_Curve curve, float duration) {
-            m_Duration = duration;
+            Duration = duration;
             m_Curve = curve;
             m_Target = target;
             return this;

@@ -34,7 +34,7 @@ namespace UCL.TweenLib {
         virtual public UCL_TweenerRotate Init(Transform target, Quaternion target_rotation, float duration) {
             m_Target = target;
             m_TargetVal = target_rotation;
-            m_Duration = duration;
+            Duration = duration;
 
             return this;
         }

@@ -33,11 +33,35 @@ namespace UCL.TweenLib {
                 return m_Started;
             }
         }
-        public float Timer {
-            get { return m_Timer; }
+        virtual public float Timer {
+            get { return m_Timer.GetTime(); }
         }
-        public float Duration {
-            get { return m_Duration; }
+        virtual public long TimerMs {
+            get { return m_Timer.GetTimeMs(); }
+        }
+        virtual public float Duration {
+            get { return m_Duration.GetTime(); }
+            set {
+                if(m_Duration == null || !(m_Duration is UCL_TimerFloat)) {
+                    m_Duration = new UCL_TimerFloat();
+                    var time = m_Timer.GetTime();
+                    m_Timer = new UCL_TimerFloat();
+                    m_Timer.SetTime(time);
+                }
+                m_Duration.SetTime(value);
+            }
+        }
+        virtual public long DurationMs {
+            get { return m_Duration.GetTimeMs(); }
+            set {
+                if(m_Duration == null || !(m_Duration is UCL_TimerMs)) {
+                    m_Duration = new UCL_TimerMs();
+                    var time = m_Timer.GetTimeMs();
+                    m_Timer = new UCL_TimerMs();
+                    m_Timer.SetTimeMs(time);
+                }
+                m_Duration.SetTimeMs(value);
+            }
         }
         protected bool m_Completed = false;
         protected bool m_Started = false;
@@ -45,44 +69,65 @@ namespace UCL.TweenLib {
         protected bool m_Paused = false;
         protected System.Action m_CompleteAct = null;
         protected System.Action m_StartAct = null;
-        protected float m_Timer = 0;
-        protected float m_Duration = 0;
-        
+        protected UCL_Timer m_Timer = new UCL_TimerFloat();
+        protected UCL_Timer m_Duration = new UCL_TimerFloat();
+
         virtual internal protected void Init() {
             m_Completed = false;
             m_End = false;
-            m_Timer = 0;
-            m_Duration = 0;
+            //m_Timer = new UCL_TimerFloat();
+            //m_Duration = 0;
             m_CompleteAct = null;
             m_Paused = false;
             InitTween();
         }
         virtual public float GetTime() {
-            return m_Timer;
+            return m_Timer.GetTime();
         }
         virtual public float GetRemainDuration() {
-            return m_Duration - m_Timer;
+            return Duration - Timer;
         }
         virtual public UCL_Tween SetDuration(float duration) {
-            m_Duration = duration;
+            Duration = duration;
+            return this;
+        }
+        virtual public UCL_Tween SetDurationMs(long duration) {
+            Duration = duration;
             return this;
         }
         /// <summary>
         /// TimeAlter ignore pause
         /// </summary>
-        /// <param name="time_delta"></param>
+        /// <param name="time_delta">time_delta in seconds</param>
         /// <returns></returns>
         virtual public float TimeAlter(float time_delta) {
             if(m_End) return time_delta;
 
-            m_Timer += time_delta;
-            if(m_Timer < 0) m_Timer = 0;
+            m_Timer.AlterTime(time_delta);
+            
+            if(Timer < 0) m_Timer.SetTime(0);
 
-            float remains = TimeUpdateAction(time_delta);
+            var remains = TimeUpdateAction(time_delta);
 
             return remains;
-            //return TimeUpdate(delta_time);//this;
         }
+        /// <summary>
+        /// TimeAlter ignore pause
+        /// </summary>
+        /// <param name="time_delta">time delta in Ms</param>
+        /// <returns></returns>
+        virtual public long TimeAlter(long time_delta) {
+            if(m_End) return time_delta;
+
+            m_Timer.AlterTimeMs(time_delta);
+
+            if(TimerMs < 0) m_Timer.SetTimeMs(0);
+
+            var remains = TimeUpdateAction(time_delta);
+
+            return remains;
+        }
+
         virtual protected void InitTween() { }
         /// <summary>
         /// Start the Tween on manager
@@ -124,19 +169,35 @@ namespace UCL.TweenLib {
             if(m_End) return time_delta;
             if(m_Paused) return 0;
 
-            m_Timer += time_delta;
-            //if(m_Timer >= m_Duration) m_Timer = m_Duration;
+            m_Timer.AlterTime(time_delta);
             float remains = TimeUpdateAction(time_delta);
-            //CheckComplete();
+
+            return remains;
+        }
+
+        /// <summary>
+        /// return value is the remain time of update(0 if not complete
+        /// </summary>
+        /// <param name="time_delta"></param>
+        /// <returns></returns>
+        virtual internal protected long TimeUpdate(long time_delta) {
+            if(m_End) return time_delta;
+            if(m_Paused) return 0;
+
+            m_Timer.AlterTimeMs(time_delta);
+            long remains = TimeUpdateAction(time_delta);
 
             return remains;
         }
         virtual protected float TimeUpdateAction(float time_delta) {
-            return m_Timer > m_Duration ? m_Timer - m_Duration : 0 ;
+            return Timer > Duration ? Timer - Duration : 0 ;
+        }
+        virtual protected long TimeUpdateAction(long time_delta) {
+            return Mathf.RoundToInt(1000f*TimeUpdateAction(0.001f*time_delta));
         }
         virtual internal protected bool CheckComplete() {
             if(m_End) return true;
-            if(m_Duration > 0 && m_Timer >= m_Duration) {
+            if(Duration > 0 && m_Timer >= m_Duration) {
                 Complete();
                 return true;
             }

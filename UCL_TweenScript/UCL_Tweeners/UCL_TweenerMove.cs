@@ -20,7 +20,7 @@ namespace UCL.TweenLib {
         virtual public UCL_TweenerMove Init(Transform target,Vector3 target_position,float duration) {
             m_Target = target;
             m_TargetVal = target_position;
-            m_Duration = duration;
+            Duration = duration;
             //Debug.LogWarning("Init !!m_Target.transform.position:" + m_Target.transform.position +
                 //",m_TargetPos:" + m_TargetPos + ",m_StartPos:" + m_StartPos);
             return this;
