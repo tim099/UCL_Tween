@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UCL.TweenLib {
     public static partial class Extension {
-        static public UCL_TweenerMove UCL_Move(this Transform target, Vector3 target_position, float duration) {
+        static public UCL_TweenerMove UCL_Move(this Transform target, float duration, Vector3 target_position) {
             return UCL_TweenerMove.Create().Init(target, target_position, duration);
         }
     }

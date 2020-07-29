@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UCL.TweenLib {
     public static partial class Extension {
-        static public UCL_TweenerCurve UCL_Move(this Transform target, Core.MathLib.UCL_Curve curve, float duration) {
+        static public UCL_TweenerCurve UCL_Move(this Transform target, float duration, Core.MathLib.UCL_Curve curve) {
             return UCL_TweenerCurve.Create().Init(target, curve, duration);
         }
     }

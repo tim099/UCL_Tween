@@ -144,7 +144,7 @@ namespace UCL.TweenLib.Demo {
             });
             {
                 int n = at >= Eases.Length ? at = 0 : at++;
-                m_Seq.Append(m_Target.UCL_Move(m_Curve, 2)
+                m_Seq.Append(m_Target.UCL_Move(2, m_Curve)
                     .AddComponent(
                         m_Target.TC_Rotate(-60, -80, 40).SetReverse(!rev)
                     )
@@ -172,7 +172,7 @@ namespace UCL.TweenLib.Demo {
 
             {
                 int n = at >= Eases.Length ? at = 0 : at++;
-                m_Seq.Append(m_Target.UCL_Move(m_Curve, 2)
+                m_Seq.Append(m_Target.UCL_Move(2, m_Curve)
                     .AddComponent(
                         m_Target.TC_Rotate(m_RotTarget.rotation)
                     )
@@ -194,7 +194,7 @@ namespace UCL.TweenLib.Demo {
             m_Seq.AppendInterval(2.0f).OnComplete(delegate () {
                 //Debug.LogWarning("Test " + ++times + ",Timer:" + m_Seq.Timer);
             });
-            m_Seq.Append(m_Target.UCL_Rotate(45, 90, 150, 2.5f)
+            m_Seq.Append(m_Target.UCL_Rotate(2.5f, 45, 90, 150)
                 .SetEase(EaseType.OutBounce).
                 AddComponent(
                     m_Target.TC_Move(1000, 500, 250).SetReverse(!rev)
@@ -204,7 +204,7 @@ namespace UCL.TweenLib.Demo {
                     m_Y = y;
                 }))
                 );
-            m_Seq.Append(m_Target.UCL_Move(m_RotTarget.position, 4)
+            m_Seq.Append(m_Target.UCL_Move(4, m_RotTarget.position)
                 .AddComponent(
                     m_Target.TC_Rotate(-30, 190, 70).SetReverse(!rev)
                 )
@@ -217,7 +217,7 @@ namespace UCL.TweenLib.Demo {
                     //Debug.LogWarning("Move End!!" + ++times + ",Timer:" + m_Seq.Timer);
                 }));
             m_Seq.Append(m_Target.UCL_Shake(2f, 20f, 30).SetEase(EaseType.OutQuart));
-            m_Seq.Append(m_Target.UCL_Rotate(m_RotTarget.rotation, 2f).SetEase(EaseType.OutBounce));
+            m_Seq.Append(m_Target.UCL_Rotate(2f, m_RotTarget.rotation).SetEase(EaseType.OutBounce));
             
             //m_RotTarget
             m_Seq.OnComplete(delegate () {

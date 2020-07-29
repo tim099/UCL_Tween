@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace UCL.TweenLib {
     public static partial class Extension {
-        static public UCL_TweenerRotate UCL_Rotate(this Transform target, Quaternion target_rotation, float duration) {
+        static public UCL_TweenerRotate UCL_Rotate(this Transform target, float duration, Quaternion target_rotation) {
             return UCL_TweenerRotate.Create().Init(target, target_rotation, duration);
         }
-        static public UCL_TweenerRotate UCL_Rotate(this Transform target, Vector3 target_rotation, float duration) {
+        static public UCL_TweenerRotate UCL_Rotate(this Transform target, float duration, Vector3 target_rotation) {
             return UCL_TweenerRotate.Create().Init(target, target_rotation.x, target_rotation.y, target_rotation.z, duration);
         }
-        static public UCL_TweenerRotate UCL_Rotate(this Transform target, float x, float y, float z, float duration) {
+        static public UCL_TweenerRotate UCL_Rotate(this Transform target, float duration, float x, float y, float z) {
             return UCL_TweenerRotate.Create().Init(target, Quaternion.Euler(x, y, z), duration);
         }
 

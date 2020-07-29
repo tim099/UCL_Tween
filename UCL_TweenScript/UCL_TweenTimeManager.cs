@@ -54,7 +54,9 @@ namespace UCL.TweenLib {
         public float m_MaxTimeInterval = 0.05f;
         public long m_MaxTimeIntervalMs = 50;//50 Ms
         List<UCL_Tween> m_Tweens = new List<UCL_Tween>();
+        Queue<UCL_Tween> m_NewTweenQue = new Queue<UCL_Tween>();
         List<UCL_Tween> m_EndTweens = new List<UCL_Tween>();
+        bool m_Updating = false;
         //UCL_TweenTimeManager() {}
         public static UCL_TweenTimeManager Create(GameObject obj) {
             return obj.AddComponent<UCL_TweenTimeManager>();
@@ -65,6 +67,10 @@ namespace UCL.TweenLib {
         }
 
         internal void Add(UCL_Tween tween) {
+            if(m_Updating) {
+                m_NewTweenQue.Enqueue(tween);
+                return;
+            }
             tween.TweenStart();
             m_Tweens.Add(tween);
         }
@@ -74,8 +80,13 @@ namespace UCL.TweenLib {
         [Core.ATTR.UCL_FunctionButton("KillAllTweens(complete = true)", true)]
 #endif
         public void KillAllTweens(bool complete = false) {
+            m_Updating = true;
             for(int i = 0; i < m_Tweens.Count; i++) {
                 m_Tweens[i].Kill(complete);
+            }
+            m_Updating = false;
+            while(m_NewTweenQue.Count > 0) {
+                Add(m_NewTweenQue.Dequeue());
             }
         }
 #if UNITY_EDITOR
@@ -102,13 +113,13 @@ namespace UCL.TweenLib {
                 delta_time *= TimeScale;
             }
             if(delta_time <= m_MaxTimeInterval) {
-                TimeUpdateAction(delta_time);
+                TimeUpdateAction((tween) => { tween.TimeUpdate(delta_time); });
             } else {
                 int seg = Mathf.CeilToInt(delta_time / m_MaxTimeInterval);
                 float seg_time = delta_time / seg;
                 //Debug.LogWarning("Seg:" + seg + ",seg_time:" + seg_time);
                 for(int i = 0; i < seg; i++) {
-                    TimeUpdateAction(seg_time);
+                    TimeUpdateAction((tween) => { tween.TimeUpdate(seg_time); });
                 }
             }
             return delta_time;
@@ -118,26 +129,31 @@ namespace UCL.TweenLib {
                 delta_time = Mathf.RoundToInt(delta_time * TimeScale);
             }
             if(delta_time <= m_MaxTimeIntervalMs) {
-                TimeUpdateAction(delta_time);
+                TimeUpdateAction((tween) => { tween.TimeUpdate(delta_time); });
             } else {
                 int seg = Mathf.CeilToInt(delta_time / m_MaxTimeIntervalMs);
                 long seg_time = Mathf.RoundToInt(delta_time / seg);
                 //Debug.LogWarning("Seg:" + seg + ",seg_time:" + seg_time);
                 for(int i = 0; i < seg - 1; i++) {
-                    TimeUpdateAction(seg_time);
+                    TimeUpdateAction((tween)=> { tween.TimeUpdate(seg_time); });
                 }
-                TimeUpdateAction(delta_time - seg_time * (seg - 1));
+                var final_time = delta_time - seg_time * (seg - 1);
+                if(final_time > 0) {
+                    TimeUpdateAction((tween) => { tween.TimeUpdate(final_time); });
+                }
             }
             return delta_time;
         }
-        float TimeUpdateAction(float delta_time) {
+        void TimeUpdateAction(System.Action<UCL_Tween> update_act) {
+            m_Updating = true;
             for(int i = 0; i < m_Tweens.Count; i++) {
                 var tween = m_Tweens[i];
                 if(tween.End) {
                     m_EndTweens.Add(tween);
                 } else {
                     try {
-                        tween.TimeUpdate(delta_time);
+                        update_act.Invoke(tween);
+                        //tween.TimeUpdate(delta_time);
                     } catch(System.Exception e) {
                         tween.Kill();
                         Debug.LogWarning("UCL_TweenTimeManager tween.TimeUpdate Exception:" + e);
@@ -156,35 +172,11 @@ namespace UCL.TweenLib {
                 //Debug.LogWarning("remove:" + i + ",TweenCount:" + TweenCount);
             }
             m_EndTweens.Clear();
-            return delta_time;
-        }
-        long TimeUpdateAction(long delta_time) {
-            for(int i = 0; i < m_Tweens.Count; i++) {
-                var tween = m_Tweens[i];
-                if(tween.End) {
-                    m_EndTweens.Add(tween);
-                } else {
-                    try {
-                        tween.TimeUpdate(delta_time);
-                    } catch(System.Exception e) {
-                        tween.Kill();
-                        Debug.LogWarning("UCL_TweenTimeManager tween.TimeUpdate Exception:" + e);
-                    }
-                    try {
-                        if(tween.CheckComplete()) {
-                            m_EndTweens.Add(tween);
-                        }
-                    } catch(System.Exception e) {
-                        Debug.LogWarning("UCL_TweenTimeManager tween.CheckComplete() Exception:" + e);
-                    }
-                }
+
+            m_Updating = false;
+            while(m_NewTweenQue.Count > 0) {
+                Add(m_NewTweenQue.Dequeue());
             }
-            for(int i = 0; i < m_EndTweens.Count; i++) {
-                m_Tweens.Remove(m_EndTweens[i]);
-                //Debug.LogWarning("remove:" + i + ",TweenCount:" + TweenCount);
-            }
-            m_EndTweens.Clear();
-            return delta_time;
         }
         private void Update() {
             if(m_AutoUpdate) {

@@ -39,7 +39,7 @@ namespace UCL.TweenLib.Demo {
             if(UnityEditor.EditorApplication.isPlaying) {
                 var obj = Instantiate(m_Target.gameObject, m_Target.parent);
                 obj.name = "target " + ++count;
-                m_Cur = obj.transform.UCL_Move(m_Curve,m_Duration);
+                m_Cur = obj.transform.UCL_Move(m_Duration, m_Curve);
                 var cur = m_Cur;
                 m_Cur.SetEase(m_Ease)
                     .OnComplete(delegate() {
