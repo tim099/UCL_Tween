@@ -6,6 +6,7 @@ namespace UCL.TweenLib {
     public class UCL_Tweener : UCL_Tween {
         protected Ease.UCL_Ease m_Ease = null;
         protected bool m_Reverse = false;
+        protected bool m_CompleteOnException = false;
         protected System.Action<float> m_UpdateAct = null;
         protected List<UCL_TweenerComponent> m_Components = new List<UCL_TweenerComponent>();
 
@@ -73,7 +74,7 @@ namespace UCL.TweenLib {
                     com.Update(y);
                 } catch(System.Exception e) {
                     Debug.LogWarning("UCL_Tweener.TimeUpdateAction com.Update(y) Exception:" + e);
-                    Kill();
+                    Kill(m_CompleteOnException);
                     return remains;
                 }
             }
@@ -83,7 +84,7 @@ namespace UCL.TweenLib {
                     m_UpdateAct.Invoke(y);
                 } catch(System.Exception e) {
                     Debug.LogWarning("UCL_Tweener.TimeUpdateAction m_UpdateAct.Invoke(y) Exception:" + e);
-                    Kill();
+                    Kill(m_CompleteOnException);
                     return remains;
                 }
             }
@@ -173,7 +174,10 @@ namespace UCL.TweenLib {
             m_Ease = _ease;
             return this;
         }
-
+        public UCL_Tweener SetCompleteOnException(bool val) {
+            m_CompleteOnException = val;
+            return this;
+        }
         public UCL_Tweener SetReverse(bool val) {
             m_Reverse = val;
             return this;
