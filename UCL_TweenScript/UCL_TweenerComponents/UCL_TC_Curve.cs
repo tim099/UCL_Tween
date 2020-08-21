@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UCL.TweenLib {
     public static partial class Extension {
-        static public UCL_TC_Curve TC_Move(this Transform target, Core.MathLib.UCL_Curve target_val) {
+        static public UCL_TC_Curve TC_Move(this Transform target, Core.MathLib.UCL_Path target_val) {
             return UCL_TC_Curve.Create().Init(target, target_val);
         }
     }
@@ -22,11 +22,11 @@ namespace UCL.TweenLib {
             return new UCL_TC_Curve();
         }
 
-        protected Core.MathLib.UCL_Curve m_Curve;
+        protected Core.MathLib.UCL_Path m_Path;
         protected LookAtFront m_LookAtFront = null;
 
-        virtual public UCL_TC_Curve Init(Transform target, Core.MathLib.UCL_Curve curve) {
-            m_Curve = curve;
+        virtual public UCL_TC_Curve Init(Transform target, Core.MathLib.UCL_Path _path) {
+            m_Path = _path;
             m_Target = target;
             return this;
         }
@@ -47,11 +47,11 @@ namespace UCL.TweenLib {
             return this;
         }
         protected override void ComponentUpdate(float pos) {
-            var cur_pos = m_Curve.GetPos(pos);
+            var cur_pos = m_Path.GetPos(pos);
             m_Target.transform.position = cur_pos;
             if(m_LookAtFront != null) {
                 const float ndel = 0.0002f;
-                var next_pos = m_Curve.GetPos(pos + ndel);
+                var next_pos = m_Path.GetPos(pos + ndel);
                 var rot = Quaternion.LookRotation(next_pos - cur_pos, m_LookAtFront.m_Up);
 
                 if(m_LookAtFront.m_DoRot) {
