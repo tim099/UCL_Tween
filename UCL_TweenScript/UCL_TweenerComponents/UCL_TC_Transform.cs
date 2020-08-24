@@ -4,6 +4,16 @@ using UnityEngine;
 
 namespace UCL.TweenLib {
     public class UCL_TC_Transform : UCL_TweenerComponent {
+        override public string Name {
+            get {
+                string name = this.GetType().Name.Replace("UCL_TC_", string.Empty);
+                if(m_Target != null) {
+                    name += "[" + m_Target.name + "]";
+                }
+                return name;
+            }
+        }
+
         //[Tooltip("Target that tween component move")]
         //[Header("Move target")]
         protected Transform m_Target;

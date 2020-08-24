@@ -50,14 +50,17 @@ namespace UCL.TweenLib {
             var cur_pos = m_Path.GetPos(pos);
             m_Target.transform.position = cur_pos;
             if(m_LookAtFront != null) {
-                const float ndel = 0.0002f;
+                const float ndel = 0.0005f;
                 var next_pos = m_Path.GetPos(pos + ndel);
-                var rot = Quaternion.LookRotation(next_pos - cur_pos, m_LookAtFront.m_Up);
+                var del = next_pos - cur_pos;
+                if(del.magnitude > 0) {
+                    var rot = Quaternion.LookRotation(del, m_LookAtFront.m_Up);
 
-                if(m_LookAtFront.m_DoRot) {
-                    rot *= Quaternion.Euler(m_LookAtFront.m_Rot);
+                    if(m_LookAtFront.m_DoRot) {
+                        rot *= Quaternion.Euler(m_LookAtFront.m_Rot);
+                    }
+                    m_Target.transform.rotation = rot;
                 }
-                m_Target.transform.rotation = rot;
             }
         }
 

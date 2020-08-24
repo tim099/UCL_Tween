@@ -33,6 +33,11 @@ namespace UCL.TweenLib {
                 return m_Started;
             }
         }
+        virtual public string Name {
+            get {
+                return this.GetType().Name;
+            }
+        }
         virtual public float Timer {
             get { return m_Timer.GetTime(); }
         }
@@ -62,6 +67,9 @@ namespace UCL.TweenLib {
                 }
                 m_Duration.SetTimeMs(value);
             }
+        }
+        virtual public bool IsPaused {
+            get { return m_Paused; }
         }
         protected bool m_Completed = false;
         protected bool m_Started = false;
@@ -247,6 +255,18 @@ namespace UCL.TweenLib {
             m_CompleteAct = _CompleteAct;
             return this;
         }
+
+#if UNITY_EDITOR
+        /// <summary>
+        /// Called when being selected
+        /// </summary>
+        virtual public void OnInspectorGUI() {
+            GUILayout.BeginVertical();
+            GUILayout.Label("time:" + m_Timer.GetTime().ToString("N1")+
+                "duration:"+m_Duration.GetTime().ToString("N1"));
+            GUILayout.EndVertical();
+        }
+#endif
     }
 }
 

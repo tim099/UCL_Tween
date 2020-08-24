@@ -20,6 +20,12 @@ namespace UCL.TweenLib {
     ///UCL_TweenerComponent extened action on tweener
     /// </summary>
     public class UCL_TweenerComponent {
+        virtual public string Name {
+            get {
+                return this.GetType().Name.Replace("UCL_TC_",string.Empty);
+            }
+        }
+
         #region Create
         virtual public TC_Type GetTC_Type() { return TC_Type.TweenerComponent; }
         virtual public void OnDrawGizmos() { }

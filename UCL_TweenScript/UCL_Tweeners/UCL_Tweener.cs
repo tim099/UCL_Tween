@@ -4,6 +4,22 @@ using UnityEngine;
 
 namespace UCL.TweenLib {
     public class UCL_Tweener : UCL_Tween {
+        override public string Name {
+            get {
+                string name = this.GetType().Name.Replace("UCL_",string.Empty);
+                if(m_Components != null && m_Components.Count > 0) {
+                    name += "(";
+                    for(int i = 0; i < m_Components.Count; i++) {
+                        name += m_Components[i].Name;
+                        if(i < m_Components.Count - 1) name += ",";
+                    }
+                    name += ")";
+                }
+
+                return name;
+            }
+        }
+
         protected Ease.UCL_Ease m_Ease = null;
         protected bool m_Reverse = false;
         protected bool m_CompleteOnException = false;

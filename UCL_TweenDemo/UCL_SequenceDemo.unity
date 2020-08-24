@@ -600,7 +600,7 @@ GameObject:
   - component: {fileID: 174083028}
   - component: {fileID: 174083029}
   m_Layer: 0
-  m_Name: Target
+  m_Name: Target5
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1945,7 +1945,7 @@ GameObject:
   - component: {fileID: 809500042}
   - component: {fileID: 809500043}
   m_Layer: 0
-  m_Name: Target
+  m_Name: ShakeTarget
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2146,7 +2146,7 @@ GameObject:
   - component: {fileID: 1176253274}
   - component: {fileID: 1176253273}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Sphere7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2332,7 +2332,7 @@ GameObject:
   - component: {fileID: 1273438198}
   - component: {fileID: 1273438197}
   m_Layer: 0
-  m_Name: Target
+  m_Name: MoveTarget
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -3023,7 +3023,7 @@ GameObject:
   - component: {fileID: 1401207914}
   - component: {fileID: 1401207915}
   m_Layer: 0
-  m_Name: Target
+  m_Name: Target6
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -3067,7 +3067,7 @@ GameObject:
   - component: {fileID: 1408378712}
   - component: {fileID: 1408378713}
   m_Layer: 0
-  m_Name: Target
+  m_Name: Target3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4121,7 +4121,7 @@ GameObject:
   - component: {fileID: 2020461507}
   - component: {fileID: 2020461508}
   m_Layer: 0
-  m_Name: Target
+  m_Name: Target4
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

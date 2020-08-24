@@ -65,7 +65,6 @@ namespace UCL.TweenLib {
         public void Init() {
 
         }
-
         internal void Add(UCL_Tween tween) {
             if(m_Updating) {
                 m_NewTweenQue.Enqueue(tween);
@@ -193,5 +192,44 @@ namespace UCL.TweenLib {
                 
             }
         }
+
+
+#if UNITY_EDITOR
+        UCL_Tween m_EditorSelectedTween;
+        public void OnInspectorGUI() {
+            GUILayout.BeginVertical();
+            
+            if(m_Tweens != null) {
+                GUILayout.Box("TweenCount:" + m_Tweens.Count);
+                for(int i = 0; i < m_Tweens.Count; i++) {
+                    var tween = m_Tweens[i];
+
+                    GUILayout.Label(tween.Name);
+                    GUILayout.BeginHorizontal();
+                    if(GUILayout.Button(tween.IsPaused ? "Resume" : "Pause", GUILayout.Width(100))) {
+                        tween.SetPause(!tween.IsPaused);
+                    }
+                    if(GUILayout.Button("Kill", UCL.Core.UI.UCL_GUIStyle.TextRed, GUILayout.Width(80))) {
+                        tween.Kill(false);
+                    }
+                    if(GUILayout.Button("Kill(Complete)", UCL.Core.UI.UCL_GUIStyle.TextRed)) {
+                        tween.Kill(true);
+                    }
+                    if(GUILayout.Button("Select")) {
+                        m_EditorSelectedTween = tween;
+                    }
+                    GUILayout.EndHorizontal();
+                }
+            } else {
+                GUILayout.Box("TweenCount: 0");
+            }
+            if(m_EditorSelectedTween != null) {
+                m_EditorSelectedTween.OnInspectorGUI();
+            }
+
+
+            GUILayout.EndVertical();
+        }
+#endif
     }
 }
