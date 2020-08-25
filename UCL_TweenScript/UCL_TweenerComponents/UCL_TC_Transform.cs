@@ -63,5 +63,25 @@ namespace UCL.TweenLib {
             m_Local = local;
             return this;
         }
+#if UNITY_EDITOR
+        //UnityEditor.SerializedProperty m_TargetProperty = null;
+        override internal void OnInspectorGUI() {
+            //if(m_TargetProperty == null) {
+            //    UnityEditor.SerializedObject serializedObject = new UnityEditor.SerializedObject(this);
+            //    m_TargetProperty = serializedObject.FindProperty("m_Target");//new UnityEditor.SerializedProperty(m_Target);
+            //}
+
+            GUILayout.BeginVertical();
+            m_Target = UnityEditor.EditorGUILayout.ObjectField("Target", m_Target, m_Target.GetType(), true) as Transform;
+            //UnityEditor.EditorGUILayout.PropertyField(m_TargetProperty);
+            GUILayout.EndVertical();
+        }
+        /// <summary>
+        /// Called when being selected
+        /// </summary>
+        override internal void OnSelected() {
+            //if(m_Target != null) UnityEditor.Selection.activeObject = m_Target;
+        }
+#endif
     }
 }

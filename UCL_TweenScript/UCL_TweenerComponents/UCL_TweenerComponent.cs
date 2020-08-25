@@ -234,5 +234,16 @@ namespace UCL.TweenLib {
             m_Reverse = val;
             return this;
         }
+#if UNITY_EDITOR
+        virtual internal void OnInspectorGUI() {
+
+        }
+        /// <summary>
+        /// Called when being selected
+        /// </summary>
+        virtual internal void OnSelected() {
+
+        }
+#endif
     }
 }

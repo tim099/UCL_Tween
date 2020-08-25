@@ -258,13 +258,20 @@ namespace UCL.TweenLib {
 
 #if UNITY_EDITOR
         /// <summary>
-        /// Called when being selected
+        /// Called when being selected in Inspector
         /// </summary>
-        virtual public void OnInspectorGUI() {
+        virtual internal void OnInspectorGUI() {
             GUILayout.BeginVertical();
+            GUILayout.Box(Name);
             GUILayout.Label("time:" + m_Timer.GetTime().ToString("N1")+
                 "duration:"+m_Duration.GetTime().ToString("N1"));
             GUILayout.EndVertical();
+        }
+        /// <summary>
+        /// Called when being selected
+        /// </summary>
+        virtual internal void OnSelected() {
+
         }
 #endif
     }

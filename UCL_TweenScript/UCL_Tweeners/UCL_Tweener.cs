@@ -198,5 +198,25 @@ namespace UCL.TweenLib {
             m_Reverse = val;
             return this;
         }
+
+#if UNITY_EDITOR
+        override internal void OnInspectorGUI() {
+            base.OnInspectorGUI();
+            GUILayout.BeginVertical();
+            foreach(var tc in m_Components) {
+                tc.OnInspectorGUI();
+            }
+            GUILayout.EndVertical();
+        }
+
+        /// <summary>
+        /// Called when being selected
+        /// </summary>
+        override internal void OnSelected() {
+            foreach(var tc in m_Components) {
+                tc.OnSelected();
+            }
+        }
+#endif
     }
 }

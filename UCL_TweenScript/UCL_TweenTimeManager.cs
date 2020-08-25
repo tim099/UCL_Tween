@@ -217,6 +217,7 @@ namespace UCL.TweenLib {
                     }
                     if(GUILayout.Button("Select")) {
                         m_EditorSelectedTween = tween;
+                        m_EditorSelectedTween.OnSelected();
                     }
                     GUILayout.EndHorizontal();
                 }
@@ -224,7 +225,11 @@ namespace UCL.TweenLib {
                 GUILayout.Box("TweenCount: 0");
             }
             if(m_EditorSelectedTween != null) {
-                m_EditorSelectedTween.OnInspectorGUI();
+                if(m_EditorSelectedTween.End) {
+                    m_EditorSelectedTween = null;
+                } else {
+                    m_EditorSelectedTween.OnInspectorGUI();
+                }
             }
 
 
