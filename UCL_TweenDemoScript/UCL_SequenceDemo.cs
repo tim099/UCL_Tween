@@ -25,24 +25,29 @@ namespace UCL.TweenLib.Demo {
         public Core.MathLib.UCL_Curve m_Curve;
         UCL_TweenerCurve m_Cur = null;
 #if UNITY_EDITOR
-        [Core.ATTR.UCL_DrawTexture2D(128, 128, TextureFormat.ARGB32, typeof(UCL_EaseTexture))]
-        public void DrawEaseCurve(Core.TextureLib.UCL_Texture2D texture) {
+        Core.TextureLib.UCL_Texture2D m_Texture;
+        [Core.ATTR.UCL_DrawTexture2D]//(128, 128, TextureFormat.ARGB32, typeof(UCL_EaseTexture))
+        Core.TextureLib.UCL_Texture2D DrawEaseCurve() {
+            if(m_Texture == null) {
+                m_Texture = new UCL_EaseTexture(128, 128, TextureFormat.ARGB32);
+            }
             if(UnityEditor.EditorApplication.isPlaying && m_Seq != null) {
-                UCL_EaseTexture.DrawEase(m_CurEase, texture);
+                UCL_EaseTexture.DrawEase(m_CurEase, m_Texture);
             } else {
-                UCL_EaseTexture.DrawEase(m_Ease, texture);
+                UCL_EaseTexture.DrawEase(m_Ease, m_Texture);
             }
 
             if(m_Cur != null) {
                 Vector2 pos = m_Cur.GetPos();
-                var tex = texture as UCL_EaseTexture;
+                var tex = m_Texture as UCL_EaseTexture;
                 if(tex != null) {
                     pos.y -= tex.m_Min;
                     pos.y /= tex.m_Range;
                     //pos.y *= 0.99f;
                 }
-                texture.DrawDot(pos.x, pos.y, Color.red, 2);
+                m_Texture.DrawDot(pos.x, pos.y, Color.red, 2);
             }
+            return m_Texture;
         }
 #endif
         [Core.ATTR.UCL_FunctionButton]

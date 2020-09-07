@@ -99,7 +99,7 @@ namespace UCL.TweenLib {
             float tmp_timer = m_Timer.GetTime() + time_delta;
             //Debug.LogWarning("m_Timer:" + m_Timer);
             if(cur != null && !cur.Started) {//First
-                cur.Start();
+                cur.TweenStart();
                 JoinTweenStart(m_CurAt);
             }
 

@@ -24,6 +24,9 @@ namespace UCL.TweenLib.Ease {
         public UCL_EaseTexture() {
 
         }
+        public UCL_EaseTexture(int width, int height, TextureFormat _TextureFormat = TextureFormat.ARGB32) {
+            Init(new Vector2Int(width,height), _TextureFormat);
+        }
         public UCL_EaseTexture(Vector2Int _size, TextureFormat _TextureFormat = TextureFormat.ARGB32) {
             Init(_size, _TextureFormat);
         }
