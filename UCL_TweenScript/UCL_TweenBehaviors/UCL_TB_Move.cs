@@ -7,7 +7,7 @@ namespace UCL.TweenLib {
         public Transform m_MoveTarget;
         public override void StartTweener() {
             CreateTweener().AddComponent(m_Target.TC_Move(m_MoveTarget.position));
-            m_Tweener.Start();
+            m_Tweener.Start(m_TimeManager);
         }
     }
 }

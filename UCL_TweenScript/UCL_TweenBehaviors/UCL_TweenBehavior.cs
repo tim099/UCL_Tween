@@ -38,7 +38,7 @@ namespace UCL.TweenLib {
         public UnityEngine.Events.UnityEvent m_EndEvent;
         protected bool m_Started = false;
         protected bool m_End = false;
-
+        protected System.Action m_EndAct;
         virtual protected void Start() {
             if(m_StartOption == StartOption.OnStart) StartTween();
         }
@@ -46,8 +46,65 @@ namespace UCL.TweenLib {
             m_End = true;
             if(m_EndOnDestroy) EndTween();
         }
+
+        /// <summary>
+        /// Call this function to start TweenBehavior
+        /// </summary>
+        public void StartTween() {
+            StartTween(null);
+        }
+        /// <summary>
+        /// Call this function to start TweenBehavior
+        /// </summary>
+        virtual public void StartTween(System.Action _end_act) {
+            if(m_Started) EndTween();
+
+            m_EndAct = _end_act;
+            //Debug.LogWarning("StartTween()!!");
+            m_Started = true;
+
+            if(m_StartEvent != null) {
+                try {
+                    m_StartEvent.Invoke();
+                } catch(System.Exception e) {
+                    Debug.LogWarning("UCL_TweenBehavior m_StartEvent.Invoke() Exception:" + e);
+                }
+            }
+
+            StartTweenAction();
+        }
+        /// <summary>
+        /// Call this function to stop TweenBehavior
+        /// </summary>
+        public void EndTween() {
+            EndTween(false);
+        }
+        /// <summary>
+        /// Call this function to stop TweenBehavior
+        /// </summary>
+        virtual public void EndTween(bool complete) {
+            if(!m_Started) return;
+            //Debug.LogWarning("EndTween()!!");
+            if(complete) {
+                if(m_EndAct != null) {
+                    m_EndAct.Invoke();
+                }
+                if(m_EndEvent != null) {
+                    try {
+                        m_EndEvent.Invoke();
+                    } catch(System.Exception e) {
+                        Debug.LogWarning("UCL_TweenBehavior m_EndEvent.Invoke() Exception:" + e);
+                    }
+                }
+            }
+            m_EndAct = null;
+            //m_EndEvent?.Invoke();
+            EndTweenAction(complete);
+            m_Started = false;
+            if(m_Looping && !m_End) StartTween();
+        }
         virtual protected void StartTweenAction() { }
-        virtual protected void EndTweenAction() { }
+        virtual protected void EndTweenAction(bool complete) { }
 #if UNITY_EDITOR
         [Core.ATTR.UCL_RuntimeOnly]
         [Core.ATTR.UCL_FunctionButton("StartTween(Editor)")]
@@ -75,38 +132,7 @@ namespace UCL.TweenLib {
         }
 
 #endif
-        virtual public void StartTween() {
-            if(m_Started) EndTween();
-            //Debug.LogWarning("StartTween()!!");
-            m_Started = true;
 
-            if(m_StartEvent != null) {
-                try {
-                    m_StartEvent.Invoke();
-                } catch(System.Exception e) {
-                    Debug.LogWarning("UCL_TweenBehavior m_StartEvent.Invoke() Exception:" + e);
-                }
-            }
-
-            
-            StartTweenAction();
-            
-        }
-        virtual public void EndTween() {
-            if(!m_Started) return;
-            //Debug.LogWarning("EndTween()!!");
-            if(m_EndEvent != null) {
-                try {
-                    m_EndEvent.Invoke();
-                } catch(System.Exception e) {
-                    Debug.LogWarning("UCL_TweenBehavior m_EndEvent.Invoke() Exception:" + e);
-                }
-            }
-            //m_EndEvent?.Invoke();
-            EndTweenAction();
-            m_Started = false;
-            if(m_Looping && !m_End) StartTween();
-        }
         virtual public void PauseTween() { }
         virtual public void ResumeTween() { }
         virtual protected void OnDisable() {

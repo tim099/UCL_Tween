@@ -26,7 +26,8 @@ namespace UCL.TweenLib {
         public TC_Type m_Type = TC_Type.Move;
         public List<Transform> m_Transform;
         public List<Quaternion> m_Quaternion;
-        public List<UCL_Curve> m_UCL_Curve;
+        //public List<UCL_Curve> m_UCL_Curve;
+        public List<UCL_Path> m_UCL_Path;
         public List<UCL_TC_Curve.LookAtFront> m_LookAtFront;
         public List<UCL_TC_Event> m_UCL_TC_Event;
 

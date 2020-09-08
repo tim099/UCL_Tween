@@ -50,13 +50,12 @@ namespace UCL.TweenLib {
         /// override this to implement StartTweener action
         /// </summary>
         virtual public void StartTweener() { CreateTweener().Start(m_TimeManager); }
-        virtual protected void EndTweener() {
-            Kill();
-        }
+        virtual protected void EndTweener() { Kill(); }
+
         protected override void StartTweenAction() {
             StartTweener();
         }
-        protected override void EndTweenAction() {
+        protected override void EndTweenAction(bool complete) {
             EndTweener();
         }
         public override void PauseTween() {
@@ -96,7 +95,7 @@ namespace UCL.TweenLib {
                 m_Tweener.AddComponent(comp);
                 //Debug.LogWarning("AddCom:" + comp.GetType().Name);
             }
-            m_Tweener.OnComplete(EndTween);
+            m_Tweener.OnComplete(()=> { EndTween(true); });
             return m_Tweener;
         }
         virtual public void Kill() {
