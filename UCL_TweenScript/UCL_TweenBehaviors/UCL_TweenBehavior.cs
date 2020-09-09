@@ -50,6 +50,8 @@ namespace UCL.TweenLib {
         /// <summary>
         /// Call this function to start TweenBehavior
         /// </summary>
+        [Core.ATTR.UCL_RuntimeOnly]
+        [Core.ATTR.UCL_FunctionButton]
         public void StartTween() {
             StartTween(null);
         }
@@ -76,6 +78,8 @@ namespace UCL.TweenLib {
         /// <summary>
         /// Call this function to stop TweenBehavior
         /// </summary>
+        [Core.ATTR.UCL_RuntimeOnly]
+        [Core.ATTR.UCL_FunctionButton]
         public void EndTween() {
             EndTween(false);
         }
@@ -106,35 +110,12 @@ namespace UCL.TweenLib {
         virtual protected void StartTweenAction() { }
         virtual protected void EndTweenAction(bool complete) { }
 #if UNITY_EDITOR
-        [Core.ATTR.UCL_RuntimeOnly]
-        [Core.ATTR.UCL_FunctionButton("StartTween(Editor)")]
-        public void Editor_StartTween() {
-            if(!Application.isPlaying) {
-                Debug.LogError("UCL_TweenBehavior Editor_StartTween() Fail!! Please press in play mode!!");
-                return;
-            }
-            StartTween();
-        }
-        [Core.ATTR.UCL_RuntimeOnly]
-        [Core.ATTR.UCL_FunctionButton("EndTween(Editor)")]
-        public void Editor_EndTween() {
-            EndTween();
-        }
-        [Core.ATTR.UCL_RuntimeOnly]
-        [Core.ATTR.UCL_FunctionButton("PauseTween(Editor)")]
-        public void Editor_PauseTween() {
-            PauseTween();
-        }
-        [Core.ATTR.UCL_RuntimeOnly]
-        [Core.ATTR.UCL_FunctionButton("ResumeTween(Editor)")]
-        public void Editor_ResumeTween() {
-            ResumeTween();
-        }
+
 
 #endif
-
         virtual public void PauseTween() { }
         virtual public void ResumeTween() { }
+
         virtual protected void OnDisable() {
             if(m_EndOnDisable) EndTween();
         }

@@ -22,8 +22,8 @@ namespace UCL.TweenLib {
             TimerUpdate(Mathf.CeilToInt(m_Duration));
             CreateTweener().OnUpdate((y)=> {
                 int time = Mathf.CeilToInt(m_Duration - m_Tweener.Timer);
-                if(time < m_Time) {
-                    TimerUpdate(time);
+                while(m_Time > time) {
+                    TimerUpdate(m_Time - 1);
                 }
             });
             m_Tweener.Start(m_TimeManager);

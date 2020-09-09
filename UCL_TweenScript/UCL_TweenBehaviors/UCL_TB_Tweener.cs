@@ -58,6 +58,8 @@ namespace UCL.TweenLib {
         protected override void EndTweenAction(bool complete) {
             EndTweener();
         }
+        [Core.ATTR.UCL_RuntimeOnly]
+        [Core.ATTR.UCL_FunctionButton]
         public override void PauseTween() {
             if(!m_Started) return;
             base.PauseTween();
@@ -65,6 +67,9 @@ namespace UCL.TweenLib {
                 m_Tweener.Pause();
             }
         }
+
+        [Core.ATTR.UCL_RuntimeOnly]
+        [Core.ATTR.UCL_FunctionButton]
         public override void ResumeTween() {
             if(!m_Started) return;
             base.ResumeTween();
