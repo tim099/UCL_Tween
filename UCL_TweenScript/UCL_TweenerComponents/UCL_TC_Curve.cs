@@ -16,6 +16,7 @@ namespace UCL.TweenLib {
 
             public Vector3 m_Rot;
             public bool m_DoRot = false;
+            public bool m_Active = true;
         }
 
         public static UCL_TC_Curve Create() {
@@ -49,7 +50,7 @@ namespace UCL.TweenLib {
         protected override void ComponentUpdate(float pos) {
             var cur_pos = m_Path.GetPos(pos);
             m_Target.transform.position = cur_pos;
-            if(m_LookAtFront != null) {
+            if(m_LookAtFront != null && m_LookAtFront.m_Active) {
                 const float ndel = 0.0005f;
                 var next_pos = m_Path.GetPos(pos + ndel);
                 var del = next_pos - cur_pos;
