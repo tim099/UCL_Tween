@@ -1769,7 +1769,7 @@ GameObject:
   - component: {fileID: 697463554}
   - component: {fileID: 697463556}
   m_Layer: 5
-  m_Name: Timer
+  m_Name: UCL_TB_Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1850,13 +1850,48 @@ MonoBehaviour:
   m_Looping: 0
   m_StartEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1121795516}
+        m_MethodName: set_clip
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: d48201eec96743b4db13c59ff215f5a2,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_EndEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1121795516}
+        m_MethodName: set_clip
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 91b31323451a0624198f0fa9809d65b7,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1121795516}
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_CompleteWhenKill: 0
   m_Ease: 0
-  m_Duration: 5
+  m_Duration: 10
   m_DrawGizmos: 1
   m_TimeManager: {fileID: 0}
   m_TweenerComponents: []
@@ -3195,7 +3230,7 @@ GameObject:
   - component: {fileID: 1426343431}
   - component: {fileID: 1426343432}
   m_Layer: 0
-  m_Name: Demo_TB_Move_4
+  m_Name: Demo_TC_Curve_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4380,7 +4415,7 @@ GameObject:
   - component: {fileID: 2048462602}
   - component: {fileID: 2048462603}
   m_Layer: 0
-  m_Name: Demo_TB_Move_5
+  m_Name: Demo_TC_Curve_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

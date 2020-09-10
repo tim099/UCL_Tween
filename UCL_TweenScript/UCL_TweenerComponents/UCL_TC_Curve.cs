@@ -9,6 +9,47 @@ namespace UCL.TweenLib {
         }
     }
     public class UCL_TC_Curve : UCL_TC_Transform {
+#if UNITY_EDITOR
+        public override bool OnInspectorGUI(UCL_TC_Data tc_data, UnityEditor.SerializedProperty sdata) {
+            {
+                var data = sdata.FindPropertyRelative("m_UCL_Path");
+                if(data.arraySize == 0) {
+                    data.InsertArrayElementAtIndex(0);
+                }
+                UnityEditor.EditorGUILayout.PropertyField(data.GetArrayElementAtIndex(0), new GUIContent("Path"));
+            }
+            {
+                var data = sdata.FindPropertyRelative("m_Transform");
+                if(data.arraySize == 0) {
+                    data.InsertArrayElementAtIndex(0);
+                }
+                UnityEditor.EditorGUILayout.PropertyField(data.GetArrayElementAtIndex(0), new GUIContent("Target"));
+            }
+            {
+                var data = sdata.FindPropertyRelative("m_LookAtFront");
+                if(data.arraySize == 0) {
+                    data.InsertArrayElementAtIndex(0);
+                }
+                UnityEditor.EditorGUILayout.PropertyField(data.GetArrayElementAtIndex(0), new GUIContent("LookAtFront"));
+            }
+            return true;
+        }
+#endif
+        /// <summary>
+        /// override to avoid using reflection on IOS
+        /// </summary>
+        /// <param name="data"></param>
+        protected internal override void LoadData(UCL_TC_Data data) {
+            if(data.m_UCL_Path.Count > 0) {
+                m_Path = data.m_UCL_Path[0];
+            }
+            if(data.m_Transform.Count > 0) {
+                m_Target = data.m_Transform[0];
+            }
+            if(data.m_LookAtFront.Count > 0) {
+                m_LookAtFront = data.m_LookAtFront[0];
+            }
+        }
         override public TC_Type GetTC_Type() { return TC_Type.Curve; }
         [System.Serializable]
         public class LookAtFront {
@@ -16,7 +57,8 @@ namespace UCL.TweenLib {
 
             public Vector3 m_Rot;
             public bool m_DoRot = false;
-            public bool m_Active = true;
+
+            [Header("won't change the rotation if not active")] public bool m_Active = true;
         }
 
         public static UCL_TC_Curve Create() {

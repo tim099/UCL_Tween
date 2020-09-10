@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,7 +8,7 @@ namespace UCL.TweenLib {
 
     public class UCL_TC_Action : UCL_TweenerComponent {
 #if UNITY_EDITOR
-        public override bool OnInspectorGUI(UCL_TC_Data tc_data, SerializedProperty sdata) {
+        public override bool OnInspectorGUI(UCL_TC_Data tc_data, UnityEditor.SerializedProperty sdata) {
 
             var event_data = sdata.FindPropertyRelative("m_UCL_TC_Event");
             if(event_data.arraySize == 0) {
