@@ -1717,12 +1717,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 619787663}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac300ea70aee5554d84e452ae1d49581, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c2802bf354f9ef4d9137b47d053148f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Seed: 0
+  m_Seed: 498
+  m_MoveData:
+    m_Acc: 0.2
+    m_AngelDel: 90
+    m_Vel: {x: -1.3544223, y: -0.9724605}
+    m_Position: {x: 265.05487, y: -0.699966, z: 0}
+    m_Inertia: 0.85
+    m_VelDec: 0.92
   m_StartPosMin: {fileID: 1336870184}
   m_StartPosMax: {fileID: 2079281118}
+  m_PathCol: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &694913143
 GameObject:
   m_ObjectHideFlags: 0

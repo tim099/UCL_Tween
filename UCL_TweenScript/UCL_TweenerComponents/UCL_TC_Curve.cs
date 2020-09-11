@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UCL.TweenLib {
     public static partial class Extension {
-        static public UCL_TC_Curve TC_Move(this Transform target, Core.MathLib.UCL_Path target_val) {
+        static public UCL_TC_Curve TC_Move(this Transform target, Core.MathLib.UCLI_Path target_val) {
             return UCL_TC_Curve.Create().Init(target, target_val);
         }
     }
@@ -65,10 +65,10 @@ namespace UCL.TweenLib {
             return new UCL_TC_Curve();
         }
 
-        protected Core.MathLib.UCL_Path m_Path;
+        protected Core.MathLib.UCLI_Path m_Path;
         protected LookAtFront m_LookAtFront = null;
 
-        virtual public UCL_TC_Curve Init(Transform target, Core.MathLib.UCL_Path _path) {
+        virtual public UCL_TC_Curve Init(Transform target, Core.MathLib.UCLI_Path _path) {
             m_Path = _path;
             m_Target = target;
             return this;
