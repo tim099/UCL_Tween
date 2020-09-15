@@ -92,13 +92,12 @@ namespace UCL.TweenLib {
         protected override void ComponentUpdate(float pos) {
             var cur_pos = m_Path.GetPos(pos);
             m_Target.transform.position = cur_pos;
-            if(m_LookAtFront != null && m_LookAtFront.m_Active) {
+            if(m_LookAtFront != null && m_LookAtFront.m_Active && m_LookAtFront.m_Up.magnitude > 0.0001f) {
                 const float ndel = 0.0005f;
                 var next_pos = m_Path.GetPos(pos + ndel);
                 var del = next_pos - cur_pos;
-                if(del.magnitude > 0) {
+                if(del.magnitude > 0.0001f) {
                     var rot = Quaternion.LookRotation(del, m_LookAtFront.m_Up);
-
                     if(m_LookAtFront.m_DoRot) {
                         rot *= Quaternion.Euler(m_LookAtFront.m_Rot);
                     }

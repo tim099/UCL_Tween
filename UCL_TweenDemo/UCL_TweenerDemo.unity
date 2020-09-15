@@ -1721,12 +1721,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c2802bf354f9ef4d9137b47d053148f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Seed: 787
+  m_Seed: 368
   m_MoveData:
     m_Acc: 0.8
     m_AngelDel: 90
-    m_Vel: {x: -7.9677305, y: -5.3868775}
-    m_Position: {x: 289.85693, y: -1.3435316, z: 0}
+    m_Vel: {x: -5.7014637, y: 7.9611063}
+    m_Position: {x: 211.15474, y: 572.5369, z: 0}
+    m_RecordInterval: 5
     m_StartRandomAt: 10
     m_Inertia: 0.8
     m_VelDec: 0.94
@@ -1735,7 +1736,7 @@ MonoBehaviour:
   m_StartPosMin: {fileID: 1336870184}
   m_StartPosMax: {fileID: 2079281118}
   m_MaxMoveTimes: 3000
-  m_PathLength: 848.2593
+  m_PathLength: 913.95496
   m_PathCol: {r: 1, g: 0.8737742, b: 0.015686274, a: 1}
   m_RecordSeedStartAt: 0
   m_RecordSeedCount: 10000
