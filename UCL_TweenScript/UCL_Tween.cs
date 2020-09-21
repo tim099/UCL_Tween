@@ -109,6 +109,10 @@ namespace UCL.TweenLib {
         /// <param name="time_delta">time_delta in seconds</param>
         /// <returns></returns>
         virtual public float TimeAlter(float time_delta) {
+            if(!m_Started) {
+                Debug.LogError("UCL_Tween TimeAlter Fail not started yet!!");
+                return time_delta;
+            }
             if(m_End) return time_delta;
 
             m_Timer.AlterTime(time_delta);
