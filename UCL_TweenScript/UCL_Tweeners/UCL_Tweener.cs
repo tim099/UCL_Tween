@@ -89,7 +89,7 @@ namespace UCL.TweenLib {
                 try {
                     com.Update(y);
                 } catch(System.Exception e) {
-                    Debug.LogWarning("UCL_Tweener.TimeUpdateAction com.Update(y) Exception:" + e);
+                    Debug.LogError("UCL_Tweener.TimeUpdateAction com.Update(y) Exception:" + e);
                     Kill(m_CompleteOnException);
                     return remains;
                 }
@@ -99,7 +99,7 @@ namespace UCL.TweenLib {
                 try {
                     m_UpdateAct.Invoke(y);
                 } catch(System.Exception e) {
-                    Debug.LogWarning("UCL_Tweener.TimeUpdateAction m_UpdateAct.Invoke(y) Exception:" + e);
+                    Debug.LogError("UCL_Tweener.TimeUpdateAction m_UpdateAct.Invoke(y) Exception:" + e);
                     Kill(m_CompleteOnException);
                     return remains;
                 }
@@ -121,7 +121,7 @@ namespace UCL.TweenLib {
                 try {
                     com.Update(y);
                 } catch(System.Exception e) {
-                    Debug.LogWarning("UCL_Tweener.TimeUpdateAction com.Update(y) Exception:" + e);
+                    Debug.LogError("UCL_Tweener.TimeUpdateAction com.Update(y) Exception:" + e);
                     Kill();
                     return remains;
                 }
@@ -131,7 +131,7 @@ namespace UCL.TweenLib {
                 try {
                     m_UpdateAct.Invoke(y);
                 } catch(System.Exception e) {
-                    Debug.LogWarning("UCL_Tweener.TimeUpdateAction m_UpdateAct.Invoke(y) Exception:" + e);
+                    Debug.LogError("UCL_Tweener.TimeUpdateAction m_UpdateAct.Invoke(y) Exception:" + e);
                     Kill();
                     return remains;
                 }
