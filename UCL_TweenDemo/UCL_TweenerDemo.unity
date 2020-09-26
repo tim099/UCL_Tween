@@ -1735,8 +1735,9 @@ MonoBehaviour:
   m_StartPosMin: {fileID: 1336870184}
   m_StartPosMax: {fileID: 2079281118}
   m_Size: {x: 1920, y: 1080, z: 0}
+  m_DrawGizmos: 1
   m_MaxMoveTimes: 20
-  m_PathLength: 257.45276
+  m_PathLength: 488.66254
   m_PathCol: {r: 1, g: 0.8705883, b: 0, a: 1}
   m_RecordSeedStartAt: 0
   m_RecordSeedCount: 1000
@@ -1835,8 +1836,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1926,6 +1927,20 @@ MonoBehaviour:
       - m_Target: {fileID: 1121795516}
         m_MethodName: Play
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_TimeUpdateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 697463554}
+        m_MethodName: set_fillAmount
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
