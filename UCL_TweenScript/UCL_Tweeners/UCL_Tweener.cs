@@ -6,7 +6,7 @@ namespace UCL.TweenLib {
     public class UCL_Tweener : UCL_Tween {
         override public string Name {
             get {
-                string name = this.GetType().Name.Replace("UCL_",string.Empty);
+                string name = this.GetType().Name.Replace("UCL_", string.Empty);
                 if(m_Components != null && m_Components.Count > 0) {
                     name += "(";
                     for(int i = 0; i < m_Components.Count; i++) {
@@ -172,7 +172,7 @@ namespace UCL.TweenLib {
             }
             return y;
         }
-        virtual public UCL_Tweener SetEase(EaseClass ease,EaseDir dir) {
+        virtual public UCL_Tweener SetEase(EaseClass ease, EaseDir dir) {
             return SetEase(EaseCreator.Get(ease, dir));
         }
         virtual public UCL_Tweener SetEase(EaseType type) {

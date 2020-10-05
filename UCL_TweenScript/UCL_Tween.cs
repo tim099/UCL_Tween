@@ -77,6 +77,8 @@ namespace UCL.TweenLib {
         protected bool m_Paused = false;
         protected System.Action m_CompleteAct = null;
         protected System.Action m_StartAct = null;
+
+        protected float m_TimeScale = 1f;
         protected UCL_Timer m_Timer = new UCL_TimerFloat();
         protected UCL_Timer m_Duration = new UCL_TimerFloat();
 
@@ -94,6 +96,15 @@ namespace UCL.TweenLib {
         }
         virtual public float GetRemainDuration() {
             return Duration - Timer;
+        }
+        /// <summary>
+        /// Set the timescale of this tweener
+        /// </summary>
+        /// <param name="scale">timescale of this tweener</param>
+        /// <returns></returns>
+        virtual public UCL_Tween SetTimeScale(float scale) {
+            m_TimeScale = scale;
+            return this;
         }
         virtual public UCL_Tween SetDuration(float duration) {
             Duration = duration;
@@ -113,6 +124,9 @@ namespace UCL.TweenLib {
                 Debug.LogError("UCL_Tween TimeAlter Fail not started yet!!");
                 return time_delta;
             }
+            if(m_TimeScale != 1f) {
+                time_delta *= m_TimeScale;
+            }
             if(m_End) return time_delta;
 
             m_Timer.AlterTime(time_delta);
@@ -130,7 +144,9 @@ namespace UCL.TweenLib {
         /// <returns></returns>
         virtual public long TimeAlter(long time_delta) {
             if(m_End) return time_delta;
-
+            if(m_TimeScale != 1f) {
+                time_delta = UCL.Core.MathLib.Lib.RoundToLong(time_delta * m_TimeScale);
+            }
             m_Timer.AlterTimeMs(time_delta);
 
             if(TimerMs < 0) m_Timer.SetTimeMs(0);
@@ -180,7 +196,9 @@ namespace UCL.TweenLib {
         virtual internal protected float TimeUpdate(float time_delta) {
             if(m_End) return time_delta;
             if(m_Paused) return 0;
-
+            if(m_TimeScale != 1f) {
+                time_delta *= m_TimeScale;
+            }
             m_Timer.AlterTime(time_delta);
             float remains = TimeUpdateAction(time_delta);
 
@@ -195,7 +213,9 @@ namespace UCL.TweenLib {
         virtual internal protected long TimeUpdate(long time_delta) {
             if(m_End) return time_delta;
             if(m_Paused) return 0;
-
+            if(m_TimeScale != 1f) {
+                time_delta = UCL.Core.MathLib.Lib.RoundToLong(time_delta * m_TimeScale);
+            }
             m_Timer.AlterTimeMs(time_delta);
             long remains = TimeUpdateAction(time_delta);
 

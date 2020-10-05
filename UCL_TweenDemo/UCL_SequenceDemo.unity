@@ -970,12 +970,13 @@ MonoBehaviour:
     m_Quaternion:
     - {x: 0, y: 0, z: 0, w: 0}
     - {x: 0, y: 0, z: 0, w: 0}
-    m_UCL_Curve:
+    m_UCL_Path:
     - {fileID: 620951743}
     m_LookAtFront:
     - m_Up: {x: 0, y: 1, z: 0}
       m_Rot: {x: 0, y: 0, z: 0}
       m_DoRot: 0
+      m_Active: 1
     m_UCL_TC_Event: []
     m_Vector3:
     - {x: 0, y: 0, z: 0}
@@ -986,13 +987,13 @@ MonoBehaviour:
     m_Int32: 00000000
     m_Single:
     - 0
-    m_Foldout: 0
+    m_Foldout: 1
   - m_Type: 7
     m_Transform:
     - {fileID: 174083028}
     - {fileID: 1996019183}
     m_Quaternion: []
-    m_UCL_Curve: []
+    m_UCL_Path: []
     m_LookAtFront: []
     m_UCL_TC_Event: []
     m_Vector3:
@@ -1113,7 +1114,7 @@ MonoBehaviour:
     - {fileID: 809500042}
     - {fileID: 1770040450}
     m_Quaternion: []
-    m_UCL_Curve: []
+    m_UCL_Path: []
     m_LookAtFront: []
     m_UCL_TC_Event: []
     m_Vector3:
@@ -2858,7 +2859,7 @@ MonoBehaviour:
     m_Quaternion:
     - {x: 0, y: 0, z: 0, w: 0}
     - {x: 0, y: 0, z: 0, w: 0}
-    m_UCL_Curve: []
+    m_UCL_Path: []
     m_LookAtFront: []
     m_UCL_TC_Event: []
     m_Vector3:
@@ -2876,18 +2877,17 @@ MonoBehaviour:
     - {fileID: 1408378712}
     - {fileID: 1622768285}
     m_Quaternion: []
-    m_UCL_Curve: []
+    m_UCL_Path: []
     m_LookAtFront: []
     m_UCL_TC_Event: []
     m_Vector3:
-    - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     m_Vector2: []
     m_Boolean: 0000
     m_Byte: 
     m_Int32: 
     m_Single: []
-    m_Foldout: 0
+    m_Foldout: 1
 --- !u!1 &1340649971
 GameObject:
   m_ObjectHideFlags: 0
@@ -3612,7 +3612,7 @@ MonoBehaviour:
     m_Quaternion:
     - {x: 0, y: 0, z: 0, w: 0}
     - {x: 0, y: 0, z: 0, w: 0}
-    m_UCL_Curve: []
+    m_UCL_Path: []
     m_LookAtFront: []
     m_UCL_TC_Event: []
     m_Vector3:
@@ -3632,7 +3632,7 @@ MonoBehaviour:
     m_Quaternion:
     - {x: 0, y: 0, z: 0, w: 0}
     - {x: 0, y: 0, z: 0, w: 0}
-    m_UCL_Curve: []
+    m_UCL_Path: []
     m_LookAtFront: []
     m_UCL_TC_Event: []
     m_Vector3:
@@ -3970,12 +3970,13 @@ MonoBehaviour:
     m_Quaternion:
     - {x: 0, y: 0, z: 0, w: 0}
     - {x: 0, y: 0, z: 0, w: 0}
-    m_UCL_Curve:
+    m_UCL_Path:
     - {fileID: 795515159}
     m_LookAtFront:
     - m_Up: {x: 0, y: 1, z: 0}
       m_Rot: {x: 0, y: 0, z: 0}
       m_DoRot: 0
+      m_Active: 1
     m_UCL_TC_Event: []
     m_Vector3:
     - {x: 0, y: 0, z: 0}
@@ -3986,7 +3987,7 @@ MonoBehaviour:
     m_Int32: 00000000
     m_Single:
     - 0
-    m_Foldout: 0
+    m_Foldout: 1
 --- !u!1 &1977226828
 GameObject:
   m_ObjectHideFlags: 0
@@ -4705,7 +4706,7 @@ MonoBehaviour:
     - {fileID: 1401207914}
     - {fileID: 1745063324}
     m_Quaternion: []
-    m_UCL_Curve: []
+    m_UCL_Path: []
     m_LookAtFront: []
     m_UCL_TC_Event: []
     m_Vector3:
@@ -4722,7 +4723,7 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     m_Quaternion: []
-    m_UCL_Curve: []
+    m_UCL_Path: []
     m_LookAtFront: []
     m_UCL_TC_Event:
     - m_PersistentCalls:
