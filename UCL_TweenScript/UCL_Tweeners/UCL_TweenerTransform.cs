@@ -14,5 +14,10 @@ namespace UCL.TweenLib {
         protected override void CompleteAction() {
             TweenerUpdate(m_Reverse ? 0 : 1);
         }
+        override public bool KillOnTransform(Transform t, bool compelete = false) {
+            if(base.KillOnTransform(t, compelete))return true;
+            Kill(compelete);
+            return true;
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace UCL.TweenLib {
                 return name;
             }
         }
-
+        override public Transform GetTarget() { return m_Target; }
         //[Tooltip("Target that tween component move")]
         //[Header("Move target")]
         protected Transform m_Target;

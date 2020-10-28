@@ -54,6 +54,10 @@ namespace UCL.TweenLib {
             if(!m_Inited) Init();
             m_TimeManager.KillAllTweens(complete);
         }
+        public void KillAllOnTransform(Transform t, bool complete = false) {
+            if(!m_Inited) Init();
+            m_TimeManager.KillAllOnTransform(t, complete);
+        }
         private void Update() {
             if(!m_Inited) Init();
 

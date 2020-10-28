@@ -68,7 +68,15 @@ namespace UCL.TweenLib {
             m_Components.Add(component);
             return this;
         }
-
+        override public bool KillOnTransform(Transform t, bool compelete = false) {
+            foreach(var tc in m_Components) {
+                if(tc.GetTarget().Equals(t)) {
+                    Kill(compelete);
+                    return true;
+                }
+            }
+            return false;
+        }
         protected internal override void TweenStart() {
             base.TweenStart();
             foreach(var com in m_Components) com.Start();

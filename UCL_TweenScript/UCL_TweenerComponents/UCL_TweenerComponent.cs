@@ -22,7 +22,7 @@ namespace UCL.TweenLib {
     public class UCL_TweenerComponent {
         virtual public string Name {
             get {
-                return this.GetType().Name.Replace("UCL_TC_",string.Empty);
+                return this.GetType().Name.Replace("UCL_TC_", string.Empty);
             }
         }
 
@@ -116,8 +116,8 @@ namespace UCL.TweenLib {
             for(int i = 0; i < fieldInfos1.Length; i++) {
                 parse_fieldinfo(fieldInfos1[i]);
             }
-            System.Action<string, List<string>> draw_data = delegate (string type_name,List<string> type_names) {
-                var t_datas = sdata.FindPropertyRelative("m_"+ type_name);
+            System.Action<string, List<string>> draw_data = delegate (string type_name, List<string> type_names) {
+                var t_datas = sdata.FindPropertyRelative("m_" + type_name);
                 if(t_datas == null) {
                     if(GUILayout.Button(new GUIContent(type_name + " not supported by UCL_TC_Data yet!!",
                         "Click this button to open UCL_TC_Data script."))) {
@@ -137,12 +137,12 @@ namespace UCL.TweenLib {
                     t_datas.InsertArrayElementAtIndex(t_datas.arraySize);
                 }
                 while(type_names.Count < t_datas.arraySize) {
-                    t_datas.DeleteArrayElementAtIndex(t_datas.arraySize-1);
+                    t_datas.DeleteArrayElementAtIndex(t_datas.arraySize - 1);
                 }
                 for(int i = 0; i < type_names.Count && i < t_datas.arraySize; i++) {
                     var t_name = type_names[i];
-                    UnityEditor.EditorGUILayout.PropertyField(t_datas.GetArrayElementAtIndex(i), 
-                        new GUIContent(t_name.StartsWith("m_") ? t_name.Remove(0,2) : t_name), true);
+                    UnityEditor.EditorGUILayout.PropertyField(t_datas.GetArrayElementAtIndex(i),
+                        new GUIContent(t_name.StartsWith("m_") ? t_name.Remove(0, 2) : t_name), true);
                 }
             };
             //GUILayout.Box(type.Name);
@@ -157,7 +157,7 @@ namespace UCL.TweenLib {
         virtual public string OnInspectorGUITips() {
             return string.Empty;
         }
-        virtual public void OnInspectorGUIBasic(UCL_TC_Data tc_data, UnityEditor.SerializedProperty sdata, 
+        virtual public void OnInspectorGUIBasic(UCL_TC_Data tc_data, UnityEditor.SerializedProperty sdata,
             Transform TB_transform) {
             UnityEditor.EditorGUILayout.PropertyField(sdata.FindPropertyRelative("m_Type"));//,new GUIContent("Test")
 
@@ -203,7 +203,7 @@ namespace UCL.TweenLib {
                     Debug.LogWarning("LoadData:" + type_name + " not support by UCL_TC_Data yet!!");
                     return;
                 }
-                for(int i = 0,count = field_infos.Count < t_datas.Count? field_infos.Count : t_datas.Count; i < count; i++) {
+                for(int i = 0, count = field_infos.Count < t_datas.Count ? field_infos.Count : t_datas.Count; i < count; i++) {
                     var f_data = t_datas[i];
                     var f_info = field_infos[i];
                     f_info.SetValue(this, f_data);
@@ -212,9 +212,9 @@ namespace UCL.TweenLib {
             foreach(var type_name in m_Infos) {
                 load_data(type_name.Key.Name, type_name.Value);
             }
-            
-        }
 
+        }
+        virtual public Transform GetTarget() { return null; }
         protected bool m_Reverse = false;
         //internal protected UCL_Tweener p_Tweener = null;
 

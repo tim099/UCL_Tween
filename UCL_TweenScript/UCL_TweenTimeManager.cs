@@ -6,7 +6,7 @@ namespace UCL.TweenLib {
 #if UNITY_EDITOR
     [Core.ATTR.EnableUCLEditor]
 #endif
-    public class UCL_TweenTimeManager : MonoBehaviour{
+    public class UCL_TweenTimeManager : MonoBehaviour {
         public enum UpdateMode {
             FloatSecond,
             LongMs
@@ -88,6 +88,19 @@ namespace UCL.TweenLib {
                 Add(m_NewTweenQue.Dequeue());
             }
         }
+
+        public void KillAllOnTransform(Transform t, bool complete = false) {
+            m_Updating = true;
+            for(int i = 0; i < m_Tweens.Count; i++) {
+                m_Tweens[i].KillOnTransform(t, complete);
+            }
+            m_Updating = false;
+            while(m_NewTweenQue.Count > 0) {
+                Add(m_NewTweenQue.Dequeue());
+            }
+        }
+
+
 #if UNITY_EDITOR
         [UCL.Core.ATTR.UCL_RuntimeOnly]
         [Core.ATTR.UCL_FunctionButton]

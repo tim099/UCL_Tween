@@ -248,6 +248,9 @@ namespace UCL.TweenLib {
         virtual public void Resume() {
             m_Paused = false;
         }
+        virtual public bool KillOnTransform(Transform t , bool compelete = false) {
+            return false;
+        }
         virtual public void Kill(bool compelete = false) {
             if(compelete) Complete();
             m_End = true;
