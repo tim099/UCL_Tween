@@ -1427,7 +1427,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RecordLen: 50
   m_RecordInterval: 3
+  m_LineWidth: 8
   m_LineCol: {r: 1, g: 0.65038824, b: 0, a: 1}
+  m_OutlineCol: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &620951741
 GameObject:
   m_ObjectHideFlags: 0
@@ -5025,9 +5027,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2122228833}
-  - component: {fileID: 2122228834}
   - component: {fileID: 2122228832}
   - component: {fileID: 2122228831}
+  - component: {fileID: 2122228834}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5112,7 +5114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b429739c976d6b54baa020be0e5ca37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Mat: {fileID: 0}
+  m_Mat: {fileID: 2100000, guid: 8ea4718b2900195438177da2ec72f8c0, type: 2}
 --- !u!1 &2146950970
 GameObject:
   m_ObjectHideFlags: 0
