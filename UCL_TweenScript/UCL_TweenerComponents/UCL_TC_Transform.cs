@@ -19,6 +19,9 @@ namespace UCL.TweenLib {
         protected Transform m_Target;
 
         //[Header("Target position")]
+        /// <summary>
+        /// Target Transform that target will move to
+        /// </summary>
         protected Transform m_TargetTransform;
         protected bool m_Local = false;
         #region EDITOR

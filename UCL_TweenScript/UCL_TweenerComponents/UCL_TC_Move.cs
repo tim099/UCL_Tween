@@ -28,6 +28,9 @@ namespace UCL.TweenLib {
         static public UCL_Tweener UCL_Move(this Transform target, float duration, Transform target_transform) {
             return LibTween.Tweener(duration).AddComponent(TC_Move(target, target_transform));
         }
+        static public UCL_Tweener UCL_Move(this Transform target, float duration, Vector3 target_position) {
+            return LibTween.Tweener(duration).AddComponent(TC_Move(target, target_position));
+        }
         static public UCL_Tweener UCL_LocalMove(this Transform target, float duration, Vector3 target_position) {
             return LibTween.Tweener(duration).AddComponent(TC_LocalMove(target, target_position));
         }
@@ -48,6 +51,9 @@ namespace UCL.TweenLib {
         #endregion
         override public TC_Type GetTC_Type() { return TC_Type.Move; }
 
+        /// <summary>
+        /// Target position that "Target" will move to
+        /// </summary>
         protected Vector3 m_TargetVal;
         [HideInInspector] protected Vector3 m_StartVal;
         public static UCL_TC_Move Create() {

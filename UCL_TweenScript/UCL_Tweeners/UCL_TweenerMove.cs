@@ -3,12 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace UCL.TweenLib {
-    public static partial class Extension {
-        static public UCL_TweenerMove UCL_Move(this Transform target, float duration, Vector3 target_position) {
-            return UCL_TweenerMove.Create().Init(target, target_position, duration);
-        }
-    }
-
     public class UCL_TweenerMove : UCL_TweenerTransform {
         protected Vector3 m_TargetVal;
         protected Vector3 m_StartVal;
@@ -21,8 +15,6 @@ namespace UCL.TweenLib {
             m_Target = target;
             m_TargetVal = target_position;
             Duration = duration;
-            //Debug.LogWarning("Init !!m_Target.transform.position:" + m_Target.transform.position +
-                //",m_TargetPos:" + m_TargetPos + ",m_StartPos:" + m_StartPos);
             return this;
         }
         protected override void TweenerStart() {
@@ -38,9 +30,6 @@ namespace UCL.TweenLib {
             } else {
                 m_Target.transform.position = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
             }
-            //Debug.LogWarning("TweenerUpdate:" + pos + ",m_Target.transform.position:"+ m_Target.transform.position + 
-            //",m_TargetPos:"+ m_TargetPos+ ",m_StartPos:"+ m_StartPos);
-
         }
     }
 }

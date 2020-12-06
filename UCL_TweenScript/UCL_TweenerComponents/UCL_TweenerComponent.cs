@@ -14,7 +14,8 @@ namespace UCL.TweenLib {
         Curve,
         Action,
         Shake,
-        Scale
+        Scale,
+        Jump,
     }
     /// <summary>
     ///UCL_TweenerComponent extened action on tweener
@@ -64,6 +65,10 @@ namespace UCL.TweenLib {
                     }
                 case TC_Type.Scale: {
                         tc = UCL_TC_Scale.Create();
+                        break;
+                    }
+                case TC_Type.Jump: {
+                        tc = UCL_TC_Jump.Create();
                         break;
                     }
                 case TC_Type.TweenerComponent: {
