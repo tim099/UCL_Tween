@@ -9,6 +9,7 @@ namespace UCL.TweenLib.Demo
 #endif
     public class UCL_TC_Demo : MonoBehaviour
     {
+
         //目標移動對象
         //Move target
         public Transform m_Target;
@@ -65,5 +66,20 @@ namespace UCL.TweenLib.Demo
         virtual public UCL_TweenerComponent CreateTC() {
             return null;
         }
+
+        #region Editor
+
+#if UNITY_EDITOR
+        Ease.UCL_EaseTexture m_EaseTexture;
+        [Core.ATTR.UCL_DrawTexture2D]
+        public Core.TextureLib.UCL_Texture2D Editor_DrawEaseCurve() {
+            if(m_EaseTexture == null) {
+                m_EaseTexture = new Ease.UCL_EaseTexture(new Vector2Int(128, 128), TextureFormat.ARGB32);
+            }
+            Ease.UCL_EaseTexture.DrawEase(m_Ease, m_EaseTexture);
+            return m_EaseTexture;
+        }
+#endif
+        #endregion
     }
 }

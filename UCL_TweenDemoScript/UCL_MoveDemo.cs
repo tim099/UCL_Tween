@@ -89,5 +89,18 @@ namespace UCL.TweenLib.Demo
             //開始執行tweener
             m_Tweener.Start();
         }
+
+        [UCL.Core.ATTR.UCL_FunctionButton]
+        public void TweenerDemo() {
+            //m_Target是一個Transform, UCL_Move對這個Transform的GameObject做移動的動作
+            //生成UCL_Move的tweener 移動時間1.5秒 移動到目標位置m_Goal(也是一個Transform)
+
+            UCL_Tweener tweener = m_Target.UCL_Move(1.5f, m_Goal);
+
+            tweener.SetEase(EaseType.InBounce);//設定緩動函式(未設定時 預設是EaseType.Linear)
+
+            tweener.Start();//開始執行tweener
+
+        }
     }
 }
