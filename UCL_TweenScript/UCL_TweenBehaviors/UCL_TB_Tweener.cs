@@ -95,10 +95,10 @@ namespace UCL.TweenLib {
         virtual protected UCL_Tweener CreateTweener() {
             Kill();
             m_Tweener = LibTween.Tweener(m_Duration).SetEase(m_Ease);
+            if(m_TweenerComponents == null) m_TweenerComponents = new List<UCL_TC_Data>();
             for(int i = 0; i < m_TweenerComponents.Count; i++) {
                 var comp = m_TweenerComponents[i].CreateTweenerComponent();
                 m_Tweener.AddComponent(comp);
-                //Debug.LogWarning("AddCom:" + comp.GetType().Name);
             }
             m_Tweener.OnComplete(()=> { EndTween(true); });
             return m_Tweener;
