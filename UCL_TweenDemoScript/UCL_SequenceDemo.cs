@@ -23,7 +23,10 @@ namespace UCL.TweenLib.Demo {
         public float m_Y = 0;
         public bool m_AutoLoop = true;
         public Core.MathLib.UCL_Curve m_Curve;
+#pragma warning disable 0219 
         UCL_TweenerCurve m_Cur = null;
+#pragma warning restore 0219
+
 #if UNITY_EDITOR
         Core.TextureLib.UCL_Texture2D m_Texture;
         [Core.ATTR.UCL_DrawTexture2D]//(128, 128, TextureFormat.ARGB32, typeof(UCL_EaseTexture))
