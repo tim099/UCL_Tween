@@ -13,9 +13,9 @@ namespace UCL.TweenLib.Demo {
         public float m_Duration = 5.0f;
         public Transform m_Target;
         public Core.MathLib.UCL_Curve m_Curve;
-#pragma warning disable 0219
+#pragma warning disable 0414
         UCL_TweenerCurve m_Cur = null;
-#pragma warning restore 0219
+#pragma warning restore 0414
 #if UNITY_EDITOR
         private void Start() {
             StartTweener();
