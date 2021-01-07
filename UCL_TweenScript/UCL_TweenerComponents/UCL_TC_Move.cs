@@ -4,12 +4,32 @@ using UnityEngine;
 
 namespace UCL.TweenLib {
     public static partial class Extension {
+        /// <summary>
+        /// Move target to target_position
+        /// </summary>
+        /// <param name="target">move target</param>
+        /// <param name="target_position">target position</param>
+        /// <returns></returns>
         static public UCL_TC_Move TC_Move(this Transform target, Vector3 target_position) {
             return UCL_TC_Move.Create().Init(target, target_position);
         }
+        /// <summary>
+        /// Move target to Vector3(x,y,z)
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="z"></param>
+        /// <returns></returns>
         static public UCL_TC_Move TC_Move(this Transform target, float x, float y, float z) {
             return UCL_TC_Move.Create().Init(target, x,y,z);
         }
+        /// <summary>
+        /// Move target to target_transform
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="target_transform"></param>
+        /// <returns></returns>
         static public UCL_TC_Move TC_Move(this Transform target, Transform target_transform) {
             return UCL_TC_Move.Create().Init(target, target_transform);
         }
@@ -25,6 +45,13 @@ namespace UCL.TweenLib {
             return obj.Init(target, x, y, z);
         }
 
+        /// <summary>
+        /// Move target to target_transform in duration(Second)
+        /// </summary>
+        /// <param name="target">move target</param>
+        /// <param name="duration">duration in second</param>
+        /// <param name="target_transform">target position</param>
+        /// <returns></returns>
         static public UCL_Tweener UCL_Move(this Transform target, float duration, Transform target_transform) {
             return LibTween.Tweener(duration).AddComponent(TC_Move(target, target_transform));
         }
