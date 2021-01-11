@@ -34,6 +34,11 @@ namespace UCL.TweenLib {
             return UCL_TC_Move.Create().Init(target, target_transform);
         }
 
+        static public UCL_TC_Move TC_LocalMove(this Transform target, Transform target_transform) {
+            var obj = UCL_TC_Move.Create();
+            obj.SetLocal(true);
+            return obj.Init(target, target_transform);
+        }
         static public UCL_TC_Move TC_LocalMove(this Transform target, Vector3 target_position) {
             var obj = UCL_TC_Move.Create();
             obj.SetLocal(true);
@@ -57,6 +62,10 @@ namespace UCL.TweenLib {
         }
         static public UCL_Tweener UCL_Move(this Transform target, float duration, Vector3 target_position) {
             return LibTween.Tweener(duration).AddComponent(TC_Move(target, target_position));
+        }
+
+        static public UCL_Tweener UCL_LocalMove(this Transform target, float duration, Transform target_transform) {
+            return LibTween.Tweener(duration).AddComponent(TC_LocalMove(target, target_transform));
         }
         static public UCL_Tweener UCL_LocalMove(this Transform target, float duration, Vector3 target_position) {
             return LibTween.Tweener(duration).AddComponent(TC_LocalMove(target, target_position));

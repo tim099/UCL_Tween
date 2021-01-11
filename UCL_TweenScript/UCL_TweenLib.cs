@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UCL.TweenLib {
     public static class Lib {
-        public const string LibName = "TweenLib";
+        public const string LibName = "UCL_TweenLib";
     }
     public static class LibTC {
         static public UCL_TC_Action Action(System.Action<float> act) {

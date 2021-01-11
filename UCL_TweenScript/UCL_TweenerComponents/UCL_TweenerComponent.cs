@@ -127,7 +127,7 @@ namespace UCL.TweenLib {
                     if(GUILayout.Button(new GUIContent(type_name + " not supported by UCL_TC_Data yet!!",
                         "Click this button to open UCL_TC_Data script."))) {
                         //Assets/UCL/UCL_Modules/UCL_Tween/UCL_TweenScript/UCL_TweenBehaviors/UCL_TweenComponentDatas/UCL_TC_Data.cs
-                        string sc_path = Core.FileLib.EditorLib.GetLibFolderPath(TweenLib.Lib.LibName)
+                        string sc_path = Core.FileLib.EditorLib.GetLibFolderPath(Core.FileLib.LibName.UCL_TweenLib)
                          + "/UCL_TweenScript/UCL_TweenBehaviors/UCL_TweenComponentDatas/UCL_TC_Data.cs";
                         //Debug.Log("EaseScript:" + sc_path);
                         var obj = UnityEditor.AssetDatabase.LoadMainAssetAtPath(sc_path);
