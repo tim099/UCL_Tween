@@ -7,6 +7,7 @@ namespace UCL.TweenLib {
     [Core.ATTR.EnableUCLEditor]
     //[Core.ATTR.RequiresConstantRepaint]
 #endif
+    [AddComponentMenu("UCL_Tween/UCL_TB_Tweener")]
     public class UCL_TB_Tweener : UCL_TweenBehavior {
         #region Editor
 
