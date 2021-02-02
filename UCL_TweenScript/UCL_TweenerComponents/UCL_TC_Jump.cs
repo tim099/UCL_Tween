@@ -142,8 +142,10 @@ namespace UCL.TweenLib
                     m_TargetVal = m_TargetTransform.position;
                 }
             }
-            
-            Vector3 cur_pos = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
+
+            Vector3 cur_pos = m_StartVal;
+
+            if(!m_StartVal.Equals(m_TargetVal)) cur_pos = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
             Vector3 height = m_Up;
             
             if(m_JumpTimes > 0) {
@@ -157,21 +159,34 @@ namespace UCL.TweenLib
                 }
                 
                 Vector3 dir = m_TargetVal - m_StartVal;
-                height = m_Up - Vector3.Project(m_Up, dir);
+                if (dir.magnitude > 0.001f)
+                {
+                    height = m_Up - Vector3.Project(m_Up, dir);
+                    if (height.Equals(Vector3.zero))
+                    {
+                        height = m_Up;
+                    }
+                }
+                else
+                {
+                    height = m_Up;
+                }
+
                 float l = height.magnitude;
                 if(l > 0 && l != 1) {
                     height.Normalize();
                 }
+                //Debug.LogWarning("h:" + h + ",m_Height:" + m_Height + ",height:" + height+ ",dir:"+ dir+ ",m_Up:"+ m_Up);
                 height = h * m_Height * height;
+                //Debug.LogWarning("h:" + h + ",m_Height:" + m_Height + ",2height:" + height);
             }
-
             
             if(m_Local) {
                 m_Target.transform.localPosition = cur_pos + height;
             } else {
                 m_Target.transform.position = cur_pos + height;
             }
-            //Debug.LogWarning("ComponentUpdate:" + pos+ ",m_StartVal:"+ m_StartVal+ ",m_TargetVal:"+ m_TargetVal);
+            //Debug.LogWarning("ComponentUpdate:" + pos+ ",m_StartVal:"+ m_StartVal+ ",m_TargetVal:"+ m_TargetVal+ ",height:"+ height+ ",cur_pos:"+ cur_pos);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace UCL.TweenLib {
         Shake,
         Scale,
         Jump,
+        EulerRotation,
     }
     /// <summary>
     ///UCL_TweenerComponent extened action on tweener
@@ -69,6 +70,11 @@ namespace UCL.TweenLib {
                     }
                 case TC_Type.Jump: {
                         tc = UCL_TC_Jump.Create();
+                        break;
+                    }
+                case TC_Type.EulerRotation:
+                    {
+                        tc = UCL_TC_EulerRotation.Create();
                         break;
                     }
                 case TC_Type.TweenerComponent: {
