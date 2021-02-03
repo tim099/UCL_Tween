@@ -43,6 +43,18 @@ namespace UCL.TweenLib {
             return this;
         }
         /// <summary>
+        /// Append a System.Action in this sequence
+        /// </summary>
+        /// <param name="iAct"></param>
+        /// <returns></returns>
+        public UCL_Sequence Append(System.Action iAct)
+        {
+            var aTweener = TweenLib.LibTween.Tweener(float.Epsilon);
+            aTweener.OnStart(iAct);
+            Append(aTweener);
+            return this;
+        }
+        /// <summary>
         /// Join a tween to this sequence, tween will start on current appended tween start
         /// </summary>
         /// <param name="tween"></param>

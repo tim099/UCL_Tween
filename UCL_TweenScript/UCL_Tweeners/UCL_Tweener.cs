@@ -19,9 +19,22 @@ namespace UCL.TweenLib {
                 return name;
             }
         }
-
+        /// <summary>
+        /// Ease of the tweener
+        /// </summary>
         protected Ease.UCL_Ease m_Ease = null;
+        /// <summary>
+        /// Reverse the tweener
+        /// </summary>
         protected bool m_Reverse = false;
+        /// <summary>
+        /// Do backfolding(x from 0 to 1 then go from 1 to 0)
+        /// 折返 x值從0到達1之後折返回0
+        /// </summary>
+        protected bool m_Backfolding = false;
+        /// <summary>
+        /// Trigger complete action on exception heppened
+        /// </summary>
         protected bool m_CompleteOnException = false;
         protected System.Action<float> m_UpdateAct = null;
         protected List<UCL_TweenerComponent> m_Components = new List<UCL_TweenerComponent>();
@@ -162,6 +175,14 @@ namespace UCL.TweenLib {
             float x = Timer;
             if(Duration > 0) x /= Duration;
             if(x > 1.0f) x = 1.0f;
+            if (m_Backfolding)
+            {
+                x = 2 * x;
+                if (x > 1f)
+                {
+                    x = 2 - x;
+                }
+            }
             return x;
         }
         virtual public float GetY() {
@@ -202,11 +223,20 @@ namespace UCL.TweenLib {
             m_CompleteOnException = val;
             return this;
         }
-        public UCL_Tweener SetReverse(bool val) {
-            m_Reverse = val;
+        /// <summary>
+        /// Reverse the movement of tweener
+        /// </summary>
+        /// <param name="iDoReverse"></param>
+        /// <returns></returns>
+        public UCL_Tweener SetReverse(bool iDoReverse) {
+            m_Reverse = iDoReverse;
             return this;
         }
-
+        public UCL_Tweener SetBackfolding(bool iDoBackfolding)
+        {
+            m_Backfolding = iDoBackfolding;
+            return this;
+        }
 #if UNITY_EDITOR
         override internal void OnInspectorGUI() {
             base.OnInspectorGUI();

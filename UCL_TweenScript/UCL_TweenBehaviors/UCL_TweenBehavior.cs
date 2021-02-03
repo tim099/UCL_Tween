@@ -31,7 +31,11 @@ namespace UCL.TweenLib {
 
         public bool m_EndOnDestroy = true;
         public bool m_EndOnDisable = false;
-
+        /// <summary>
+        /// Do backfolding(x from 0 to 1 then go from 1 to 0)
+        /// 折返 x值從0到達1之後折返回0
+        /// </summary>
+        public bool m_Backfolding = false;
         public bool m_Looping = false;
         
         public UnityEngine.Events.UnityEvent m_StartEvent;
