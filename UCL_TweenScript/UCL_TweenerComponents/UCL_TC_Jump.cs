@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace UCL.TweenLib
 {
+    #region Extension
     public static partial class Extension {
         /// <summary>
         /// Create a TC_Jump
@@ -62,6 +63,7 @@ namespace UCL.TweenLib
             return LibTween.Tweener(duration).AddComponent(TC_Jump(target, _TargetPosition, _JumpTimes, _Up, _Height, _Bounciness));
         }
     }
+    #endregion
     public class UCL_TC_Jump : UCL_TC_Transform
     {
 
