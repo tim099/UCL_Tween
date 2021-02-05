@@ -5,6 +5,29 @@ using UnityEngine;
 namespace UCL.TweenLib {
     public static partial class Extension {
         /// <summary>
+        /// Move target by offset
+        /// </summary>
+        /// <param name="iTarget">move target</param>
+        /// <param name="x">offset x</param>
+        /// <param name="y">offset y</param>
+        /// <param name="z">offset z</param>
+        /// <returns></returns>
+        static public UCL_TC_Move TC_MoveBy(this Transform iTarget, float x, float y, float z)
+        {
+            Vector3 aPos = iTarget.position;
+            return UCL_TC_Move.Create().Init(iTarget, aPos.x + x, aPos.y + y, aPos.z + z);
+        }
+        /// <summary>
+        /// Move target by offset
+        /// </summary>
+        /// <param name="iTarget">move target</param>
+        /// <param name="iOffSet">offset</param>
+        /// <returns></returns>
+        static public UCL_TC_Move TC_MoveBy(this Transform iTarget, Vector3 iOffSet)
+        {
+            return UCL_TC_Move.Create().Init(iTarget, iTarget.position + iOffSet);
+        }
+        /// <summary>
         /// Move target to target_position
         /// </summary>
         /// <param name="target">move target</param>
@@ -45,9 +68,9 @@ namespace UCL.TweenLib {
             return obj.Init(target, target_position);
         }
         static public UCL_TC_Move TC_LocalMove(this Transform target, float x, float y, float z) {
-            var obj = UCL_TC_Move.Create();
-            obj.SetLocal(true);
-            return obj.Init(target, x, y, z);
+            var aTC = UCL_TC_Move.Create();
+            aTC.SetLocal(true);
+            return aTC.Init(target, x, y, z);
         }
 
         /// <summary>

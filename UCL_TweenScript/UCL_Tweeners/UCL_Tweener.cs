@@ -171,6 +171,21 @@ namespace UCL.TweenLib {
 
             return new Vector2(x, GetY(x));
         }
+        /// <summary>
+        /// Get progress of tween (range from 0 ~ 1)
+        /// </summary>
+        /// <returns></returns>
+        virtual public float GetProgress()
+        {
+            float aProgress = Timer;
+            if (Duration > 0) aProgress /= Duration;
+            if (aProgress > 1.0f) aProgress = 1.0f;
+            return aProgress;
+        }
+        /// <summary>
+        /// Convert tween time to x(range from 0 ~ 1)
+        /// </summary>
+        /// <returns></returns>
         virtual public float GetX() {
             float x = Timer;
             if(Duration > 0) x /= Duration;
