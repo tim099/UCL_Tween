@@ -14,7 +14,7 @@ namespace UCL.TweenLib {
             OnEnable,//Invoke StartTween() On OnEnable()
             OnAwake,//Invoke StartTween() On Awake()
         }
-
+        public bool IsStarted { get { return m_Started; } }
 
         //[SerializeField] protected float m_Timer;//For Inspector
 
@@ -63,6 +63,7 @@ namespace UCL.TweenLib {
         /// Call this function to start TweenBehavior
         /// </summary>
         virtual public void StartTween(System.Action _end_act) {
+            m_End = false;
             if(m_Started) EndTween();
 
             m_EndAct = _end_act;
@@ -121,7 +122,11 @@ namespace UCL.TweenLib {
         virtual public void ResumeTween() { }
 
         virtual protected void OnDisable() {
-            if(m_EndOnDisable) EndTween();
+            if (m_EndOnDisable)
+            {
+                m_End = true;
+                EndTween();
+            }
         }
         virtual protected void OnEnable() {
             if(m_StartOption == StartOption.OnEnable) StartTween();
