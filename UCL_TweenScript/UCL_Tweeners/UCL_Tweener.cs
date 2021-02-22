@@ -96,6 +96,38 @@ namespace UCL.TweenLib {
 
             TweenerStart();
         }
+        virtual protected void TweenTimeUpdate(float iX)
+        {
+            float aY = GetY(iX);
+
+            foreach (var com in m_Components)
+            {
+                try
+                {
+                    com.Update(aY);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError("UCL_Tweener.SetTweenTime com.Update(y) Exception:" + e);
+                    Kill(m_CompleteOnException);
+                    return;
+                }
+            }
+            TweenerUpdate(aY);
+            if (m_UpdateAct != null)
+            {
+                try
+                {
+                    m_UpdateAct.Invoke(aY);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError("UCL_Tweener.SetTweenTime m_UpdateAct.Invoke(y) Exception:" + e);
+                    Kill(m_CompleteOnException);
+                    return;
+                }
+            }
+        }
         protected override long TimeUpdateAction(long time_delta) {
             long remains = 0;
             if(TimerMs > DurationMs) {
@@ -103,28 +135,7 @@ namespace UCL.TweenLib {
                 m_Timer.SetTime(m_Duration);
             }
 
-            float x = GetX();
-            float y = GetY(x);
-
-            foreach(var com in m_Components) {
-                try {
-                    com.Update(y);
-                } catch(System.Exception e) {
-                    Debug.LogError("UCL_Tweener.TimeUpdateAction com.Update(y) Exception:" + e);
-                    Kill(m_CompleteOnException);
-                    return remains;
-                }
-            }
-            TweenerUpdate(y);
-            if(m_UpdateAct != null) {
-                try {
-                    m_UpdateAct.Invoke(y);
-                } catch(System.Exception e) {
-                    Debug.LogError("UCL_Tweener.TimeUpdateAction m_UpdateAct.Invoke(y) Exception:" + e);
-                    Kill(m_CompleteOnException);
-                    return remains;
-                }
-            }
+            TweenTimeUpdate(GetX());
 
             return remains;
         }
@@ -135,33 +146,21 @@ namespace UCL.TweenLib {
                 m_Timer.SetTime(m_Duration);
             }
 
-            float x = GetX();
-            float y = GetY(x);
-
-            foreach(var com in m_Components) {
-                try {
-                    com.Update(y);
-                } catch(System.Exception e) {
-                    Debug.LogError("UCL_Tweener.TimeUpdateAction com.Update(y) Exception:" + e);
-                    Kill();
-                    return remains;
-                }
-            }
-            TweenerUpdate(y);
-            if(m_UpdateAct != null) {
-                try {
-                    m_UpdateAct.Invoke(y);
-                } catch(System.Exception e) {
-                    Debug.LogError("UCL_Tweener.TimeUpdateAction m_UpdateAct.Invoke(y) Exception:" + e);
-                    Kill();
-                    return remains;
-                }
-            }
+            TweenTimeUpdate(GetX());
 
             return remains;
         }
         protected override void CompleteAction() {
             base.CompleteAction();
+            if (m_Backfolding)
+            {
+                TweenTimeUpdate(0f);
+            }
+            else
+            {
+                TweenTimeUpdate(1f);
+            }
+
             foreach(var com in m_Components) com.Complete();
             TweenerCompleteAction();
         }
