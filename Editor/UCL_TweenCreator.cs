@@ -7,7 +7,7 @@ namespace UCL.TweenLib.Editor
     {
         [UnityEditor.MenuItem("GameObject/Effects/UCL_Tween/TB_Tweener")]
         private static void CreateTB_Tweener() {
-            Object selectedObject = UnityEditor.Selection.activeObject;
+            Object selectedObject = UCL.Core.EditorLib.SelectionMapper.activeObject;
 
             GameObject obj = selectedObject as GameObject;
             Transform p = null;
@@ -15,12 +15,12 @@ namespace UCL.TweenLib.Editor
                 p = obj.transform;
             }
             var tb = Core.GameObjectLib.Create<UCL_TB_Tweener>("TB_Tweener", p);
-            UnityEditor.Selection.activeObject = tb;
+            UCL.Core.EditorLib.SelectionMapper.activeObject = tb;
         }
 
         [UnityEditor.MenuItem("GameObject/Effects/UCL_Tween/TB_Move")]
         private static void CreateTB_Move() {
-            Object selectedObject = UnityEditor.Selection.activeObject;
+            Object selectedObject = UCL.Core.EditorLib.SelectionMapper.activeObject;
 
             GameObject obj = selectedObject as GameObject;
             Transform p = null;
@@ -28,11 +28,11 @@ namespace UCL.TweenLib.Editor
                 p = obj.transform;
             }
             var tb = Core.GameObjectLib.Create<UCL_TB_Move>("TB_Move", p);
-            UnityEditor.Selection.activeObject = tb;
+            UCL.Core.EditorLib.SelectionMapper.activeObject = tb;
         }
         [UnityEditor.MenuItem("GameObject/Effects/UCL_Tween/TB_Timer")]
         private static void CreateTB_Timer() {
-            Object selectedObject = UnityEditor.Selection.activeObject;
+            Object selectedObject = UCL.Core.EditorLib.SelectionMapper.activeObject;
 
             GameObject obj = selectedObject as GameObject;
             Transform p = null;
@@ -40,7 +40,7 @@ namespace UCL.TweenLib.Editor
                 p = obj.transform;
             }
             var tb = Core.GameObjectLib.Create<UCL_TB_Timer>("TB_Timer", p);
-            UnityEditor.Selection.activeObject = tb;
+            UCL.Core.EditorLib.SelectionMapper.activeObject = tb;
         }
     }
 }

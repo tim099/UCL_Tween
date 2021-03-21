@@ -136,9 +136,9 @@ namespace UCL.TweenLib {
                         string sc_path = Core.FileLib.EditorLib.GetLibFolderPath(Core.FileLib.LibName.UCL_TweenLib)
                          + "/UCL_TweenScript/UCL_TweenBehaviors/UCL_TweenComponentDatas/UCL_TC_Data.cs";
                         //Debug.Log("EaseScript:" + sc_path);
-                        var obj = UnityEditor.AssetDatabase.LoadMainAssetAtPath(sc_path);
-                        if(obj != null) {
-                            UnityEditor.Selection.activeObject = obj;
+                        var aObj = UCL.Core.EditorLib.AssetDatabaseMapper.LoadMainAssetAtPath(sc_path);
+                        if(aObj != null) {
+                            UnityEditor.Selection.activeObject = aObj;
                         }
                     }
                     //GUILayout.Box(type_name + " not support by UCL_TC_Data yet!!");

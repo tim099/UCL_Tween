@@ -38,9 +38,9 @@ namespace UCL.TweenLib.Demo {
 
             string sc_path = ease.GetScriptPath(Core.FileLib.EditorLib.GetLibFolderPath(Core.FileLib.LibName.UCL_TweenLib), ease.GetType().Name);
             Debug.Log("EaseScript:" + sc_path);
-            var obj = UnityEditor.AssetDatabase.LoadMainAssetAtPath(sc_path);
-            if(obj != null) {
-                UnityEditor.Selection.activeObject = obj;
+            var aObj = UCL.Core.EditorLib.AssetDatabaseMapper.LoadMainAssetAtPath(sc_path);
+            if(aObj != null) {
+                UCL.Core.EditorLib.SelectionMapper.activeObject = aObj;
             } else {
                 Debug.LogWarning("EaseScript:" + sc_path + " ,Not Found!!");
             }
