@@ -37,22 +37,20 @@ namespace UCL.TweenLib.Demo {
         }
         int count = 0;
         [Core.ATTR.UCL_FunctionButton]
+        [Core.ATTR.UCL_RuntimeOnly]
         public void StartTweener() {
-            if(UnityEditor.EditorApplication.isPlaying) {
-                var obj = Instantiate(m_Target.gameObject, m_Target.parent);
-                obj.name = "target " + ++count;
-                m_Cur = obj.transform.UCL_Move(m_Duration, m_Curve);
-                var cur = m_Cur;
-                m_Cur.SetEase(m_Ease)
-                    .OnComplete(delegate() {
-                        if(m_Cur == cur) {
-                            m_Cur = null;
-                        }
-                        Destroy(obj);
-                    }).Start();
-            } else {
-                Debug.LogWarning("StartTweener() !UnityEditor.EditorApplication.isPlaying");
-            }
+            var obj = Instantiate(m_Target.gameObject, m_Target.parent);
+            obj.name = "target " + ++count;
+            m_Cur = obj.transform.UCL_Move(m_Duration, m_Curve);
+            var cur = m_Cur;
+            m_Cur.SetEase(m_Ease)
+                .OnComplete(delegate () {
+                    if (m_Cur == cur)
+                    {
+                        m_Cur = null;
+                    }
+                    Destroy(obj);
+                }).Start();
         }
 #endif
 

@@ -42,7 +42,7 @@ namespace UCL.TweenLib {
                         modified = true;
                         tc.OnInspectorGUIBasic(data, sdata, tb.transform);
                         if(tc.OnInspectorGUI(data, sdata)) {//serializedObject
-                            EditorUtility.SetDirty(tb);
+                           UCL.Core.EditorLib.EditorUtilityMapper.SetDirty(tb);
                         }
                     }
 

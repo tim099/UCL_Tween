@@ -34,7 +34,7 @@ namespace UCL.TweenLib.Demo {
             if(m_Texture == null) {
                 m_Texture = new UCL_EaseTexture(128, 128, TextureFormat.ARGB32);
             }
-            if(UnityEditor.EditorApplication.isPlaying && m_Seq != null) {
+            if(UCL.Core.EditorLib.EditorApplicationMapper.isPlaying && m_Seq != null) {
                 UCL_EaseTexture.DrawEase(m_CurEase, m_Texture);
             } else {
                 UCL_EaseTexture.DrawEase(m_Ease, m_Texture);
