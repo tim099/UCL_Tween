@@ -182,6 +182,27 @@ namespace UCL.TweenLib {
             return aProgress;
         }
         /// <summary>
+        /// Convert tween time to x(range from 0 ~ 1) ,and Ignore Backfolding
+        /// </summary>
+        /// <returns></returns>
+        virtual public float GetOriginX()
+        {
+            float aX = Timer;
+            if (Duration > 0) aX /= Duration;
+            if (aX > 1.0f) aX = 1.0f;
+            return aX;
+        }
+        /// <summary>
+        /// Get tween position, f(X) = Y where f is the EaseFunction, and Ignore Backfolding
+        /// </summary>
+        /// <returns></returns>
+        virtual public float GetOriginY()
+        {
+            float aX = Timer;
+            if (Duration > 0) aX /= Duration;
+            return GetY(aX);
+        }
+        /// <summary>
         /// Convert tween time to x(range from 0 ~ 1)
         /// </summary>
         /// <returns></returns>
@@ -199,10 +220,12 @@ namespace UCL.TweenLib {
             }
             return x;
         }
+        /// <summary>
+        /// Get tween position, f(X) = Y where f is the EaseFunction
+        /// </summary>
+        /// <returns></returns>
         virtual public float GetY() {
-            float x = Timer;
-            if(Duration > 0) x /= Duration;
-            return GetY(x);
+            return GetY(GetX());
         }
         virtual public float GetY(float x) {
             float y = x;
