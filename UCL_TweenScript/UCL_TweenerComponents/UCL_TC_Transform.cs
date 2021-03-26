@@ -32,25 +32,16 @@ namespace UCL.TweenLib {
             tips += "\"TargetTransform\" is target position that \"Target\" will move to\n";
             return tips;
         }
-        override public void OnInspectorGUIBasic(UCL_TC_Data tc_data, UnityEditor.SerializedProperty sdata, Transform TB_transform) {
-            base.OnInspectorGUIBasic(tc_data, sdata, TB_transform);
-            //UnityEditor.EditorGUILayout.PropertyField(sdata.FindPropertyRelative("m_Type"));//,new GUIContent("Test")
-            UnityEditor.SerializedProperty t_datas = sdata.FindPropertyRelative("m_Transform");
-            if(TB_transform != null && t_datas != null) {
-                if(t_datas.arraySize == 0) {
-                    t_datas.InsertArrayElementAtIndex(0);
-                    t_datas.InsertArrayElementAtIndex(1);
-                    t_datas.GetArrayElementAtIndex(0).objectReferenceValue = TB_transform;
+        override public void OnInspectorGUIBasic(UCL_TC_Data iTcData, UnityEditor.SerializedProperty iSerializedProperty, Transform iTransform) {
+            base.OnInspectorGUIBasic(iTcData, iSerializedProperty, iTransform);
+            UnityEditor.SerializedProperty aTransformDatas = iSerializedProperty.FindPropertyRelative("m_Transform");
+            if(iTransform != null && aTransformDatas != null) {
+                if(aTransformDatas.arraySize == 0) {//Init
+                    aTransformDatas.InsertArrayElementAtIndex(0);
+                    aTransformDatas.InsertArrayElementAtIndex(1);
+                    aTransformDatas.GetArrayElementAtIndex(0).objectReferenceValue = iTransform;
                 }
             }
-            /*
-            if(tc_data.m_Transform == null) {
-                tc_data.m_Transform = new List<Transform>();
-            }
-            if(tc_data.m_Transform.Count == 0) {
-                tc_data.m_Transform.Add(TB_transform);
-            }
-            */
         }
 #endif
         #endregion

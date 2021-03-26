@@ -179,8 +179,8 @@ namespace UCL.TweenLib {
             if(m_StartAct != null) {
                 try {
                     m_StartAct.Invoke();
-                } catch(System.Exception e) {
-                    Debug.LogError("UCL_Tween m_StartAct.Invoke() Exception:" + e);
+                } catch(System.Exception iE) {
+                    Debug.LogException(iE);
                 }
                 
             }
@@ -267,7 +267,7 @@ namespace UCL.TweenLib {
                 try {
                     m_CompleteAct.Invoke();
                 } catch(System.Exception e) {
-                    Debug.LogError("UCL_Tween m_CompleteAct.Invoke() Exception:" + e);
+                    Debug.LogException(e);
                 }
             }
         }

@@ -11,16 +11,16 @@ namespace UCL.TweenLib {
             UCL_TB_Tweener tb = target as UCL_TB_Tweener;
             GUILayout.BeginVertical();
 
-            var scoms = serializedObject.FindProperty("m_TweenerComponents");
-            var coms = tb.m_TweenerComponents;
+            var aSerializedComponents = serializedObject.FindProperty("m_TweenerComponents");
+            var aComponents = tb.m_TweenerComponents;
             int add_at = -1;
             int delete_at = -1;
             bool modified = false;
             EditorGUI.BeginChangeCheck();
-            if(coms != null) {
-                for(int i = 0; i < coms.Count; i++) {
-                    var data = coms[i];
-                    var sdata = scoms.GetArrayElementAtIndex(i);
+            if(aComponents != null) {
+                for(int i = 0; i < aComponents.Count; i++) {
+                    var data = aComponents[i];
+                    var sdata = aSerializedComponents.GetArrayElementAtIndex(i);
                     var tc = UCL_TweenerComponent.Create(data.m_Type);
                     var type = tc.GetType();
                     /*
