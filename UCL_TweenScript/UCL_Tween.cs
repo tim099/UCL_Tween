@@ -251,8 +251,8 @@ namespace UCL.TweenLib {
         virtual public bool KillOnTransform(Transform t , bool compelete = false) {
             return false;
         }
-        virtual public void Kill(bool compelete = false) {
-            if(compelete) Complete();
+        virtual public void Kill(bool iCompelete = false) {
+            if(iCompelete) Complete();
             m_End = true;
         }
         virtual internal protected void Complete() {
