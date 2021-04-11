@@ -106,9 +106,9 @@ namespace UCL.TweenLib {
                 {
                     com.Update(aY);
                 }
-                catch (System.Exception e)
+                catch (System.Exception iE)
                 {
-                    Debug.LogError("UCL_Tweener.SetTweenTime com.Update(y) Exception:" + e);
+                    Debug.LogException(iE);
                     Kill(m_CompleteOnException);
                     return;
                 }
