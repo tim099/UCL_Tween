@@ -62,11 +62,11 @@ namespace UCL.TweenLib {
         /// <summary>
         /// Call this function to start TweenBehavior
         /// </summary>
-        virtual public void StartTween(System.Action _end_act) {
+        virtual public void StartTween(System.Action iEndAct) {
             m_End = false;
             if(m_Started) EndTween();
 
-            m_EndAct = _end_act;
+            m_EndAct = iEndAct;
             //Debug.LogWarning("StartTween()!!");
             m_Started = true;
 
