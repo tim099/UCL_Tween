@@ -100,11 +100,11 @@ namespace UCL.TweenLib {
         {
             float aY = GetY(iX);
 
-            foreach (var com in m_Components)
+            foreach (var aComponent in m_Components)
             {
                 try
                 {
-                    com.Update(aY);
+                    aComponent.Update(aY);
                 }
                 catch (System.Exception iE)
                 {

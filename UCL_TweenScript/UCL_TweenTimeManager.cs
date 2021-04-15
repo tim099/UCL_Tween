@@ -156,7 +156,7 @@ namespace UCL.TweenLib {
             }
             return delta_time;
         }
-        void TimeUpdateAction(System.Action<UCL_Tween> update_act) {
+        void TimeUpdateAction(System.Action<UCL_Tween> iUpdateAct) {
             m_Updating = true;
             for(int i = 0; i < m_Tweens.Count; i++) {
                 var tween = m_Tweens[i];
@@ -164,7 +164,7 @@ namespace UCL.TweenLib {
                     m_EndTweens.Add(tween);
                 } else {
                     try {
-                        update_act.Invoke(tween);
+                        iUpdateAct.Invoke(tween);
                         //tween.TimeUpdate(delta_time);
                     } catch(System.Exception e) {
                         tween.Kill();
