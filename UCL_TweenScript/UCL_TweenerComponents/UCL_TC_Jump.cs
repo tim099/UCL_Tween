@@ -9,58 +9,60 @@ namespace UCL.TweenLib
         /// <summary>
         /// Create a TC_Jump
         /// </summary>
-        /// <param name="target">Move target</param>
-        /// <param name="_TargetTransform">Target Transform that target will move to</param>
-        /// <param name="_JumpTimes">Jump times</param>
-        /// <param name="_Up">Up vector of jump , etc. (0,1,0)</param>
-        /// <param name="_Height">Initial Jump height</param>
-        /// <param name="_Bounciness">Height decade after each jump, if == 1 then the height stay the same each jump</param>
+        /// <param name="iTarget">Move target</param>
+        /// <param name="iTargetTransform">Target Transform that target will move to</param>
+        /// <param name="iJumpTimes">Jump times</param>
+        /// <param name="iUp">Up vector of jump , etc. (0,1,0)</param>
+        /// <param name="iHeight">Initial Jump height</param>
+        /// <param name="iBounciness">Height decade after each jump, if == 1 then the height stay the same each jump</param>
         /// <returns></returns>
-        static public UCL_TC_Jump TC_Jump(this Transform target, Transform _TargetTransform, int _JumpTimes, Vector3 _Up, float _Height, float _Bounciness) {
-            return UCL_TC_Jump.Create().Init(target, _TargetTransform, _JumpTimes, _Up, _Height, _Bounciness);
+        static public UCL_TC_Jump TC_Jump(this Transform iTarget, Transform iTargetTransform, int iJumpTimes, Vector3 iUp, float iHeight, float iBounciness) {
+            return UCL_TC_Jump.Create().Init(iTarget, iTargetTransform, iJumpTimes, iUp, iHeight, iBounciness);
         }
         /// <summary>
         /// Create a TC_Jump
         /// </summary>
-        /// <param name="target">Move target</param>
-        /// <param name="_TargetPosition">Target position that target will move to</param>
-        /// <param name="_JumpTimes">Jump times</param>
-        /// <param name="_Up">Up vector of jump , etc. (0,1,0)</param>
-        /// <param name="_Height">Initial Jump height</param>
-        /// <param name="_Bounciness">Height decade after each jump, if == 1 then the height stay the same each jump</param>
+        /// <param name="iTarget">Move target</param>
+        /// <param name="iTargetPosition">Target position that target will move to</param>
+        /// <param name="iJumpTimes">Jump times</param>
+        /// <param name="iUp">Up vector of jump , etc. (0,1,0)</param>
+        /// <param name="iHeight">Initial Jump height</param>
+        /// <param name="iBounciness">Height decade after each jump, if == 1 then the height stay the same each jump</param>
         /// <returns></returns>
-        static public UCL_TC_Jump TC_Jump(this Transform target, Vector3 _TargetPosition, int _JumpTimes, Vector3 _Up, float _Height, float _Bounciness) {
-            return UCL_TC_Jump.Create().Init(target, _TargetPosition, _JumpTimes, _Up, _Height, _Bounciness);
+        static public UCL_TC_Jump TC_Jump(this Transform iTarget, Vector3 iTargetPosition, int iJumpTimes, Vector3 iUp, float iHeight, float iBounciness) {
+            return UCL_TC_Jump.Create().Init(iTarget, iTargetPosition, iJumpTimes, iUp, iHeight, iBounciness);
         }
 
         /// <summary>
         /// Create a Tweener contains TC_Jump
         /// </summary>
-        /// <param name="duration">duration of tweener</param>
-        /// <param name="target">Move target</param>
-        /// <param name="_TargetTransform">Target Transform that target will move to</param>
-        /// <param name="_JumpTimes">Jump times</param>
-        /// <param name="_Up">Up vector of jump , etc. (0,1,0)</param>
-        /// <param name="_Height">Initial Jump height</param>
-        /// <param name="_Bounciness">Height decade after each jump, if == 1 then the height stay the same each jump</param>
+        /// <param name="iDuration">duration of tweener</param>
+        /// <param name="iTarget">Move target</param>
+        /// <param name="iTargetTransform">Target Transform that target will move to</param>
+        /// <param name="iJumpTimes">Jump times</param>
+        /// <param name="iUp">Up vector of jump , etc. (0,1,0)</param>
+        /// <param name="iHeight">Initial Jump height</param>
+        /// <param name="iBounciness">Height decade after each jump, if == 1 then the height stay the same each jump</param>
         /// <returns></returns>
-        static public UCL_Tweener UCL_Jump(this Transform target, float duration, Transform _TargetTransform, int _JumpTimes, Vector3 _Up, float _Height, float _Bounciness) {
-            return LibTween.Tweener(duration).AddComponent(TC_Jump(target, _TargetTransform, _JumpTimes, _Up, _Height, _Bounciness));
+        static public UCL_Tweener UCL_Jump(this Transform iTarget, float iDuration, Transform iTargetTransform, int iJumpTimes,
+            Vector3 iUp, float iHeight, float iBounciness) {
+            return LibTween.Tweener(iDuration).AddComponent(TC_Jump(iTarget, iTargetTransform, iJumpTimes, iUp, iHeight, iBounciness));
         }
 
         /// <summary>
         /// Create a Tweener contains TC_Jump
         /// </summary>
-        /// <param name="duration">duration of tweener</param>
-        /// <param name="target">Move target</param>
-        /// <param name="_TargetPosition">Target position that target will move to</param>
-        /// <param name="_JumpTimes">Jump times</param>
-        /// <param name="_Up">Up vector of jump , etc. (0,1,0)</param>
-        /// <param name="_Height">Initial Jump height</param>
-        /// <param name="_Bounciness">Height decade after each jump, if == 1 then the height stay the same each jump</param>
+        /// <param name="iDuration">duration of tweener</param>
+        /// <param name="iTarget">Move target</param>
+        /// <param name="iTargetPosition">Target position that target will move to</param>
+        /// <param name="iJumpTimes">Jump times</param>
+        /// <param name="iUp">Up vector of jump , etc. (0,1,0)</param>
+        /// <param name="iHeight">Initial Jump height</param>
+        /// <param name="iBounciness">Height decade after each jump, if == 1 then the height stay the same each jump</param>
         /// <returns></returns>
-        static public UCL_Tweener UCL_Jump(this Transform target, float duration, Vector3 _TargetPosition, int _JumpTimes, Vector3 _Up, float _Height, float _Bounciness) {
-            return LibTween.Tweener(duration).AddComponent(TC_Jump(target, _TargetPosition, _JumpTimes, _Up, _Height, _Bounciness));
+        static public UCL_Tweener UCL_Jump(this Transform iTarget, float iDuration, Vector3 iTargetPosition, int iJumpTimes,
+            Vector3 iUp, float iHeight, float iBounciness) {
+            return LibTween.Tweener(iDuration).AddComponent(TC_Jump(iTarget, iTargetPosition, iJumpTimes, iUp, iHeight, iBounciness));
         }
     }
     #endregion
@@ -110,13 +112,14 @@ namespace UCL.TweenLib
         /// Start position of "Target"
         /// </summary>
         [HideInInspector] protected Vector3 m_StartVal;
-        virtual public UCL_TC_Jump Init(Transform target, Transform _TargetTransform, int _JumpTimes, Vector3 _Up, float _Height, float _Bounciness) {
-            m_Target = target;
-            m_TargetTransform = _TargetTransform;
-            m_JumpTimes = _JumpTimes;
-            m_Up = _Up.normalized;
-            m_Height = _Height;
-            m_Bounciness = _Bounciness;
+
+        virtual public UCL_TC_Jump Init(Transform iTarget, Transform iTargetTransform, int iJumpTimes, Vector3 iUp, float iHeight, float iBounciness) {
+            m_Target = iTarget;
+            m_TargetTransform = iTargetTransform;
+            m_JumpTimes = iJumpTimes;
+            m_Up = iUp.normalized;
+            m_Height = iHeight;
+            m_Bounciness = iBounciness;
             return this;
         }
         virtual public UCL_TC_Jump Init(Transform target, Vector3 _TargetVal, int _JumpTimes, Vector3 _Up, float _Height, float _Bounciness) {
