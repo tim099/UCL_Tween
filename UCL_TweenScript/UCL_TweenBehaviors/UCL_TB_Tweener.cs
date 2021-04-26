@@ -50,7 +50,7 @@ namespace UCL.TweenLib {
         /// <summary>
         /// override this to implement StartTweener action
         /// </summary>
-        virtual public void StartTweener() {
+        virtual protected void StartTweener() {
             var aTweener = CreateTweener();
             if (m_Backfolding)
             {

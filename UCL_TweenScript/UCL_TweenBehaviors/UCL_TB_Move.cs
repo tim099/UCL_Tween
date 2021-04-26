@@ -5,7 +5,7 @@ using UnityEngine;
 namespace UCL.TweenLib {
     public class UCL_TB_Move : UCL_TB_Transform {
         public Transform m_TargetTransform;
-        public override void StartTweener() {
+        protected override void StartTweener() {
             CreateTweener().AddComponent(m_Target.TC_Move(m_TargetTransform.position));
             m_Tweener.Start(m_TimeManager);
         }

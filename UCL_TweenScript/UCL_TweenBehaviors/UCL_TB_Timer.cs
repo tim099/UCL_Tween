@@ -19,7 +19,7 @@ namespace UCL.TweenLib {
         public int m_Threshold = 0;
 
         protected int m_Time = 0;
-        public override void StartTweener() {
+        protected override void StartTweener() {
             TimerUpdate(Mathf.CeilToInt(m_Duration));
             CreateTweener().OnUpdate((y)=> {
                 int time = Mathf.CeilToInt(m_Duration - m_Tweener.Timer);
