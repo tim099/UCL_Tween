@@ -126,9 +126,9 @@ namespace UCL.TweenLib {
         virtual public UCL_TC_Move Init(Transform target, float x, float y, float z) {
             return Init(target, new Vector3(x,y,z));
         }
-        virtual public UCL_TC_Move Init(Transform target, Transform _TargetTransform) {
-            m_Target = target;
-            m_TargetTransform = _TargetTransform;
+        virtual public UCL_TC_Move Init(Transform iTarget, Transform iTargetTransform) {
+            m_Target = iTarget;
+            m_TargetTransform = iTargetTransform;
             return this;
         }
         protected internal override void Start() {
@@ -147,9 +147,9 @@ namespace UCL.TweenLib {
                 }
             }
             if(m_Local) {
-                m_Target.transform.localPosition = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
+                m_Target.localPosition = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
             } else {
-                m_Target.transform.position = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
+                m_Target.position = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
             }
             //Debug.LogWarning("ComponentUpdate:" + pos+ ",m_StartVal:"+ m_StartVal+ ",m_TargetVal:"+ m_TargetVal);
         }

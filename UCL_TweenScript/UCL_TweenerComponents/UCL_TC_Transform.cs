@@ -45,12 +45,12 @@ namespace UCL.TweenLib {
         }
 #endif
         #endregion
-        public UCL_TC_Transform SetTarget(Transform _Target) {
-            m_Target = _Target;
+        public UCL_TC_Transform SetTarget(Transform iTarget) {
+            m_Target = iTarget;
             return this;
         }
-        public UCL_TC_Transform SetTargetTransform(Transform _TargetTransform) {
-            m_TargetTransform = _TargetTransform;
+        public UCL_TC_Transform SetTargetTransform(Transform iTargetTransform) {
+            m_TargetTransform = iTargetTransform;
             return this;
         }
         public UCL_TC_Transform SetLocal(bool local) {
