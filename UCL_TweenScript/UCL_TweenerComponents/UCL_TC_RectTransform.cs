@@ -107,7 +107,7 @@ namespace UCL.TweenLib
             var iTarget = m_TargetTransform;
 
             //Debug.LogError("aTarget.sizeDelta:" + aTarget.sizeDelta);
-            aTarget.pivot = iTarget.pivot;
+            aTarget.pivot = new Vector2(0.5f, 0.5f);//iTarget.pivot;
             aTarget.anchorMin = 0.5f * Vector2.one;
             aTarget.anchorMax = 0.5f * Vector2.one;
 
