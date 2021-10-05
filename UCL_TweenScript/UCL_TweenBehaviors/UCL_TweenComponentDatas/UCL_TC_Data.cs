@@ -47,6 +47,7 @@ namespace UCL.TweenLib {
         public List<System.Single> m_Single;
         //public List<System.Double> m_Double;
 
+        public List<string> m_FieldNames = new List<string>();
         [HideInInspector] public bool m_Foldout = false;
         //public byte[] m_Data;
 

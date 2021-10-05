@@ -278,8 +278,8 @@ namespace UCL.TweenLib {
         override internal void OnInspectorGUI() {
             base.OnInspectorGUI();
             GUILayout.BeginVertical();
-            foreach(var tc in m_Components) {
-                tc.OnInspectorGUI();
+            foreach(var aComponent in m_Components) {
+                aComponent.OnInspectorGUI();
             }
             GUILayout.EndVertical();
         }

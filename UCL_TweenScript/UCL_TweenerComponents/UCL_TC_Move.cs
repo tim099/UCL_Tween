@@ -98,21 +98,12 @@ namespace UCL.TweenLib {
         }
     }
     public class UCL_TC_Move : UCL_TC_Transform {
-        #region EDITOR
-#if UNITY_EDITOR
-        public override string OnInspectorGUITips() {
-            var tips = base.OnInspectorGUITips();
-            tips += "\"TargetVal\" is target position that \"Target\" will move to " +
-                "(if \"TargetTransform\" is not null ,\"Target\" will move to \"TargetTransform\" instead)";
-            return tips;
-        }
-#endif
-        #endregion
         override public TC_Type GetTC_Type() { return TC_Type.Move; }
 
         /// <summary>
         /// Target position that "Target" will move to
         /// </summary>
+        [Header("Target position that Target will move to\n(If m_TargetTransform is not null, then this value will override by m_TargetTransform)")]
         protected Vector3 m_TargetVal;
         [HideInInspector] protected Vector3 m_StartVal;
         public static UCL_TC_Move Create() {

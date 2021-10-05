@@ -12,7 +12,7 @@ namespace UCL.TweenLib {
         #region Editor
 
 #if UNITY_EDITOR
-        Ease.UCL_EaseTexture m_EaseTexture;
+        static Ease.UCL_EaseTexture m_EaseTexture;
         [Core.ATTR.UCL_DrawTexture2D]
         public Core.TextureLib.UCL_Texture2D Editor_DrawEaseCurve() {
             if(m_EaseTexture == null) {
@@ -20,7 +20,6 @@ namespace UCL.TweenLib {
             }
             Ease.UCL_EaseTexture.DrawEase(m_Ease, m_EaseTexture);
             return m_EaseTexture;
-            //GUILayout.Box(m_EaseTexture.texture);
         }
         [Core.ATTR.UCL_RuntimeOnly]
         [Core.ATTR.UCL_FunctionButton("Time Alter -0.5 sec", -0.5f)]

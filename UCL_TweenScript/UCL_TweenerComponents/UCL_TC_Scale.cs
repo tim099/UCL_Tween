@@ -49,6 +49,11 @@ namespace UCL.TweenLib {
         protected Vector3 m_TargetVal;
         protected Vector3 m_StartVal;
 
+        /// <summary>
+        /// Use start value instead of Target initial value
+        /// </summary>
+        [Header("Use start value instead of Target initial scale value")]
+        protected bool m_UseStartValue = false;
         public static UCL_TC_Scale Create() {
             return new UCL_TC_Scale();
         }
@@ -61,7 +66,10 @@ namespace UCL.TweenLib {
             return Init(target, new Vector3(x, y, z));
         }
         protected internal override void Start() {
-            m_StartVal = m_Target.localScale;
+            if (!m_UseStartValue)
+            {
+                m_StartVal = m_Target.localScale;
+            }
         }
         protected override void ComponentUpdate(float pos) {
             if(m_TargetTransform) {

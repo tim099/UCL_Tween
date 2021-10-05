@@ -14,23 +14,32 @@ namespace UCL.TweenLib {
             }
         }
         override public Transform GetTarget() { return m_Target; }
-        //[Tooltip("Target that tween component move")]
-        //[Header("Move target")]
+        /// <summary>
+        /// Move target of TweenerComponent
+        /// </summary>
+        [Header("Move target of TweenerComponent")]
         protected Transform m_Target;
 
-        //[Header("Target position")]
+
         /// <summary>
-        /// Target Transform that target will move to
+        /// TargetTransform is target position where Target will move to
         /// </summary>
+        [Header("Target position where Target will move to")]
         protected Transform m_TargetTransform;
+
+        /// <summary>
+        /// Do on local(local position, local rotation)
+        /// </summary>
+        [Header("Do on local(local position, local rotation)")]
         protected bool m_Local = false;
+
         #region EDITOR
 #if UNITY_EDITOR
         public override string OnInspectorGUITips() {
-            var tips = base.OnInspectorGUITips();
-            tips += "\"Target\" is the move target of TweenerComponent\n";
-            tips += "\"TargetTransform\" is target position that \"Target\" will move to\n";
-            return tips;
+            var aTips = base.OnInspectorGUITips();
+            //tips += "\"Target\" is the move target of TweenerComponent\n";
+            //tips += "\"TargetTransform\" is target position that \"Target\" will move to\n";
+            return aTips;
         }
         override public void OnInspectorGUIBasic(UCL_TC_Data iTcData, UnityEditor.SerializedProperty iSerializedProperty, Transform iTransform) {
             base.OnInspectorGUIBasic(iTcData, iSerializedProperty, iTransform);

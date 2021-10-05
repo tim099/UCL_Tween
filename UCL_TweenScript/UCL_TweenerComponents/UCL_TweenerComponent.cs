@@ -109,31 +109,49 @@ namespace UCL.TweenLib {
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        virtual public bool OnInspectorGUI(UCL_TC_Data tc_data, UnityEditor.SerializedProperty sdata) {
+        virtual public bool OnInspectorGUI(UCL_TC_Data iTC_Data, UnityEditor.SerializedProperty iSerializedProperty) {
 
-            var type = this.GetType();
+            var aType = this.GetType();
+            var aFieldNamesProperty = iSerializedProperty.FindPropertyRelative("m_FieldNames");
 
-            FieldInfo[] fieldInfos1 = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetProperty | BindingFlags.Instance);
-            Dictionary<System.Type, List<string>> m_Names = new Dictionary<System.Type, List<string>>();
-            System.Action<FieldInfo> parse_fieldinfo = delegate (FieldInfo info) {
-                if(info.GetCustomAttribute<HideInInspector>() != null) return;
-                var value = info.GetValue(this);
-                System.Type info_type = info.FieldType;
-                if(info_type.IsGenericType) return;
+            FieldInfo[] aFieldInfos = aType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetProperty | BindingFlags.Instance);
+            Dictionary<Type, List<FieldInfo>> aFieldInfosDic = new Dictionary<System.Type, List<FieldInfo>>();
+            List<string> aFieldNames = new List<string>();
+            Action<FieldInfo> aParseFieldinfo = delegate (FieldInfo iFieldInfo) {
+                if(iFieldInfo.GetCustomAttribute<HideInInspector>() != null) return;
+                //var value = iFieldInfo.GetValue(this);
+                Type aInfoType = iFieldInfo.FieldType;
+                if(aInfoType.IsGenericType) return;
 
-                if(!m_Names.ContainsKey(info_type)) {
-                    m_Names.Add(info_type, new List<string>());
+                if(!aFieldInfosDic.ContainsKey(aInfoType)) {
+                    aFieldInfosDic.Add(aInfoType, new List<FieldInfo>());
                 }
-                m_Names[info_type].Add(info.Name);
+                aFieldInfosDic[aInfoType].Add(iFieldInfo);
+                aFieldNames.Add(iFieldInfo.Name);
             };
 
-            for(int i = 0; i < fieldInfos1.Length; i++) {
-                parse_fieldinfo(fieldInfos1[i]);
+            for (int i = 0; i < aFieldInfos.Length; i++) {
+                aParseFieldinfo(aFieldInfos[i]);
             }
-            System.Action<string, List<string>> draw_data = delegate (string type_name, List<string> type_names) {
-                var t_datas = sdata.FindPropertyRelative("m_" + type_name);
-                if(t_datas == null) {
-                    if(GUILayout.Button(new GUIContent(type_name + " not supported by UCL_TC_Data yet!!",
+
+            {//record the field names
+                while (aFieldNames.Count > aFieldNamesProperty.arraySize)
+                {
+                    aFieldNamesProperty.InsertArrayElementAtIndex(aFieldNamesProperty.arraySize);
+                }
+                while (aFieldNames.Count < aFieldNamesProperty.arraySize)
+                {
+                    aFieldNamesProperty.DeleteArrayElementAtIndex(aFieldNamesProperty.arraySize - 1);
+                }
+                for (int i = 0; i < aFieldNames.Count; i++)
+                {
+                    aFieldNamesProperty.GetArrayElementAtIndex(i).stringValue = aFieldNames[i];
+                }
+            }
+            Action<string, List<FieldInfo>> aDrawData = delegate (string iTypeName, List<FieldInfo> iFieldInfos) {
+                var aDatas = iSerializedProperty.FindPropertyRelative("m_" + iTypeName);
+                if(aDatas == null) {
+                    if(GUILayout.Button(new GUIContent(iTypeName + " not supported by UCL_TC_Data yet!!",
                         "Click this button to open UCL_TC_Data script."))) {
                         //Assets/UCL/UCL_Modules/UCL_Tween/UCL_TweenScript/UCL_TweenBehaviors/UCL_TweenComponentDatas/UCL_TC_Data.cs
                         string sc_path = Core.FileLib.EditorLib.GetLibFolderPath(Core.FileLib.LibName.UCL_TweenLib)
@@ -147,23 +165,37 @@ namespace UCL.TweenLib {
                     //GUILayout.Box(type_name + " not support by UCL_TC_Data yet!!");
                     return;
                 }
-                while(type_names.Count > t_datas.arraySize) {
-                    t_datas.InsertArrayElementAtIndex(t_datas.arraySize);
+                while(iFieldInfos.Count > aDatas.arraySize) {
+                    aDatas.InsertArrayElementAtIndex(aDatas.arraySize);
+                    var aFieldInfo = iFieldInfos[aDatas.arraySize - 1];
+                    if (aFieldInfo.FieldType.IsBool())
+                    {
+                        bool aNewVal = (bool)iFieldInfos[aDatas.arraySize - 1].GetValue(this);
+                        //Debug.LogError("aNewVal:" + aNewVal+ ",aFieldInfo.Name:" + aFieldInfo.Name);
+                        aDatas.GetArrayElementAtIndex(aDatas.arraySize - 1).boolValue = aNewVal;
+                    }
                 }
-                while(type_names.Count < t_datas.arraySize) {
-                    t_datas.DeleteArrayElementAtIndex(t_datas.arraySize - 1);
+                while(iFieldInfos.Count < aDatas.arraySize) {
+                    aDatas.DeleteArrayElementAtIndex(aDatas.arraySize - 1);
                 }
-                for(int i = 0; i < type_names.Count && i < t_datas.arraySize; i++) {
-                    var t_name = type_names[i];
-                    UnityEditor.EditorGUILayout.PropertyField(t_datas.GetArrayElementAtIndex(i),
-                        new GUIContent(t_name.StartsWith("m_") ? t_name.Remove(0, 2) : t_name), true);
+                for(int i = 0; i < iFieldInfos.Count && i < aDatas.arraySize; i++) {
+                    var aInfo = iFieldInfos[i];
+                    var aTypeName = iFieldInfos[i].Name;
+                    string aDisplayName = aTypeName.StartsWith("m_") ? aTypeName.Remove(0, 2) : aTypeName;
+                    var aHeaderAttr = aInfo.GetCustomAttribute<HeaderAttribute>();
+                    if (aHeaderAttr != null)
+                    {
+                        GUILayout.Box(aHeaderAttr.header);
+                    }
+                    UnityEditor.EditorGUILayout.PropertyField(aDatas.GetArrayElementAtIndex(i),
+                        new GUIContent(aDisplayName), true);
                 }
             };
             //GUILayout.Box(type.Name);
             //UnityEditor.EditorGUILayout.PropertyField(sdata.FindPropertyRelative("m_Type"));//,new GUIContent("Test")
 
-            foreach(var type_name in m_Names) {
-                draw_data(type_name.Key.Name, type_name.Value);
+            foreach(var aTypeName in aFieldInfosDic) {
+                aDrawData(aTypeName.Key.Name, aTypeName.Value);
             }
 
             return false;
@@ -171,15 +203,14 @@ namespace UCL.TweenLib {
         virtual public string OnInspectorGUITips() {
             return string.Empty;
         }
-        virtual public void OnInspectorGUIBasic(UCL_TC_Data tc_data, UnityEditor.SerializedProperty sdata,
-            Transform TB_transform) {
-            UnityEditor.EditorGUILayout.PropertyField(sdata.FindPropertyRelative("m_Type"));//,new GUIContent("Test")
+        virtual public void OnInspectorGUIBasic(UCL_TC_Data tc_data, UnityEditor.SerializedProperty iSerializedProperty, Transform TB_transform) {
+            UnityEditor.EditorGUILayout.PropertyField(iSerializedProperty.FindPropertyRelative("m_Type"));//,new GUIContent("Test")
 
-            string tips = OnInspectorGUITips();
-            if(!string.IsNullOrEmpty(tips)) {
-                var strs = tips.Split('\n');
-                foreach(string str in strs) {
-                    if(!string.IsNullOrEmpty(str)) GUILayout.Box(str);
+            string aTips = OnInspectorGUITips();
+            if(!string.IsNullOrEmpty(aTips)) {
+                var aTip = aTips.Split('\n');
+                foreach(string aStr in aTip) {
+                    if(!string.IsNullOrEmpty(aStr)) GUILayout.Box(aStr);
                 }
             }
         }
@@ -196,35 +227,35 @@ namespace UCL.TweenLib {
             FieldInfo[] aFieldInfos = aType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetProperty | BindingFlags.Instance);
             //FieldInfo[] datafieldInfos = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetProperty | BindingFlags.Instance);
             Dictionary<System.Type, List<FieldInfo>> m_Infos = new Dictionary<System.Type, List<FieldInfo>>();
-            System.Action<FieldInfo> parse_fieldinfo = delegate (FieldInfo info) {
-                var value = info.GetValue(this);
-                System.Type info_type = info.FieldType;
-                if(!m_Infos.ContainsKey(info_type)) {
-                    m_Infos.Add(info_type, new List<FieldInfo>());
+            System.Action<FieldInfo> aParseFieldinfo = delegate (FieldInfo iInfo) {
+                //var value = info.GetValue(this);
+                System.Type aInfoType = iInfo.FieldType;
+                if(!m_Infos.ContainsKey(aInfoType)) {
+                    m_Infos.Add(aInfoType, new List<FieldInfo>());
                 }
-                m_Infos[info_type].Add(info);
+                m_Infos[aInfoType].Add(iInfo);
             };
 
             for(int i = 0; i < aFieldInfos.Length; i++) {
-                parse_fieldinfo(aFieldInfos[i]);
+                aParseFieldinfo(aFieldInfos[i]);
             }
-            System.Action<string, List<FieldInfo>> load_data = delegate (string type_name, List<FieldInfo> field_infos) {
-                var t_datafield = aDataType.GetField("m_" + type_name);
-                if(t_datafield == null) return;
+            System.Action<string, List<FieldInfo>> aLoadData = delegate (string iTypeName, List<FieldInfo> iFieldInfos) {
+                FieldInfo aFieldInfo = aDataType.GetField("m_" + iTypeName);
+                if(aFieldInfo == null) return;
 
-                IList t_datas = t_datafield.GetValue(iData) as IList; //sdata.FindPropertyRelative("m_" + type_name);
-                if(t_datas == null) {
-                    Debug.LogWarning("LoadData:" + type_name + " not support by UCL_TC_Data yet!!");
+                IList aDatas = aFieldInfo.GetValue(iData) as IList; //sdata.FindPropertyRelative("m_" + type_name);
+                if(aDatas == null) {
+                    Debug.LogWarning("LoadData:" + iTypeName + " not support by UCL_TC_Data yet!!");
                     return;
                 }
-                for(int i = 0, count = field_infos.Count < t_datas.Count ? field_infos.Count : t_datas.Count; i < count; i++) {
-                    var f_data = t_datas[i];
-                    var f_info = field_infos[i];
-                    f_info.SetValue(this, f_data);
+                for(int i = 0, count = iFieldInfos.Count < aDatas.Count ? iFieldInfos.Count : aDatas.Count; i < count; i++) {
+                    var aData = aDatas[i];
+                    var aInfo = iFieldInfos[i];
+                    aInfo.SetValue(this, aData);
                 }
             };
-            foreach(var type_name in m_Infos) {
-                load_data(type_name.Key.Name, type_name.Value);
+            foreach(var aTypeName in m_Infos) {
+                aLoadData(aTypeName.Key.Name, aTypeName.Value);
             }
 
         }
