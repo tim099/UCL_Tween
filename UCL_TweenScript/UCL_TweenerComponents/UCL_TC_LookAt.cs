@@ -33,11 +33,11 @@ namespace UCL.TweenLib {
         public static UCL_TC_LookAt Create() {
             return new UCL_TC_LookAt();
         }
-        protected Quaternion m_TargetVal;
+        [SerializeField] protected Quaternion m_TargetVal;
         [HideInInspector] protected Quaternion m_StartVal;
 
         [HideInInspector] protected Vector3 m_LookTarget;
-        protected Vector3 m_Up;
+        [SerializeField] protected Vector3 m_Up;
         virtual public UCL_TC_LookAt Init(Transform target, Vector3 look_target, Vector3 up) {
             m_Target = target;
             m_LookTarget = look_target;

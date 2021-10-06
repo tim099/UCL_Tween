@@ -110,44 +110,13 @@ namespace UCL.TweenLib {
         /// <param name="data"></param>
         /// <returns></returns>
         virtual public bool OnInspectorGUI(UCL_TC_Data iTC_Data, UnityEditor.SerializedProperty iSerializedProperty) {
-
-            var aType = this.GetType();
-            var aFieldNamesProperty = iSerializedProperty.FindPropertyRelative("m_FieldNames");
-
-            FieldInfo[] aFieldInfos = aType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetProperty | BindingFlags.Instance);
-            Dictionary<Type, List<FieldInfo>> aFieldInfosDic = new Dictionary<System.Type, List<FieldInfo>>();
-            List<string> aFieldNames = new List<string>();
-            Action<FieldInfo> aParseFieldinfo = delegate (FieldInfo iFieldInfo) {
-                if(iFieldInfo.GetCustomAttribute<HideInInspector>() != null) return;
-                //var value = iFieldInfo.GetValue(this);
-                Type aInfoType = iFieldInfo.FieldType;
-                if(aInfoType.IsGenericType) return;
-
-                if(!aFieldInfosDic.ContainsKey(aInfoType)) {
-                    aFieldInfosDic.Add(aInfoType, new List<FieldInfo>());
-                }
-                aFieldInfosDic[aInfoType].Add(iFieldInfo);
-                aFieldNames.Add(iFieldInfo.Name);
-            };
-
-            for (int i = 0; i < aFieldInfos.Length; i++) {
-                aParseFieldinfo(aFieldInfos[i]);
+            bool aIsDirty = false;
+            Dictionary<Type, List<FieldInfo>> aFieldInfosDic = GetFieldInfosDic();
+            if (iTC_Data.UpdateVersion(UpdateVersionAct))
+            {
+                aIsDirty = true;
             }
 
-            {//record the field names
-                while (aFieldNames.Count > aFieldNamesProperty.arraySize)
-                {
-                    aFieldNamesProperty.InsertArrayElementAtIndex(aFieldNamesProperty.arraySize);
-                }
-                while (aFieldNames.Count < aFieldNamesProperty.arraySize)
-                {
-                    aFieldNamesProperty.DeleteArrayElementAtIndex(aFieldNamesProperty.arraySize - 1);
-                }
-                for (int i = 0; i < aFieldNames.Count; i++)
-                {
-                    aFieldNamesProperty.GetArrayElementAtIndex(i).stringValue = aFieldNames[i];
-                }
-            }
             Action<string, List<FieldInfo>> aDrawData = delegate (string iTypeName, List<FieldInfo> iFieldInfos) {
                 var aDatas = iSerializedProperty.FindPropertyRelative("m_" + iTypeName);
                 if(aDatas == null) {
@@ -191,21 +160,17 @@ namespace UCL.TweenLib {
                         new GUIContent(aDisplayName), true);
                 }
             };
-            //GUILayout.Box(type.Name);
-            //UnityEditor.EditorGUILayout.PropertyField(sdata.FindPropertyRelative("m_Type"));//,new GUIContent("Test")
 
             foreach(var aTypeName in aFieldInfosDic) {
                 aDrawData(aTypeName.Key.Name, aTypeName.Value);
             }
 
-            return false;
+            return aIsDirty;
         }
         virtual public string OnInspectorGUITips() {
             return string.Empty;
         }
         virtual public void OnInspectorGUIBasic(UCL_TC_Data tc_data, UnityEditor.SerializedProperty iSerializedProperty, Transform TB_transform) {
-            UnityEditor.EditorGUILayout.PropertyField(iSerializedProperty.FindPropertyRelative("m_Type"));//,new GUIContent("Test")
-
             string aTips = OnInspectorGUITips();
             if(!string.IsNullOrEmpty(aTips)) {
                 var aTip = aTips.Split('\n');
@@ -216,29 +181,51 @@ namespace UCL.TweenLib {
         }
 #endif
         #endregion
+        protected static Dictionary<Type, FieldInfo[]> s_DataFieldInfos = new Dictionary<Type, FieldInfo[]>();
+        virtual protected FieldInfo[] GetDataFieldInfos()
+        {
+            var aType = this.GetType();
+            if (!s_DataFieldInfos.ContainsKey(aType))
+            {
+                s_DataFieldInfos[aType] = aType.GetAllFieldsUnityVer(typeof(UCL_TweenerComponent)).ToArray();
+                    //aType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetProperty | BindingFlags.Instance);
+            }
+            return s_DataFieldInfos[aType];
+        }
+        protected static Dictionary<Type, Dictionary<System.Type, List<FieldInfo>>> s_FieldInfosDic = new Dictionary<Type, Dictionary<Type, List<FieldInfo>>>();
+        virtual protected Dictionary<System.Type, List<FieldInfo>> GetFieldInfosDic()
+        {
+            var aType = this.GetType();
+            if (!s_FieldInfosDic.ContainsKey(aType))
+            {
+                FieldInfo[] aFieldInfos = GetDataFieldInfos();
+                Dictionary<System.Type, List<FieldInfo>> aInfos = new Dictionary<System.Type, List<FieldInfo>>();
+                System.Action<FieldInfo> aParseFieldinfo = delegate (FieldInfo iInfo) {
+                    System.Type aInfoType = iInfo.FieldType;
+                    if (!aInfos.ContainsKey(aInfoType))
+                    {
+                        aInfos.Add(aInfoType, new List<FieldInfo>());
+                    }
+                    aInfos[aInfoType].Add(iInfo);
+                };
 
+                for (int i = 0; i < aFieldInfos.Length; i++)
+                {
+                    aParseFieldinfo(aFieldInfos[i]);
+                }
+                s_FieldInfosDic[aType] = aInfos;
+            }
+
+            return s_FieldInfosDic[aType];
+        }
         /// <summary>
         /// Load Data using reflection
         /// </summary>
         /// <param name="iData"></param>
         virtual protected internal void LoadData(UCL_TC_Data iData) {
-            var aType = this.GetType();
+            iData.UpdateVersion(UpdateVersionAct);
             var aDataType = iData.GetType();
-            FieldInfo[] aFieldInfos = aType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetProperty | BindingFlags.Instance);
-            //FieldInfo[] datafieldInfos = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetProperty | BindingFlags.Instance);
-            Dictionary<System.Type, List<FieldInfo>> m_Infos = new Dictionary<System.Type, List<FieldInfo>>();
-            System.Action<FieldInfo> aParseFieldinfo = delegate (FieldInfo iInfo) {
-                //var value = info.GetValue(this);
-                System.Type aInfoType = iInfo.FieldType;
-                if(!m_Infos.ContainsKey(aInfoType)) {
-                    m_Infos.Add(aInfoType, new List<FieldInfo>());
-                }
-                m_Infos[aInfoType].Add(iInfo);
-            };
-
-            for(int i = 0; i < aFieldInfos.Length; i++) {
-                aParseFieldinfo(aFieldInfos[i]);
-            }
+            Dictionary<System.Type, List<FieldInfo>> aInfos = GetFieldInfosDic();
             System.Action<string, List<FieldInfo>> aLoadData = delegate (string iTypeName, List<FieldInfo> iFieldInfos) {
                 FieldInfo aFieldInfo = aDataType.GetField("m_" + iTypeName);
                 if(aFieldInfo == null) return;
@@ -254,9 +241,17 @@ namespace UCL.TweenLib {
                     aInfo.SetValue(this, aData);
                 }
             };
-            foreach(var aTypeName in m_Infos) {
+            foreach(var aTypeName in aInfos) {
                 aLoadData(aTypeName.Key.Name, aTypeName.Value);
             }
+
+        }
+        /// <summary>
+        /// Update if the data is older version
+        /// </summary>
+        /// <param name="iCurVersion"></param>
+        virtual protected void UpdateVersionAct(UCL_TC_Data.DataVersion iCurVersion, UCL_TC_Data iData)
+        {
 
         }
         virtual public Transform GetTarget() { return null; }

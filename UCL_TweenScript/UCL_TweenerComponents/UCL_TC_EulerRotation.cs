@@ -122,8 +122,8 @@ namespace UCL.TweenLib
     #endregion
     public class UCL_TC_EulerRotation : UCL_TC_Transform {
         override public TC_Type GetTC_Type() { return TC_Type.EulerRotation; }
-        protected Vector3 m_RotateVal;
-        [HideInInspector] protected Quaternion m_StartVal;
+        [SerializeField] protected Vector3 m_RotateVal;
+        protected Quaternion m_StartVal;
 
         public static UCL_TC_EulerRotation Create()
         {

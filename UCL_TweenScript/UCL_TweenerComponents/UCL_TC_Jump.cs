@@ -87,31 +87,31 @@ namespace UCL.TweenLib
         /// <summary>
         /// Jump times 
         /// </summary>
-        protected int m_JumpTimes = 1;
+        [SerializeField] protected int m_JumpTimes = 1;
 
         /// <summary>
         /// Up vector of jump , etc. (0,1,0)
         /// </summary>
-        protected Vector3 m_Up = Vector3.up;
+        [SerializeField] protected Vector3 m_Up = Vector3.up;
 
         /// <summary>
         /// Initial Jump height
         /// </summary>
-        protected float m_Height = 1f;
+        [SerializeField] protected float m_Height = 1f;
 
         /// <summary>
         /// Height decade after each jump, if == 1 then the height stay the same each jump
         /// </summary>
-        protected float m_Bounciness = 1f;
+        [SerializeField] protected float m_Bounciness = 1f;
         /// <summary>
         /// Target position that "Target" will move to
         /// </summary>
-        protected Vector3 m_TargetVal;
+        [SerializeField] protected Vector3 m_TargetVal;
 
         /// <summary>
         /// Start position of "Target"
         /// </summary>
-        [HideInInspector] protected Vector3 m_StartVal;
+        protected Vector3 m_StartVal;
 
         virtual public UCL_TC_Jump Init(Transform iTarget, Transform iTargetTransform, int iJumpTimes, Vector3 iUp, float iHeight, float iBounciness) {
             m_Target = iTarget;

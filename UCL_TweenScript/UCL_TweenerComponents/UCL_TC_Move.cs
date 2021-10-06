@@ -104,7 +104,8 @@ namespace UCL.TweenLib {
         /// Target position that "Target" will move to
         /// </summary>
         [Header("Target position that Target will move to\n(If m_TargetTransform is not null, then this value will override by m_TargetTransform)")]
-        protected Vector3 m_TargetVal;
+        [SerializeField] protected Vector3 m_TargetVal;
+
         [HideInInspector] protected Vector3 m_StartVal;
         public static UCL_TC_Move Create() {
             return new UCL_TC_Move();

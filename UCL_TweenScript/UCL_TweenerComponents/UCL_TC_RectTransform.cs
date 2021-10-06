@@ -54,12 +54,12 @@ namespace UCL.TweenLib
         override public Transform GetTarget() { return m_Target; }
 
         //[Tooltip("Target that tween component move")]
-        protected RectTransform m_Target;
+        [SerializeField] protected RectTransform m_Target;
 
         /// <summary>
         /// Target Transform that target will move to
         /// </summary>
-        protected RectTransform m_TargetTransform;
+        [SerializeField] protected RectTransform m_TargetTransform;
 
 
         [HideInInspector] protected Vector3 m_StartPos;

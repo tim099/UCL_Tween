@@ -65,8 +65,8 @@ namespace UCL.TweenLib {
             return new UCL_TC_Curve();
         }
 
-        protected Core.MathLib.UCLI_Path m_Path;
-        protected LookAtFront m_LookAtFront = null;
+        [SerializeField] protected Core.MathLib.UCLI_Path m_Path;
+        [SerializeField] protected LookAtFront m_LookAtFront = null;
 
         virtual public UCL_TC_Curve Init(Transform target, Core.MathLib.UCLI_Path _path) {
             m_Path = _path;

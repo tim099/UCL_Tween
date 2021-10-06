@@ -93,16 +93,16 @@ namespace UCL.TweenLib {
         }
     }
     public class UCL_TC_Shake : UCL_TC_Transform {
-        protected bool m_UseRandomSeed = false;
-        protected bool m_Fade = true;
-        protected int m_RandSeed = 0;
-        protected float m_Range = 1f;
-        protected int m_ShakeTimes = 10;//Shake times
+        [SerializeField] protected bool m_UseRandomSeed = false;
+        [SerializeField] protected bool m_Fade = true;
+        [SerializeField] protected int m_RandSeed = 0;
+        [SerializeField] protected float m_Range = 1f;
+        [SerializeField] protected int m_ShakeTimes = 10;//Shake times
 
         //protected Vector3 m_TargetVal;
         //protected Vector3 m_StartVal;
 
-        [HideInInspector] protected Core.MathLib.UCL_Random m_Rnd;
+        protected Core.MathLib.UCL_Random m_Rnd;
         protected List<Vector3> m_ShakePos;
         protected List<float> m_PosDis;
         //public 

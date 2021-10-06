@@ -18,20 +18,20 @@ namespace UCL.TweenLib {
         /// Move target of TweenerComponent
         /// </summary>
         [Header("Move target of TweenerComponent")]
-        protected Transform m_Target;
+        [SerializeField] protected Transform m_Target;
 
 
         /// <summary>
         /// TargetTransform is target position where Target will move to
         /// </summary>
         [Header("Target position where Target will move to")]
-        protected Transform m_TargetTransform;
+        [SerializeField] protected Transform m_TargetTransform;
 
         /// <summary>
         /// Do on local(local position, local rotation)
         /// </summary>
         [Header("Do on local(local position, local rotation)")]
-        protected bool m_Local = false;
+        [SerializeField] protected bool m_Local = false;
 
         #region EDITOR
 #if UNITY_EDITOR
