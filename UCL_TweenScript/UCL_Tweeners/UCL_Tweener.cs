@@ -120,9 +120,10 @@ namespace UCL.TweenLib {
                 {
                     m_UpdateAct.Invoke(aY);
                 }
-                catch (System.Exception e)
+                catch (System.Exception iE)
                 {
-                    Debug.LogError("UCL_Tweener.SetTweenTime m_UpdateAct.Invoke(y) Exception:" + e);
+                    Debug.LogWarning("UCL_Tweener.SetTweenTime m_UpdateAct.Invoke(y) Exception:" + iE);
+                    Debug.LogException(iE);
                     Kill(m_CompleteOnException);
                     return;
                 }
