@@ -33,7 +33,7 @@ namespace UCL.TweenLib {
                     UnityEditor.EditorGUILayout.BeginHorizontal();
                     aTC_Data.m_Foldout = UnityEditor.EditorGUILayout.Foldout(aTC_Data.m_Foldout, aType.Name, true);
 
-                    if(GUILayout.Button("Delete", UCL.Core.UI.UCL_GUIStyle.TextRed)) {
+                    if(GUILayout.Button("Delete", UCL.Core.UI.UCL_GUIStyle.ButtonTextRed)) {
                         delete_at = i;
                         break;
                     }

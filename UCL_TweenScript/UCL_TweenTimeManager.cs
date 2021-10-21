@@ -222,10 +222,10 @@ namespace UCL.TweenLib {
                     if(GUILayout.Button(tween.IsPaused ? "Resume" : "Pause", GUILayout.Width(100))) {
                         tween.SetPause(!tween.IsPaused);
                     }
-                    if(GUILayout.Button("Kill", UCL.Core.UI.UCL_GUIStyle.TextRed, GUILayout.Width(80))) {
+                    if(GUILayout.Button("Kill", UCL.Core.UI.UCL_GUIStyle.ButtonTextRed, GUILayout.Width(80))) {
                         tween.Kill(false);
                     }
-                    if(GUILayout.Button("Kill(Complete)", UCL.Core.UI.UCL_GUIStyle.TextRed)) {
+                    if(GUILayout.Button("Kill(Complete)", UCL.Core.UI.UCL_GUIStyle.ButtonTextRed)) {
                         tween.Kill(true);
                     }
                     if(GUILayout.Button("Select")) {
