@@ -103,6 +103,7 @@ namespace UCL.TweenLib {
         //protected Vector3 m_StartVal;
 
         protected Core.MathLib.UCL_Random m_Rnd;
+        protected Vector3 m_OriginalPos;
         protected List<Vector3> m_ShakePos;
         protected List<float> m_PosDis;
         //public 
@@ -168,14 +169,14 @@ namespace UCL.TweenLib {
             m_ShakePos = new List<Vector3>();
             m_PosDis = new List<float>();
             if(m_Local) {
-                //m_StartVal = m_Target.localPosition;
-                m_ShakePos.Add(Vector3.zero);
+                m_OriginalPos = m_Target.localPosition;
+                m_ShakePos.Add(m_OriginalPos);
                 float range = m_Range;
                 for(int i = 0; i < m_ShakeTimes; i++) {
                     if(m_Fade) range = ((m_ShakeTimes - i) / (float)m_ShakeTimes) * m_Range;
-                    m_ShakePos.Add(range * m_Rnd.OnUnitSphere());
+                    m_ShakePos.Add(m_OriginalPos + range * m_Rnd.OnUnitSphere());
                 }
-                m_ShakePos.Add(Vector3.zero);
+                m_ShakePos.Add(m_OriginalPos);
             } else {
                 //m_StartVal = m_Target.position;
                 m_ShakePos.Add(m_Target.position);
