@@ -130,7 +130,7 @@ namespace UCL.TweenLib {
                 m_StartVal = m_Target.position;
             }
         }
-        protected override void ComponentUpdate(float pos) {
+        protected override void ComponentUpdate(float iPos) {
             if(m_TargetTransform) {
                 if(m_Local) {
                     m_TargetVal = m_TargetTransform.localPosition;
@@ -139,9 +139,9 @@ namespace UCL.TweenLib {
                 }
             }
             if(m_Local) {
-                m_Target.localPosition = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
+                m_Target.localPosition = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, iPos);
             } else {
-                m_Target.position = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
+                m_Target.position = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, iPos);
             }
             //Debug.LogWarning("ComponentUpdate:" + pos+ ",m_StartVal:"+ m_StartVal+ ",m_TargetVal:"+ m_TargetVal);
         }

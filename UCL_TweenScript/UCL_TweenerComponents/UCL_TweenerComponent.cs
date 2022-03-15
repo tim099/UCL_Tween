@@ -17,6 +17,7 @@ namespace UCL.TweenLib {
         Scale,
         Jump,
         EulerRotation,
+        Color,
         /// <summary>
         /// Move and scale RectTransform toward target
         /// </summary>
@@ -75,6 +76,11 @@ namespace UCL.TweenLib {
                         aTC = UCL_TC_EulerRotation.Create();
                         break;
                     }
+                case TC_Type.Color:
+                    {
+                        aTC = UCL_TC_Color.Create();
+                        break;
+                    }
                 case TC_Type.TweenerComponent: {
                         aTC = new UCL_TweenerComponent();
                         break;
@@ -117,22 +123,32 @@ namespace UCL.TweenLib {
                 aIsDirty = true;
             }
 
-            Action<string, List<FieldInfo>> aDrawData = delegate (string iTypeName, List<FieldInfo> iFieldInfos) {
-                var aDatas = iSerializedProperty.FindPropertyRelative("m_" + iTypeName);
+            Action<Type, List<FieldInfo>> aDrawData = delegate (Type iType, List<FieldInfo> iFieldInfos) {
+                string aTypeName = iType.Name;
+                var aDatas = iSerializedProperty.FindPropertyRelative("m_" + aTypeName);
                 if(aDatas == null) {
-                    if(GUILayout.Button(new GUIContent(iTypeName + " not supported by UCL_TC_Data yet!!",
-                        "Click this button to open UCL_TC_Data script."))) {
-                        //Assets/UCL/UCL_Modules/UCL_Tween/UCL_TweenScript/UCL_TweenBehaviors/UCL_TweenComponentDatas/UCL_TC_Data.cs
-                        string sc_path = Core.FileLib.EditorLib.GetLibFolderPath(Core.FileLib.LibName.UCL_TweenLib)
-                         + "/UCL_TweenScript/UCL_TweenBehaviors/UCL_TweenComponentDatas/UCL_TC_Data.cs";
-                        //Debug.Log("EaseScript:" + sc_path);
-                        var aObj = UCL.Core.EditorLib.AssetDatabaseMapper.LoadMainAssetAtPath(sc_path);
-                        if(aObj != null) {
-                            UnityEditor.Selection.activeObject = aObj;
+                    //if (typeof(Component).IsAssignableFrom(iType))
+                    //{
+                    //    aDatas = iSerializedProperty.FindPropertyRelative("m_Component");
+                    //}
+                    //else
+                    {
+                        if (GUILayout.Button(new GUIContent(aTypeName + " not supported by UCL_TC_Data",
+                            "Click this button to open UCL_TC_Data script.")))
+                        {
+                            //Assets/UCL/UCL_Modules/UCL_Tween/UCL_TweenScript/UCL_TweenBehaviors/UCL_TweenComponentDatas/UCL_TC_Data.cs
+                            string sc_path = Core.FileLib.EditorLib.GetLibFolderPath(Core.FileLib.LibName.UCL_TweenLib)
+                             + "/UCL_TweenScript/UCL_TweenBehaviors/UCL_TweenComponentDatas/UCL_TC_Data.cs";
+                            //Debug.Log("EaseScript:" + sc_path);
+                            var aObj = UCL.Core.EditorLib.AssetDatabaseMapper.LoadMainAssetAtPath(sc_path);
+                            if (aObj != null)
+                            {
+                                UnityEditor.Selection.activeObject = aObj;
+                            }
                         }
+                        //GUILayout.Box(type_name + " not support by UCL_TC_Data yet!!");
+                        return;
                     }
-                    //GUILayout.Box(type_name + " not support by UCL_TC_Data yet!!");
-                    return;
                 }
                 while(iFieldInfos.Count > aDatas.arraySize) {
                     aDatas.InsertArrayElementAtIndex(aDatas.arraySize);
@@ -149,8 +165,8 @@ namespace UCL.TweenLib {
                 }
                 for(int i = 0; i < iFieldInfos.Count && i < aDatas.arraySize; i++) {
                     var aInfo = iFieldInfos[i];
-                    var aTypeName = iFieldInfos[i].Name;
-                    string aDisplayName = aTypeName.StartsWith("m_") ? aTypeName.Remove(0, 2) : aTypeName;
+                    var aFieldName = aInfo.Name;
+                    string aDisplayName = aFieldName.StartsWith("m_") ? aFieldName.Remove(0, 2) : aFieldName;
                     var aHeaderAttr = aInfo.GetCustomAttribute<HeaderAttribute>();
                     if (aHeaderAttr != null)
                     {
@@ -161,8 +177,8 @@ namespace UCL.TweenLib {
                 }
             };
 
-            foreach(var aTypeName in aFieldInfosDic) {
-                aDrawData(aTypeName.Key.Name, aTypeName.Value);
+            foreach(var aType in aFieldInfosDic) {
+                aDrawData(aType.Key, aType.Value);
             }
 
             return aIsDirty;
@@ -262,16 +278,16 @@ namespace UCL.TweenLib {
         virtual protected internal void Start() { }
         virtual protected internal void Complete() { }
 
-        virtual protected void ComponentUpdate(float pos) { }
+        virtual protected void ComponentUpdate(float iPos) { }
 
 
-        internal void Update(float pos) {
-            if(m_Reverse) pos = 1 - pos;
-            ComponentUpdate(pos);
+        internal void Update(float iPos) {
+            if(m_Reverse) iPos = 1 - iPos;
+            ComponentUpdate(iPos);
         }
 
-        public UCL_TweenerComponent SetReverse(bool val) {
-            m_Reverse = val;
+        public UCL_TweenerComponent SetReverse(bool iVal) {
+            m_Reverse = iVal;
             return this;
         }
 #if UNITY_EDITOR

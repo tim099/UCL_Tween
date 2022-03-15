@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UCL.Core.MathLib;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UCL.TweenLib {
     /// <summary>
@@ -102,7 +103,14 @@ namespace UCL.TweenLib {
         public List<System.Byte> m_Byte;
         public List<System.Int32> m_Int32;
         public List<System.Single> m_Single;
+
+        public List<Image> m_Image;
+        public List<RawImage> m_RawImage;
+        public List<Color> m_Color;
+
+        //public List<Component> m_Component;
         public DataVersion m_Version = DataVersion.InitVer;
+
 
         [HideInInspector] public bool m_Foldout = false;
 
