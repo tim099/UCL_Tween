@@ -120,21 +120,20 @@ namespace UCL.TweenLib {
             }
         }
 
-        public float TimeUpdate(float delta_time) {
+        public float TimeUpdate(float iDeltaTime) {
             if(TimeScale != 1) {
-                delta_time *= TimeScale;
+                iDeltaTime *= TimeScale;
             }
-            if(delta_time <= m_MaxTimeInterval) {
-                TimeUpdateAction((tween) => { tween.TimeUpdate(delta_time); });
+            if(iDeltaTime <= m_MaxTimeInterval) {
+                TimeUpdateAction((iTween) => { iTween.TimeUpdate(iDeltaTime); });
             } else {
-                int seg = Mathf.CeilToInt(delta_time / m_MaxTimeInterval);
-                float seg_time = delta_time / seg;
-                //Debug.LogWarning("Seg:" + seg + ",seg_time:" + seg_time);
-                for(int i = 0; i < seg; i++) {
-                    TimeUpdateAction((tween) => { tween.TimeUpdate(seg_time); });
+                int aSeg = Mathf.CeilToInt(iDeltaTime / m_MaxTimeInterval);
+                float aSegTime = iDeltaTime / aSeg;
+                for(int i = 0; i < aSeg; i++) {
+                    TimeUpdateAction((tween) => { tween.TimeUpdate(aSegTime); });
                 }
             }
-            return delta_time;
+            return iDeltaTime;
         }
         public long TimeUpdate(long delta_time) {
             if(TimeScale != 1) {
