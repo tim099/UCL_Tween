@@ -23,7 +23,7 @@ namespace UCL.TweenLib {
             obj.SetDuration(duration);
             return obj;
         }
-        static public UCL_Tweener Tweener(long durationMs) {
+        static public UCL_Tweener TweenerMs(long durationMs) {
             var obj = UCL_Tweener.CreateTweener();
             obj.DurationMs = durationMs;
             return obj;
