@@ -91,10 +91,10 @@ namespace UCL.TweenLib {
         /// <summary>
         /// Call this function to stop TweenBehavior
         /// </summary>
-        virtual public void EndTween(bool complete) {
+        virtual public void EndTween(bool iComplete) {
             if(!m_Started) return;
             //Debug.LogWarning("EndTween()!!");
-            if(complete) {
+            if(iComplete) {
                 if(m_EndAct != null) {
                     m_EndAct.Invoke();
                 }
@@ -108,7 +108,7 @@ namespace UCL.TweenLib {
             }
             m_EndAct = null;
             //m_EndEvent?.Invoke();
-            EndTweenAction(complete);
+            EndTweenAction(iComplete);
             m_Started = false;
             if(m_Looping && !m_End) StartTween();
         }
