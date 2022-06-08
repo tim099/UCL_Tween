@@ -86,7 +86,7 @@ namespace UCL.TweenLib.Demo {
                 GUILayout.Box(m_Type.ToString() + " " + m_Ease.m_Dir.ToString(), GUILayout.Width(m_TextureSize.x + 4));
                 //GUILayout.Box("Range:" + m_Texture.m_Range, GUILayout.Width(m_TextureSize.x + 4));
                 //GUILayout.Box(name, GUILayout.Width(m_TextureSize.x + 4));
-                GUILayout.Box(m_Texture.texture);
+                GUILayout.Box(m_Texture.GetTexture());
                 GUILayout.EndVertical();
             });
         }
