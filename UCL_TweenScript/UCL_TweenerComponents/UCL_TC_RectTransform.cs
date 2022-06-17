@@ -104,17 +104,17 @@ namespace UCL.TweenLib
         protected internal override void Start()
         {
             var aTarget = m_Target;
-            var iTarget = m_TargetTransform;
+            var aTargetTransform = m_TargetTransform;
 
             //Debug.LogError("aTarget.sizeDelta:" + aTarget.sizeDelta);
             aTarget.pivot = new Vector2(0.5f, 0.5f);//iTarget.pivot;
             aTarget.anchorMin = 0.5f * Vector2.one;
             aTarget.anchorMax = 0.5f * Vector2.one;
 
-            Transform aTargetTransform = aTarget.GetComponentInParent<Canvas>().transform;//iRect.parent;
-            Canvas aCanvasB = iTarget.GetComponentInParent<Canvas>();
+            Transform aTargetCanvasTransform = aTarget.GetComponentInParent<Canvas>().transform;//iRect.parent;
+            Canvas aCanvasB = aTargetTransform.GetComponentInParent<Canvas>();
             Vector3[] aCorners = new Vector3[4];
-            iTarget.GetWorldCorners(aCorners);
+            aTargetTransform.GetWorldCorners(aCorners);
             for (int i = 0; i < 4; i++)
             {
                 aCorners[i] = aCanvasB.transform.InverseTransformPoint(aCorners[i]);
@@ -128,9 +128,12 @@ namespace UCL.TweenLib
             m_TargetSize = new Vector2(aHorVec.magnitude, aVerVec.magnitude);
 
 
-
             m_StartPos = m_Target.position;
-            m_TargetPos = aTargetTransform.TransformPoint(aMidPoint);
+            
+            aTarget.SetAnchorPositionScreenSpace(aTargetTransform.GetScreenSpaceRect().center);
+
+
+            m_TargetPos = m_Target.position;//aTargetCanvasTransform.TransformPoint(aMidPoint);
 
             float aX = -aHorVec.x;
             float aY = -aHorVec.y;
