@@ -111,7 +111,7 @@ namespace UCL.TweenLib
             aTarget.anchorMin = 0.5f * Vector2.one;
             aTarget.anchorMax = 0.5f * Vector2.one;
 
-            Transform aTargetCanvasTransform = aTarget.GetComponentInParent<Canvas>().transform;//iRect.parent;
+            //Transform aTargetCanvasTransform = aTarget.GetComponentInParent<Canvas>().transform;//iRect.parent;
             Canvas aCanvasB = aTargetTransform.GetComponentInParent<Canvas>();
             Vector3[] aCorners = new Vector3[4];
             aTargetTransform.GetWorldCorners(aCorners);
@@ -121,7 +121,7 @@ namespace UCL.TweenLib
             }
             Vector2 aHorVec = aCorners[0] - aCorners[3];
             Vector2 aVerVec = aCorners[0] - aCorners[1];
-            Vector2 aMidPoint = 0.5f * (aCorners[0] + aCorners[2]);
+            //Vector2 aMidPoint = 0.5f * (aCorners[0] + aCorners[2]);
 
             m_StartSize = aTarget.sizeDelta;
             //Debug.LogError("m_StartSize:"+ m_StartSize);
@@ -145,6 +145,10 @@ namespace UCL.TweenLib
         }
         protected override void ComponentUpdate(float iPos)
         {
+            if(m_Target == null)
+            {
+                return;
+            }
             m_Target.position = Core.MathLib.Lib.Lerp(m_StartPos, m_TargetPos, iPos);
             m_Target.sizeDelta = Core.MathLib.Lib.Lerp(m_StartSize, m_TargetSize, iPos);
             m_Target.rotation = Core.MathLib.Lib.Lerp(m_StartRot, m_TargetRot, iPos);
