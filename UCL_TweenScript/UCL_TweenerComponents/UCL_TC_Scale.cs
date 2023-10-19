@@ -86,7 +86,7 @@ namespace UCL.TweenLib {
             if(m_TargetTransform) {
                 m_TargetVal = m_TargetTransform.localScale;
             }
-            m_Target.transform.localScale = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
+            m_Target.localScale = Core.MathLib.Lib.Lerp(m_StartVal, m_TargetVal, pos);
             //Debug.LogWarning("ComponentUpdate:" + pos+ ",m_StartVal:"+ m_StartVal+ ",m_TargetVal:"+ m_TargetVal);
         }
     }
