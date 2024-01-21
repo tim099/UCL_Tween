@@ -15,6 +15,10 @@ namespace UCL.TweenLib
             if (iTween == null) return;
             iTween.Kill(iCompelete);
         }
+        public static Ease.UCL_Ease GetEase(this EaseType iEaseType)
+        {
+            return EaseCreator.Get(iEaseType);
+        }
     }
 }
 
